@@ -10,3 +10,7 @@ mongo:
 descriptors:
   descriptorsMapName: descriptors
   internalIdsMapName: internalIds
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
