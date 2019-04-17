@@ -1,6 +1,6 @@
 {
   "codec": {
-    "class": "org.redisson.codec.JsonJacksonCodec"
+    "class": "com.extremum.common.mapper.BasicJsonObjectMapper"
   },
   "transportMode": "NIO"
 }
