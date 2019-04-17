@@ -8,11 +8,11 @@
 		<version>2.1.4.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.cybernation</groupId>
-	<artifactId>descriptors-test-service</artifactId>
+	<groupId>com.extremum</groupId>
+	<artifactId>extremum-demo-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>descriptors-test-service</name>
-	<description>Test service for descriptors</description>
+	<name>extremum-demo-service</name>
+	<description>Sample service for extremum api</description>
 
 	<properties>
 		<java.version>1.8</java.version>
@@ -48,7 +48,7 @@
 
 		<dependency>
 			<groupId>com.extremum</groupId>
-			<artifactId>common</artifactId>
+			<artifactId>everything-everything</artifactId>
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
