@@ -1,0 +1,16 @@
+redis:
+  uri: redis://localhost:6379
+  cacheSize: 4
+  idleTime: 1
+
+mongo:
+  uri: mongodb://localhost:27017
+  dbName: test
+
+descriptors:
+  descriptorsMapName: descriptors
+  internalIdsMapName: internalIds
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
