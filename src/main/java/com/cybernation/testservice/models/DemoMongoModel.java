@@ -6,17 +6,20 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.mongodb.morphia.annotations.Entity;
+import org.mongodb.morphia.annotations.Transient;
 
 @Entity("testMongoModels")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class TestMongoModel extends MongoCommonModel {
+public class DemoMongoModel extends MongoCommonModel {
+    @Transient
+    public static final String MODEL_NAME="DemoMongoModel";
     private String testId;
 
     @Override
     public String getModelName() {
-        return TestMongoModel.class.getSimpleName();
+        return MODEL_NAME;
     }
 }
