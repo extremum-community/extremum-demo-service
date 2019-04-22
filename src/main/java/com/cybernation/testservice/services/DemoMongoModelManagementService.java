@@ -41,12 +41,12 @@ public class DemoMongoModelManagementService {
         return converter.convertToResponse(demoMongoModel, ConversionConfig.builder().build());
     }
 
-    public DemoMongoModelResponseDto updateById(String externalId, String testId) {
+    public DemoMongoModelResponseDto updateById(String externalId, DemoMongoModelRequestDto dto) {
         Descriptor descriptor = checkDescriptorByExternalId(externalId);
         Optional<DemoMongoModel> result = Optional.ofNullable(service.get(descriptor.getInternalId()));
         if (result.isPresent()) {
             DemoMongoModel testMongoModel = result.get();
-            testMongoModel.setTestId(testId);
+            testMongoModel.setTestId(dto.getTestId());
             return converter.convertToResponse(service.save(testMongoModel), ConversionConfig.builder().build());
         } else {
             return null;

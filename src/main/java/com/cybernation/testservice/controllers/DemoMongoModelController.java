@@ -37,9 +37,9 @@ public class DemoMongoModelController {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<DemoMongoModelResponseDto> updateById(@PathVariable String id, @RequestParam String testId) {
+    public ResponseEntity<DemoMongoModelResponseDto> updateById(@PathVariable String id, @RequestBody DemoMongoModelRequestDto dto) {
         try {
-            Optional<DemoMongoModelResponseDto> demoMongoModelResponseDto = Optional.ofNullable(managementService.updateById(id, testId));
+            Optional<DemoMongoModelResponseDto> demoMongoModelResponseDto = Optional.ofNullable(managementService.updateById(id, dto));
             return demoMongoModelResponseDto
                     .map(mongoModelResponseDto -> new ResponseEntity<>(mongoModelResponseDto, HttpStatus.OK))
                     .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));

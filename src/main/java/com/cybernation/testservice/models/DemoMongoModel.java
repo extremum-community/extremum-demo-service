@@ -1,10 +1,7 @@
 package com.cybernation.testservice.models;
 
 import com.extremum.common.models.MongoCommonModel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Transient;
 
@@ -13,6 +10,7 @@ import org.mongodb.morphia.annotations.Transient;
 @AllArgsConstructor
 @Getter
 @Setter
+@ToString
 public class DemoMongoModel extends MongoCommonModel {
     @Transient
     public static final String MODEL_NAME="DemoMongoModel";
