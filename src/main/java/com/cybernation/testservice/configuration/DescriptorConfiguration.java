@@ -1,6 +1,5 @@
 package com.cybernation.testservice.configuration;
 
-import com.extremum.common.ExtremumCommonConfiguration;
 import com.extremum.everything.config.EverythingEverythingConfiguration;
 import com.extremum.everything.destroyer.EmptyFieldDestroyer;
 import com.extremum.everything.destroyer.EmptyFieldDestroyerConfig;
@@ -13,7 +12,7 @@ import java.util.Collections;
 
 
 @Configuration
-@Import({ExtremumCommonConfiguration.class, EverythingEverythingConfiguration.class})
+@Import(EverythingEverythingConfiguration.class)
 public class DescriptorConfiguration {
     @Bean
     public EmptyFieldDestroyer emptyFieldDestroyer() {
