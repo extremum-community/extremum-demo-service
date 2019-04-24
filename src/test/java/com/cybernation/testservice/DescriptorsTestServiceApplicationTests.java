@@ -62,7 +62,7 @@ public class DescriptorsTestServiceApplicationTests {
                 .value(System.out::println)
                 .returnResult()
                 .getResponseBody();
-        descriptorId = responseBody.getId();
+        descriptorId = responseBody.getId().getExternalId();
 
         DemoMongoModelRequestDto everythingDto = new DemoMongoModelRequestDto();
         dto.setTestId("1000");
@@ -77,7 +77,7 @@ public class DescriptorsTestServiceApplicationTests {
                 .value(System.out::println)
                 .returnResult()
                 .getResponseBody();
-        everythingDescriptorId = everythingBody.getId();
+        everythingDescriptorId = everythingBody.getId().getExternalId();
     }
 
     @Test

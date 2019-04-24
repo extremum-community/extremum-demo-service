@@ -18,8 +18,8 @@ public class DemoMongoModelResponseDto implements ResponseDto {
     private ZonedDateTime modified;
 
     @Override
-    public String getId() {
-        return id.getExternalId();
+    public Descriptor getId() {
+        return id;
     }
 
     @Override
