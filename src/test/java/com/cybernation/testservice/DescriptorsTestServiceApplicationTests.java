@@ -179,15 +179,29 @@ public class DescriptorsTestServiceApplicationTests {
         Street street = streetService.create(new Street("Test avenue",
                 Arrays.asList(house1.getId().toString(), house2.getId().toString())));
         
-        /*Map<String, Object> streetMap = (Map<String, Object>) */webTestClient.get()
+        Map<String, Object> streetMap = (Map<String, Object>) webTestClient.get()
                 .uri("/" + street.getUuid())
                 .exchange()
                 .expectStatus().is2xxSuccessful()
-                .expectBody(String.class)
+                .expectBody(Response.class)
                 .value(System.out::println)
                 .returnResult()
-                .getResponseBody()/*.getResult()*/;
+                .getResponseBody().getResult();
 
 //        System.out.println(streetMap);
+        Map<String, Object> housesMap = (Map<String, Object>) streetMap.get("houses");
+        String housesCollectionId = (String) housesMap.get("id");
+        assertNotNull(housesCollectionId);
+
+/*
+        webTestClient.get()
+                .uri("/collection/" + housesCollectionId)
+                .exchange()
+                .expectStatus().is2xxSuccessful()
+                .expectBody(Response.class)
+                .value(System.out::println)
+                .returnResult()
+                .getResponseBody().getResult();
+*/
     }
 }
