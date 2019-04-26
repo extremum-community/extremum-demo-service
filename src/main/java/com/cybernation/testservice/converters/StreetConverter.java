@@ -8,18 +8,18 @@ import com.extremum.common.collection.CollectionReference;
 import com.extremum.common.dto.converters.ConversionConfig;
 import com.extremum.common.dto.converters.ToRequestDtoConverter;
 import com.extremum.common.dto.converters.ToResponseDtoConverter;
-import com.extremum.common.stucts.IdOrObjectStruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class StreetConverter implements ToRequestDtoConverter<Street, StreetRequestDto>,
         ToResponseDtoConverter<Street, StreetResponseDto> {
+    private final HouseConverter houseConverter;
+
     public Street convertFromRequest(StreetRequestDto dto) {
         if (dto == null) {
             return null;
@@ -47,9 +47,8 @@ public class StreetConverter implements ToRequestDtoConverter<Street, StreetRequ
         dto.setModified(street.getModified());
 
         dto.setName(street.getName());
-        // TODO: expand!
-        List<IdOrObjectStruct<String, HouseResponseDto>> houses = street.getHouses().stream()
-                .map((Function<String, IdOrObjectStruct<String, HouseResponseDto>>) IdOrObjectStruct::new)
+        List<HouseResponseDto> houses = street.getHouses().stream()
+                .map(houseId -> houseConverter.loadHouse(houseId, conversionConfig))
                 .collect(Collectors.toList());
         dto.setHouses(new CollectionReference<>(houses));
 

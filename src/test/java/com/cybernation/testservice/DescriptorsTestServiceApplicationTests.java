@@ -2,6 +2,10 @@ package com.cybernation.testservice;
 
 import com.cybernation.testservice.models.DemoMongoModelRequestDto;
 import com.cybernation.testservice.models.DemoMongoModelResponseDto;
+import com.cybernation.testservice.models.House;
+import com.cybernation.testservice.models.Street;
+import com.cybernation.testservice.services.HouseService;
+import com.cybernation.testservice.services.StreetService;
 import com.extremum.common.response.Response;
 import com.fasterxml.jackson.databind.node.TextNode;
 import com.github.fge.jackson.jsonpointer.JsonPointer;
@@ -15,7 +19,6 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -23,8 +26,9 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.testcontainers.containers.GenericContainer;
 
+import java.util.Arrays;
 import java.util.Collections;
-import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -40,6 +44,11 @@ public class DescriptorsTestServiceApplicationTests {
     private static GenericContainer mongo = new GenericContainer("mongo:3.4-xenial").withExposedPorts(27017);
     private String descriptorId;
     private String everythingDescriptorId;
+
+    @Autowired
+    private HouseService houseService;
+    @Autowired
+    private StreetService streetService;
 
     static {
         Stream.of(redis, mongo).forEach(GenericContainer::start);
@@ -126,7 +135,7 @@ public class DescriptorsTestServiceApplicationTests {
     @Test
     @SuppressWarnings("unchecked")
     void getByDescriptorId() {
-        LinkedHashMap<String, Object> responseBody = (LinkedHashMap<String, Object>) webTestClient
+        Map<String, Object> responseBody = (Map<String, Object>) webTestClient
                 .get()
                 .uri("/" + everythingDescriptorId)
                 .exchange()
@@ -146,7 +155,7 @@ public class DescriptorsTestServiceApplicationTests {
         JsonPatchOperation operation=new ReplaceOperation(new JsonPointer("/testId"), new TextNode("1212"));
         JsonPatch jsonPatch = new JsonPatch(Collections.singletonList(operation));
 
-        LinkedHashMap<String,Object> result = (LinkedHashMap<String, Object>) webTestClient
+        Map<String,Object> result = (Map<String, Object>) webTestClient
                 .patch()
                 .uri("/" + everythingDescriptorId)
                 .body(BodyInserters.fromObject(jsonPatch))
@@ -159,5 +168,26 @@ public class DescriptorsTestServiceApplicationTests {
 
         assertNotNull(result);
         assertEquals(result.get("testId"),"1212");
+    }
+
+    @SuppressWarnings("unchecked")
+    @Test
+    void test() {
+        House house1 = houseService.create(new House("1"));
+        House house2 = houseService.create(new House("2a"));
+
+        Street street = streetService.create(new Street("Test avenue",
+                Arrays.asList(house1.getId().toString(), house2.getId().toString())));
+        
+        /*Map<String, Object> streetMap = (Map<String, Object>) */webTestClient.get()
+                .uri("/" + street.getUuid())
+                .exchange()
+                .expectStatus().is2xxSuccessful()
+                .expectBody(String.class)
+                .value(System.out::println)
+                .returnResult()
+                .getResponseBody()/*.getResult()*/;
+
+//        System.out.println(streetMap);
     }
 }

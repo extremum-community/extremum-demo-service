@@ -3,6 +3,7 @@ package com.cybernation.testservice.converters;
 import com.cybernation.testservice.models.House;
 import com.cybernation.testservice.models.HouseRequestDto;
 import com.cybernation.testservice.models.HouseResponseDto;
+import com.cybernation.testservice.services.HouseService;
 import com.extremum.common.dto.converters.ConversionConfig;
 import com.extremum.common.dto.converters.ToRequestDtoConverter;
 import com.extremum.common.dto.converters.ToResponseDtoConverter;
@@ -13,6 +14,8 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class HouseConverter implements ToRequestDtoConverter<House, HouseRequestDto>,
         ToResponseDtoConverter<House, HouseResponseDto> {
+    private final HouseService houseService;
+
     public House convertFromRequest(HouseRequestDto dto) {
         if (dto == null) {
             return null;
@@ -54,5 +57,10 @@ public class HouseConverter implements ToRequestDtoConverter<House, HouseRequest
     @Override
     public String getSupportedModel() {
         return House.MODEL_NAME;
+    }
+
+    public HouseResponseDto loadHouse(String houseId, ConversionConfig conversionConfig) {
+        House house = houseService.get(houseId);
+        return convertToResponse(house, conversionConfig);
     }
 }

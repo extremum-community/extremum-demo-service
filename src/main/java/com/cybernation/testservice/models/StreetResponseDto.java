@@ -4,7 +4,6 @@ import com.extremum.common.collection.CollectionReference;
 import com.extremum.common.collection.conversion.MongoEmbeddedCollection;
 import com.extremum.common.descriptor.Descriptor;
 import com.extremum.common.dto.ResponseDto;
-import com.extremum.common.stucts.IdOrObjectStruct;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,7 +20,7 @@ public class StreetResponseDto implements ResponseDto {
 
     private String name;
     @MongoEmbeddedCollection
-    private CollectionReference<IdOrObjectStruct<String, HouseResponseDto>> houses;
+    private CollectionReference<HouseResponseDto> houses;
 
     @Override
     public Descriptor getId() {
