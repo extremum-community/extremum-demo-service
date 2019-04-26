@@ -18,3 +18,7 @@ spring:
 logging:
   level:
     org.springframework.web : DEBUG
+
+custom:
+  field-destroyer:
+    analyzable-package-prefix: com.cybernation.testservice

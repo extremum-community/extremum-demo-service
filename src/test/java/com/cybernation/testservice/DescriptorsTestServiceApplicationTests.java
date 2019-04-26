@@ -15,7 +15,6 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -143,10 +142,10 @@ public class DescriptorsTestServiceApplicationTests {
     @Test
     @SuppressWarnings("unchecked")
     void patchByDescriptorId() throws JsonPointerException {
-        JsonPatchOperation operation=new ReplaceOperation(new JsonPointer("/testId"), new TextNode("1212"));
+        JsonPatchOperation operation = new ReplaceOperation(new JsonPointer("/testId"), new TextNode("1212"));
         JsonPatch jsonPatch = new JsonPatch(Collections.singletonList(operation));
 
-        LinkedHashMap<String,Object> result = (LinkedHashMap<String, Object>) webTestClient
+        LinkedHashMap<String, Object> result = (LinkedHashMap<String, Object>) webTestClient
                 .patch()
                 .uri("/" + everythingDescriptorId)
                 .body(BodyInserters.fromObject(jsonPatch))
@@ -158,6 +157,6 @@ public class DescriptorsTestServiceApplicationTests {
                 .getResponseBody().getResult();
 
         assertNotNull(result);
-        assertEquals(result.get("testId"),"1212");
+        assertEquals(result.get("testId"), "1212");
     }
 }
