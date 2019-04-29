@@ -193,7 +193,6 @@ public class DescriptorsTestServiceApplicationTests {
         String housesCollectionId = (String) housesMap.get("id");
         assertNotNull(housesCollectionId);
 
-/*
         webTestClient.get()
                 .uri("/collection/" + housesCollectionId)
                 .exchange()
@@ -202,6 +201,5 @@ public class DescriptorsTestServiceApplicationTests {
                 .value(System.out::println)
                 .returnResult()
                 .getResponseBody().getResult();
-*/
     }
 }
