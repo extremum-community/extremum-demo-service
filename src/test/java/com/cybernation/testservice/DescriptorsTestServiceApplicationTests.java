@@ -13,6 +13,8 @@ import com.github.fge.jackson.jsonpointer.JsonPointerException;
 import com.github.fge.jsonpatch.JsonPatch;
 import com.github.fge.jsonpatch.JsonPatchOperation;
 import com.github.fge.jsonpatch.ReplaceOperation;
+import com.google.common.collect.ImmutableMap;
+import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -26,10 +28,15 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.testcontainers.containers.GenericContainer;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URLEncoder;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -181,8 +188,9 @@ public class DescriptorsTestServiceApplicationTests {
 
     @SuppressWarnings("unchecked")
     @Test
-    void fetchACollectionById() {
-        List<Object> housesCollectionList = create2HousesAnd1StreetAndObtainHousesFromStreetHousesCollection("");
+    void fetchACollectionById() throws Exception {
+        List<Object> housesCollectionList = create2HousesAnd1StreetAndObtainHousesFromStreetHousesCollection(
+                Collections.emptyMap());
 
         assertThat(housesCollectionList, hasSize(2));
         Map<String, Object> houseMap = (Map<String, Object>) housesCollectionList.get(0);
@@ -191,7 +199,8 @@ public class DescriptorsTestServiceApplicationTests {
     }
 
     @SuppressWarnings("unchecked")
-    private List<Object> create2HousesAnd1StreetAndObtainHousesFromStreetHousesCollection(String queryString) {
+    private List<Object> create2HousesAnd1StreetAndObtainHousesFromStreetHousesCollection(
+            Map<String, String> queryParams) throws Exception {
         house1 = houseService.create(new House("1"));
         house2 = houseService.create(new House("2a"));
 
@@ -211,8 +220,11 @@ public class DescriptorsTestServiceApplicationTests {
         String housesCollectionUrl = (String) housesMap.get("url");
         assertNotNull(housesCollectionUrl);
 
+        // encoding query parameters manually because WebTestClient does not decode + sign
+        // by default, and the default servlet container does decode it
+        URI uri = buildUriWithEncodedQueryString(queryParams, housesCollectionUrl);
         return (List<Object>) webTestClient.get()
-                .uri(housesCollectionUrl + queryString)
+                .uri(uri)
                 .exchange()
                 .expectStatus().is2xxSuccessful()
                 .expectBody(Response.class)
@@ -221,11 +233,33 @@ public class DescriptorsTestServiceApplicationTests {
                 .getResponseBody().getResult();
     }
 
+    @NotNull
+    private URI buildUriWithEncodedQueryString(Map<String, String> queryParams,
+            String housesCollectionUrl) throws URISyntaxException {
+        String encodedQueryParams = queryParams.entrySet().stream()
+                .map(entry -> entry.getKey() + "=" + urlEncode(entry.getValue()))
+                .collect(Collectors.joining("&"));
+        return new URI(housesCollectionUrl + "?" + encodedQueryParams);
+    }
+
+    private String urlEncode(String value) {
+        try {
+            return URLEncoder.encode(value, "utf-8");
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     @SuppressWarnings("unchecked")
     @Test
-    void fetchACollectionByIdWithOffset() {
+    void fetchACollectionByIdWithProjection() throws Exception {
         List<Object> housesCollectionList = create2HousesAnd1StreetAndObtainHousesFromStreetHousesCollection(
-                "?offset=1&limit=10");
+                ImmutableMap.of(
+                        "offset", "1",
+                        "limit", "10",
+                        "since", "2000-04-30T15:20:29.578+0000",
+                        "until", "2100-04-30T15:20:29.578+0000"
+                ));
 
         assertThat(housesCollectionList, hasSize(1));
         Map<String, Object> houseMap = (Map<String, Object>) housesCollectionList.get(0);
