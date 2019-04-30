@@ -194,11 +194,11 @@ public class DescriptorsTestServiceApplicationTests {
                 .getResponseBody().getResult();
 
         Map<String, Object> housesMap = (Map<String, Object>) streetMap.get("houses");
-        String housesCollectionId = (String) housesMap.get("id");
-        assertNotNull(housesCollectionId);
+        String housesCollectionUrl = (String) housesMap.get("url");
+        assertNotNull(housesCollectionUrl);
 
         List<Object> housesCollectionList = (List<Object>) webTestClient.get()
-                .uri("/collection/" + housesCollectionId)
+                .uri(housesCollectionUrl)
                 .exchange()
                 .expectStatus().is2xxSuccessful()
                 .expectBody(Response.class)
