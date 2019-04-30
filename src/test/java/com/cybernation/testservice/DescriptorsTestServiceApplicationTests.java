@@ -50,6 +50,9 @@ public class DescriptorsTestServiceApplicationTests {
     private String descriptorId;
     private String everythingDescriptorId;
 
+    private House house1;
+    private House house2;
+
     @Autowired
     private HouseService houseService;
     @Autowired
@@ -175,15 +178,26 @@ public class DescriptorsTestServiceApplicationTests {
         assertEquals(result.get("testId"),"1212");
     }
 
+
     @SuppressWarnings("unchecked")
     @Test
     void fetchACollectionById() {
-        House house1 = houseService.create(new House("1"));
-        House house2 = houseService.create(new House("2a"));
+        List<Object> housesCollectionList = create2HousesAnd1StreetAndObtainHousesFromStreetHousesCollection("");
+
+        assertThat(housesCollectionList, hasSize(2));
+        Map<String, Object> houseMap = (Map<String, Object>) housesCollectionList.get(0);
+        assertThat(houseMap.get("id"), is(equalTo(house1.getUuid().getExternalId())));
+        assertThat(houseMap.get("number"), is("1"));
+    }
+
+    @SuppressWarnings("unchecked")
+    private List<Object> create2HousesAnd1StreetAndObtainHousesFromStreetHousesCollection(String queryString) {
+        house1 = houseService.create(new House("1"));
+        house2 = houseService.create(new House("2a"));
 
         Street street = streetService.create(new Street("Test avenue",
                 Arrays.asList(house1.getId().toString(), house2.getId().toString())));
-        
+
         Map<String, Object> streetMap = (Map<String, Object>) webTestClient.get()
                 .uri("/" + street.getUuid())
                 .exchange()
@@ -197,18 +211,25 @@ public class DescriptorsTestServiceApplicationTests {
         String housesCollectionUrl = (String) housesMap.get("url");
         assertNotNull(housesCollectionUrl);
 
-        List<Object> housesCollectionList = (List<Object>) webTestClient.get()
-                .uri(housesCollectionUrl)
+        return (List<Object>) webTestClient.get()
+                .uri(housesCollectionUrl + queryString)
                 .exchange()
                 .expectStatus().is2xxSuccessful()
                 .expectBody(Response.class)
                 .value(System.out::println)
                 .returnResult()
                 .getResponseBody().getResult();
+    }
 
-        assertThat(housesCollectionList, hasSize(2));
+    @SuppressWarnings("unchecked")
+    @Test
+    void fetchACollectionByIdWithOffset() {
+        List<Object> housesCollectionList = create2HousesAnd1StreetAndObtainHousesFromStreetHousesCollection(
+                "?offset=1&limit=10");
+
+        assertThat(housesCollectionList, hasSize(1));
         Map<String, Object> houseMap = (Map<String, Object>) housesCollectionList.get(0);
-        assertThat(houseMap.get("id"), is(equalTo(house1.getUuid().getExternalId())));
-        assertThat(houseMap.get("number"), is("1"));
+        assertThat(houseMap.get("id"), is(equalTo(house2.getUuid().getExternalId())));
+        assertThat(houseMap.get("number"), is("2a"));
     }
 }
