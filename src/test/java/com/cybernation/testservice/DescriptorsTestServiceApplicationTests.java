@@ -28,9 +28,14 @@ import org.testcontainers.containers.GenericContainer;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -172,7 +177,7 @@ public class DescriptorsTestServiceApplicationTests {
 
     @SuppressWarnings("unchecked")
     @Test
-    void test() {
+    void fetchACollectionById() {
         House house1 = houseService.create(new House("1"));
         House house2 = houseService.create(new House("2a"));
 
@@ -188,18 +193,22 @@ public class DescriptorsTestServiceApplicationTests {
                 .returnResult()
                 .getResponseBody().getResult();
 
-//        System.out.println(streetMap);
         Map<String, Object> housesMap = (Map<String, Object>) streetMap.get("houses");
-        String housesCollectionId = (String) housesMap.get("id");
-        assertNotNull(housesCollectionId);
+        String housesCollectionUrl = (String) housesMap.get("url");
+        assertNotNull(housesCollectionUrl);
 
-        webTestClient.get()
-                .uri("/collection/" + housesCollectionId)
+        List<Object> housesCollectionList = (List<Object>) webTestClient.get()
+                .uri(housesCollectionUrl)
                 .exchange()
                 .expectStatus().is2xxSuccessful()
                 .expectBody(Response.class)
                 .value(System.out::println)
                 .returnResult()
                 .getResponseBody().getResult();
+
+        assertThat(housesCollectionList, hasSize(2));
+        Map<String, Object> houseMap = (Map<String, Object>) housesCollectionList.get(0);
+        assertThat(houseMap.get("id"), is(equalTo(house1.getUuid().getExternalId())));
+        assertThat(houseMap.get("number"), is("1"));
     }
 }
