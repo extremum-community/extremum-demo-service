@@ -11,7 +11,7 @@ import org.mongodb.morphia.annotations.Entity;
 /**
  * @author rpuch
  */
-@Entity(House.MODEL_NAME)
+@Entity(value = House.MODEL_NAME, noClassnameStored = true)
 @Getter
 @Setter
 @NoArgsConstructor

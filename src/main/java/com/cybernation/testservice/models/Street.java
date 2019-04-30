@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * @author rpuch
  */
-@Entity(Street.MODEL_NAME)
+@Entity(value = Street.MODEL_NAME, noClassnameStored = true)
 @Getter
 @Setter
 @NoArgsConstructor
