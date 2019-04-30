@@ -152,7 +152,7 @@ public class DescriptorsTestServiceApplicationTests {
     @Test
     @SuppressWarnings("unchecked")
     void patchByDescriptorId() throws JsonPointerException {
-        JsonPatchOperation operation=new ReplaceOperation(new JsonPointer("/testId"), new TextNode("1212"));
+        JsonPatchOperation operation = new ReplaceOperation(new JsonPointer("/testId"), new TextNode("1212"));
         JsonPatch jsonPatch = new JsonPatch(Collections.singletonList(operation));
 
         Map<String,Object> result = (Map<String, Object>) webTestClient
@@ -167,7 +167,7 @@ public class DescriptorsTestServiceApplicationTests {
                 .getResponseBody().getResult();
 
         assertNotNull(result);
-        assertEquals(result.get("testId"),"1212");
+        assertEquals(result.get("testId"), "1212");
     }
 
     @SuppressWarnings("unchecked")

@@ -11,25 +11,19 @@ import com.extremum.common.descriptor.Descriptor;
 import com.extremum.common.descriptor.service.DescriptorService;
 import com.extremum.common.dto.converters.ConversionConfig;
 import com.extremum.common.exceptions.CommonException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class DemoMongoModelManagementService {
     private final DemoMongoModelServiceImpl service;
     private final DemoMongoGetterService getterService;
     private final DemoMongoPatcherService patcherService;
     private final DemoMongoDeleteService deleteService;
     private final DemoMongoModelConverter converter;
-
-    public DemoMongoModelManagementService(DemoMongoModelServiceImpl service, DemoMongoGetterService getterService, DemoMongoPatcherService patcherService, DemoMongoDeleteService deleteService, DemoMongoModelConverter converter) {
-        this.service = service;
-        this.getterService = getterService;
-        this.patcherService = patcherService;
-        this.deleteService = deleteService;
-        this.converter = converter;
-    }
 
     public DemoMongoModelResponseDto create(DemoMongoModelRequestDto dto) {
         return converter.convertToResponse(service.create(converter.convertFromRequest(dto)), ConversionConfig.builder().build());
