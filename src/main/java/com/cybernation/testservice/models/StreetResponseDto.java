@@ -1,7 +1,7 @@
 package com.cybernation.testservice.models;
 
 import com.extremum.common.collection.CollectionReference;
-import com.extremum.common.collection.conversion.MongoEmbeddedCollection;
+import com.extremum.common.collection.conversion.MongoOwnedCollection;
 import com.extremum.common.descriptor.Descriptor;
 import com.extremum.common.dto.ResponseDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -19,7 +19,7 @@ public class StreetResponseDto implements ResponseDto {
     private ZonedDateTime modified;
 
     private String name;
-    @MongoEmbeddedCollection
+    @MongoOwnedCollection
     private CollectionReference<HouseResponseDto> houses;
 
     @Override
