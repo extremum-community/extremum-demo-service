@@ -1,17 +1,13 @@
 package com.cybernation.testservice.models;
 
 import com.extremum.common.models.MongoCommonModel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-import org.mongodb.morphia.annotations.Entity;
+import lombok.*;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * @author rpuch
  */
-@Entity(value = House.MODEL_NAME, noClassnameStored = true)
+@Document(House.MODEL_NAME)
 @Getter
 @Setter
 @NoArgsConstructor

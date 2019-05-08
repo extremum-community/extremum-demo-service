@@ -121,7 +121,7 @@ public class DescriptorsTestServiceApplicationTests {
                 .getResponseBody();
 
         assertNotNull(responseBody);
-        assertEquals(responseBody.getVersion().longValue(), 2L);
+        assertEquals(responseBody.getVersion().longValue(), 1L);
         assertEquals(responseBody.getTestId(), "1212");
     }
 
