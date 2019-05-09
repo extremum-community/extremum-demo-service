@@ -220,7 +220,7 @@ public class DescriptorsTestServiceApplicationTests {
         String housesCollectionUrl = (String) housesMap.get("url");
         assertNotNull(housesCollectionUrl);
 
-        // encoding query parameters manually because WebTestClient does not decode + sign
+        // encoding query parameters manually because WebTestClient does not encode + sign
         // by default, and the default servlet container does decode it
         URI uri = buildUriWithEncodedQueryString(queryParams, housesCollectionUrl);
         return (List<Object>) webTestClient.get()
