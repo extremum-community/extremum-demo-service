@@ -3,10 +3,9 @@ package com.cybernation.testservice.models;
 import com.extremum.common.models.MongoCommonModel;
 import com.extremum.common.models.annotation.ModelName;
 import lombok.*;
-import org.mongodb.morphia.annotations.Entity;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-
-@Entity("testMongoModels")
+@Document("testMongoModels")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
