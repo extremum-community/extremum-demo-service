@@ -1,6 +1,7 @@
 package com.cybernation.testservice.config;
 
 import com.extremum.common.repository.BaseMongoRepository;
+import com.extremum.common.repository.SoftDeleteMongoRepositoryFactoryBean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
@@ -9,6 +10,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
  */
 @Configuration
 @EnableMongoRepositories(repositoryBaseClass = BaseMongoRepository.class,
+        repositoryFactoryBeanClass = SoftDeleteMongoRepositoryFactoryBean.class,
         basePackages = "com.cybernation.testservice.repositories")
 public class DescriptorsTestServiceConfiguration {
 }
