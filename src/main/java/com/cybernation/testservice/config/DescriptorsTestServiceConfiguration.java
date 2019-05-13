@@ -1,6 +1,6 @@
 package com.cybernation.testservice.config;
 
-import com.extremum.common.repository.BaseRepositoryImpl;
+import com.extremum.common.repository.BaseMongoRepository;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
  * @author rpuch
  */
 @Configuration
-@EnableMongoRepositories(repositoryBaseClass = BaseRepositoryImpl.class,
+@EnableMongoRepositories(repositoryBaseClass = BaseMongoRepository.class,
         basePackages = "com.cybernation.testservice.repositories")
 public class DescriptorsTestServiceConfiguration {
 }
