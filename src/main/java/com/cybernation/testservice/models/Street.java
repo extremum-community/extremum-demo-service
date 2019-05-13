@@ -3,7 +3,7 @@ package com.cybernation.testservice.models;
 import com.extremum.common.models.MongoCommonModel;
 import com.extremum.everything.CollectionElementType;
 import lombok.*;
-import org.mongodb.morphia.annotations.Entity;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * @author rpuch
  */
-@Entity(value = Street.MODEL_NAME, noClassnameStored = true)
+@Document(Street.MODEL_NAME)
 @Getter
 @Setter
 @NoArgsConstructor
