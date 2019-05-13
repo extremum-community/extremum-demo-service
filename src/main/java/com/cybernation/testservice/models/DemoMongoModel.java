@@ -1,9 +1,10 @@
 package com.cybernation.testservice.models;
 
 import com.extremum.common.models.MongoCommonModel;
+import com.extremum.common.models.annotation.ModelName;
 import lombok.*;
 import org.mongodb.morphia.annotations.Entity;
-import org.mongodb.morphia.annotations.Transient;
+
 
 @Entity("testMongoModels")
 @NoArgsConstructor
@@ -11,13 +12,8 @@ import org.mongodb.morphia.annotations.Transient;
 @Getter
 @Setter
 @ToString
+@ModelName(name = DemoMongoModel.MODEL_NAME)
 public class DemoMongoModel extends MongoCommonModel {
-    @Transient
-    public static final String MODEL_NAME="DemoMongoModel";
+    public static final String MODEL_NAME = "DemoMongoModel";
     private String testId;
-
-    @Override
-    public String getModelName() {
-        return MODEL_NAME;
-    }
 }
