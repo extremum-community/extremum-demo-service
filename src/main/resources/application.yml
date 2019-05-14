@@ -26,3 +26,5 @@ custom:
     analyzable-package-prefix: com.cybernation.testservice
   model:
     package-names: com.cybernation.testservice.models
+  repositories:
+    package-names: com.cybernation.testservice.repositories

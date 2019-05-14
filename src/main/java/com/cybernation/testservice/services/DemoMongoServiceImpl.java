@@ -6,8 +6,8 @@ import com.extremum.common.service.impl.MongoCommonServiceImpl;
 import org.springframework.stereotype.Service;
 
 @Service
-public class DemoMongoModelServiceImpl extends MongoCommonServiceImpl<DemoMongoModel> implements DemoMongoService {
-    public DemoMongoModelServiceImpl(DemoMongoModelDao dao) {
+public class DemoMongoServiceImpl extends MongoCommonServiceImpl<DemoMongoModel> implements DemoMongoService {
+    public DemoMongoServiceImpl(DemoMongoModelDao dao) {
         super(dao);
     }
 }

@@ -19,7 +19,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class DemoMongoModelManagementService {
-    private final DemoMongoModelServiceImpl service;
+    private final DemoMongoServiceImpl service;
     private final DemoMongoGetterService getterService;
     private final DemoMongoPatcherService patcherService;
     private final DemoMongoDeleteService deleteService;

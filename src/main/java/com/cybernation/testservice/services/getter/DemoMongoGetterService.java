@@ -18,6 +18,7 @@ public class DemoMongoGetterService implements GetterService<DemoMongoModel> {
 
     @Override
     public String getSupportedModel() {
-        return DemoMongoModel.MODEL_NAME;
+        return "";
+//        return DemoMongoModel.MODEL_NAME;
     }
 }
