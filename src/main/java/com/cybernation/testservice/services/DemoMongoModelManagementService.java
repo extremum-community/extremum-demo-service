@@ -4,9 +4,6 @@ import com.cybernation.testservice.converters.DemoMongoModelConverter;
 import com.cybernation.testservice.models.DemoMongoModel;
 import com.cybernation.testservice.models.DemoMongoModelRequestDto;
 import com.cybernation.testservice.models.DemoMongoModelResponseDto;
-import com.cybernation.testservice.services.getter.DemoMongoGetterService;
-import com.cybernation.testservice.services.patcher.DemoMongoPatcherService;
-import com.cybernation.testservice.services.removal.DemoMongoDeleteService;
 import com.extremum.common.descriptor.Descriptor;
 import com.extremum.common.descriptor.service.DescriptorService;
 import com.extremum.common.dto.converters.ConversionConfig;
@@ -20,9 +17,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class DemoMongoModelManagementService {
     private final DemoMongoServiceImpl service;
-    private final DemoMongoGetterService getterService;
-    private final DemoMongoPatcherService patcherService;
-    private final DemoMongoDeleteService deleteService;
     private final DemoMongoModelConverter converter;
 
     public DemoMongoModelResponseDto create(DemoMongoModelRequestDto dto) {

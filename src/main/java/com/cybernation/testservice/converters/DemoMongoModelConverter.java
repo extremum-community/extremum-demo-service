@@ -4,6 +4,7 @@ import com.cybernation.testservice.models.DemoMongoModel;
 import com.cybernation.testservice.models.DemoMongoModelRequestDto;
 import com.cybernation.testservice.models.DemoMongoModelResponseDto;
 import com.extremum.common.dto.converters.ConversionConfig;
+import com.extremum.common.dto.converters.FromRequestDtoConverter;
 import com.extremum.common.dto.converters.ToRequestDtoConverter;
 import com.extremum.common.dto.converters.ToResponseDtoConverter;
 import lombok.RequiredArgsConstructor;
@@ -11,13 +12,13 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class DemoMongoModelConverter implements ToRequestDtoConverter<DemoMongoModel, DemoMongoModelRequestDto>, ToResponseDtoConverter<DemoMongoModel, DemoMongoModelResponseDto> {
-    public DemoMongoModel convertFromRequest(DemoMongoModelRequestDto dto) {
-        if (dto == null) {
+public class DemoMongoModelConverter implements ToRequestDtoConverter<DemoMongoModel, DemoMongoModelRequestDto>, ToResponseDtoConverter<DemoMongoModel, DemoMongoModelResponseDto>, FromRequestDtoConverter<DemoMongoModel, DemoMongoModelRequestDto> {
+    public DemoMongoModel convertFromRequest(DemoMongoModelRequestDto dtoIn) {
+        if (dtoIn == null) {
             return null;
         } else {
             DemoMongoModel mongoModel = new DemoMongoModel();
-            mongoModel.setTestId(dto.getTestId());
+            mongoModel.setTestId(dtoIn.getTestId());
             return mongoModel;
         }
     }
