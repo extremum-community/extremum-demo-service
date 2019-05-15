@@ -11,7 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Getter
 @Setter
 @ToString
-@ModelName(name = DemoMongoModel.MODEL_NAME)
+@ModelName(DemoMongoModel.MODEL_NAME)
 public class DemoMongoModel extends MongoCommonModel {
     public static final String MODEL_NAME = "DemoMongoModel";
     private String testId;
