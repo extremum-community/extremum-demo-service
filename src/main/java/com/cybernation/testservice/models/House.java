@@ -16,7 +16,7 @@ import static com.cybernation.testservice.models.House.MODEL_NAME;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@ModelName(name = MODEL_NAME)
+@ModelName(MODEL_NAME)
 public class House extends MongoCommonModel {
     public static final String MODEL_NAME = "House";
     private String number;
