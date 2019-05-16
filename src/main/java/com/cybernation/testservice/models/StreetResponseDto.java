@@ -23,26 +23,6 @@ public class StreetResponseDto implements ResponseDto {
     private CollectionReference<HouseResponseDto> houses;
 
     @Override
-    public Descriptor getId() {
-        return id;
-    }
-
-    @Override
-    public Long getVersion() {
-        return version;
-    }
-
-    @Override
-    public ZonedDateTime getCreated() {
-        return created;
-    }
-
-    @Override
-    public ZonedDateTime getModified() {
-        return modified;
-    }
-
-    @Override
     @JsonIgnore
     public String getModel() {
         return Street.MODEL_NAME;

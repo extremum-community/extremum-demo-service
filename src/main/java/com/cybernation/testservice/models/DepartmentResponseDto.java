@@ -21,27 +21,7 @@ public class DepartmentResponseDto implements ResponseDto {
     private String name;
     @MongoOwnedCollection
     private CollectionReference<EmployeeResponseDto> employees;
-
-    @Override
-    public Descriptor getId() {
-        return id;
-    }
-
-    @Override
-    public Long getVersion() {
-        return version;
-    }
-
-    @Override
-    public ZonedDateTime getCreated() {
-        return created;
-    }
-
-    @Override
-    public ZonedDateTime getModified() {
-        return modified;
-    }
-
+    
     @Override
     @JsonIgnore
     public String getModel() {

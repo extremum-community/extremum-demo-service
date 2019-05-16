@@ -19,26 +19,6 @@ public class HouseResponseDto implements ResponseDto {
     private String number;
 
     @Override
-    public Descriptor getId() {
-        return id;
-    }
-
-    @Override
-    public Long getVersion() {
-        return version;
-    }
-
-    @Override
-    public ZonedDateTime getCreated() {
-        return created;
-    }
-
-    @Override
-    public ZonedDateTime getModified() {
-        return modified;
-    }
-
-    @Override
     @JsonIgnore
     public String getModel() {
         return House.MODEL_NAME;
