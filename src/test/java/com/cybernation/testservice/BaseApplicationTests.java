@@ -1,10 +1,14 @@
 package com.cybernation.testservice;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testcontainers.containers.GenericContainer;
 
 import java.util.stream.Stream;
 
 abstract class BaseApplicationTests {
+    private static final Logger LOGGER = LoggerFactory.getLogger(BaseApplicationTests.class);
+
     private static final GenericContainer redis = new GenericContainer("redis:5.0.4")
             .withExposedPorts(6379);
     private static final GenericContainer mongo = new GenericContainer("mongo:3.4-xenial")
@@ -19,5 +23,6 @@ abstract class BaseApplicationTests {
         String postgresUrl = String.format("jdbc:postgresql://%s:%d/%s",
                 postgres.getContainerIpAddress(), postgres.getFirstMappedPort(), "postgres");
         System.setProperty("jpa.uri", postgresUrl);
+        LOGGER.info("Postgres DB url is {}", postgresUrl);
     }
 }

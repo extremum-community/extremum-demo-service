@@ -45,6 +45,6 @@ public class StreetResponseDto implements ResponseDto {
     @Override
     @JsonIgnore
     public String getModel() {
-        return DemoMongoModel.MODEL_NAME;
+        return Street.MODEL_NAME;
     }
 }

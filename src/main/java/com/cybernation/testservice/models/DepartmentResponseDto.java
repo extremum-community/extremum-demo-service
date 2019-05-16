@@ -1,5 +1,7 @@
 package com.cybernation.testservice.models;
 
+import com.extremum.common.collection.CollectionReference;
+import com.extremum.common.collection.conversion.MongoOwnedCollection;
 import com.extremum.common.descriptor.Descriptor;
 import com.extremum.common.dto.ResponseDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -10,13 +12,15 @@ import java.time.ZonedDateTime;
 
 @NoArgsConstructor
 @Data
-public class HouseResponseDto implements ResponseDto {
+public class DepartmentResponseDto implements ResponseDto {
     private Descriptor id;
     private Long version;
     private ZonedDateTime created;
     private ZonedDateTime modified;
 
-    private String number;
+    private String name;
+    @MongoOwnedCollection
+    private CollectionReference<EmployeeResponseDto> employees;
 
     @Override
     public Descriptor getId() {
@@ -41,6 +45,6 @@ public class HouseResponseDto implements ResponseDto {
     @Override
     @JsonIgnore
     public String getModel() {
-        return House.MODEL_NAME;
+        return Department.MODEL_NAME;
     }
 }
