@@ -17,14 +17,14 @@ import javax.persistence.*;
 public class Employee extends PostgresCommonModel {
     public static final String MODEL_NAME = "Employee";
 
+    private String name;
+    @Getter(onMethod_ = {@ManyToOne(fetch = FetchType.LAZY), @JoinColumn(name = "department_id")})
+    private Department department;
+
     public Employee() {
     }
 
     public Employee(String name) {
         this.name = name;
     }
-
-    private String name;
-    @Getter(onMethod_ = {@ManyToOne(fetch = FetchType.LAZY), @JoinColumn(name = "department_id")})
-    private Department department;
 }
