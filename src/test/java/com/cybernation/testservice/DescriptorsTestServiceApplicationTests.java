@@ -33,6 +33,7 @@ class DescriptorsTestServiceApplicationTests extends BaseApplicationTests {
 
     private String descriptorId;
     private String everythingDescriptorId;
+    private String removeDescriptorId;
 
     @BeforeAll
     void loadData() {
@@ -52,11 +53,11 @@ class DescriptorsTestServiceApplicationTests extends BaseApplicationTests {
         descriptorId = responseBody.getId().getExternalId();
 
         DemoMongoModelRequestDto everythingDto = new DemoMongoModelRequestDto();
-        dto.setTestId("1000");
+        everythingDto.setTestId("1000");
         DemoMongoModelResponseDto everythingBody = webTestClient
                 .post()
                 .uri("/api")
-                .body(BodyInserters.fromObject(dto))
+                .body(BodyInserters.fromObject(everythingDto))
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .exchange()
                 .expectStatus().is2xxSuccessful()
@@ -65,6 +66,20 @@ class DescriptorsTestServiceApplicationTests extends BaseApplicationTests {
                 .returnResult()
                 .getResponseBody();
         everythingDescriptorId = everythingBody.getId().getExternalId();
+
+        DemoMongoModelRequestDto removalDto = new DemoMongoModelRequestDto();
+        DemoMongoModelResponseDto removalResponse = webTestClient
+                .post()
+                .uri("/api")
+                .body(BodyInserters.fromObject(removalDto))
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .exchange()
+                .expectStatus().is2xxSuccessful()
+                .expectBody(DemoMongoModelResponseDto.class)
+                .value(System.out::println)
+                .returnResult()
+                .getResponseBody();
+        removeDescriptorId = removalResponse.getId().getExternalId();
     }
 
     @Test
@@ -133,7 +148,7 @@ class DescriptorsTestServiceApplicationTests extends BaseApplicationTests {
         JsonPatchOperation operation = new ReplaceOperation(new JsonPointer("/testId"), new TextNode("1212"));
         JsonPatch jsonPatch = new JsonPatch(Collections.singletonList(operation));
 
-        Map<String,Object> result = (Map<String, Object>) webTestClient
+        Map<String, Object> result = (Map<String, Object>) webTestClient
                 .patch()
                 .uri("/" + everythingDescriptorId)
                 .body(BodyInserters.fromObject(jsonPatch))
@@ -146,5 +161,13 @@ class DescriptorsTestServiceApplicationTests extends BaseApplicationTests {
 
         assertNotNull(result);
         assertEquals(result.get("testId"), "1212");
+    }
+
+    @Test
+    void removeByDescriptorId() {
+        webTestClient.delete()
+                .uri("/" + removeDescriptorId)
+                .exchange()
+                .expectStatus().is2xxSuccessful();
     }
 }

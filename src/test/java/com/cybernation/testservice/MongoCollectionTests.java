@@ -1,29 +1,17 @@
 package com.cybernation.testservice;
 
-import com.cybernation.testservice.models.DemoMongoModelRequestDto;
-import com.cybernation.testservice.models.DemoMongoModelResponseDto;
 import com.cybernation.testservice.models.House;
 import com.cybernation.testservice.models.Street;
 import com.cybernation.testservice.services.HouseService;
 import com.cybernation.testservice.services.StreetService;
 import com.extremum.common.response.Response;
-import com.fasterxml.jackson.databind.node.TextNode;
-import com.github.fge.jackson.jsonpointer.JsonPointer;
-import com.github.fge.jackson.jsonpointer.JsonPointerException;
-import com.github.fge.jsonpatch.JsonPatch;
-import com.github.fge.jsonpatch.JsonPatchOperation;
-import com.github.fge.jsonpatch.ReplaceOperation;
 import com.google.common.collect.ImmutableMap;
 import org.jetbrains.annotations.NotNull;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
-import org.springframework.web.reactive.function.BodyInserters;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
@@ -36,10 +24,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -105,7 +90,7 @@ class MongoCollectionTests extends BaseApplicationTests {
 
     @NotNull
     private URI buildUriWithEncodedQueryString(Map<String, String> queryParams,
-            String housesCollectionUrl) throws URISyntaxException {
+                                               String housesCollectionUrl) throws URISyntaxException {
         String encodedQueryParams = queryParams.entrySet().stream()
                 .map(entry -> entry.getKey() + "=" + urlEncode(entry.getValue()))
                 .collect(Collectors.joining("&"));
