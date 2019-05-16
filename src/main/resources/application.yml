@@ -7,12 +7,12 @@ mongo:
   uri: mongodb://localhost:27017
   dbName: test
 
-jpa:
-  #uri: jdbc:postgresql://localhost:5432/postgres
-  username: postgres
-  generate-ddl: true
-  show-sql: true
-  package-names: com.extremum.everything.dao
+#jpa:
+#  #uri: jdbc:postgresql://localhost:5432/postgres
+#  username: postgres
+#  generate-ddl: true
+#  show-sql: true
+#  package-names: com.extremum.everything.dao
 
 descriptors:
   descriptorsMapName: descriptors
