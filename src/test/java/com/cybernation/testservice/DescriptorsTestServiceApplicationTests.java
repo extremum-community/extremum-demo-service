@@ -16,6 +16,7 @@ import com.github.fge.jsonpatch.ReplaceOperation;
 import com.google.common.collect.ImmutableMap;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,9 +39,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -51,8 +50,10 @@ public class DescriptorsTestServiceApplicationTests {
     private WebTestClient webTestClient;
     private static GenericContainer redis = new GenericContainer("redis:5.0.4").withExposedPorts(6379);
     private static GenericContainer mongo = new GenericContainer("mongo:3.4-xenial").withExposedPorts(27017);
+
     private String descriptorId;
     private String everythingDescriptorId;
+    private String removeDescriptorId;
 
     private House house1;
     private House house2;
@@ -86,11 +87,11 @@ public class DescriptorsTestServiceApplicationTests {
         descriptorId = responseBody.getId().getExternalId();
 
         DemoMongoModelRequestDto everythingDto = new DemoMongoModelRequestDto();
-        dto.setTestId("1000");
+        everythingDto.setTestId("1000");
         DemoMongoModelResponseDto everythingBody = webTestClient
                 .post()
                 .uri("/api")
-                .body(BodyInserters.fromObject(dto))
+                .body(BodyInserters.fromObject(everythingDto))
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .exchange()
                 .expectStatus().is2xxSuccessful()
@@ -99,6 +100,20 @@ public class DescriptorsTestServiceApplicationTests {
                 .returnResult()
                 .getResponseBody();
         everythingDescriptorId = everythingBody.getId().getExternalId();
+
+        DemoMongoModelRequestDto removalDto = new DemoMongoModelRequestDto();
+        DemoMongoModelResponseDto removalResponse = webTestClient
+                .post()
+                .uri("/api")
+                .body(BodyInserters.fromObject(removalDto))
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .exchange()
+                .expectStatus().is2xxSuccessful()
+                .expectBody(DemoMongoModelResponseDto.class)
+                .value(System.out::println)
+                .returnResult()
+                .getResponseBody();
+        removeDescriptorId = removalResponse.getId().getExternalId();
     }
 
     @Test
@@ -167,7 +182,7 @@ public class DescriptorsTestServiceApplicationTests {
         JsonPatchOperation operation = new ReplaceOperation(new JsonPointer("/testId"), new TextNode("1212"));
         JsonPatch jsonPatch = new JsonPatch(Collections.singletonList(operation));
 
-        Map<String,Object> result = (Map<String, Object>) webTestClient
+        Map<String, Object> result = (Map<String, Object>) webTestClient
                 .patch()
                 .uri("/" + everythingDescriptorId)
                 .body(BodyInserters.fromObject(jsonPatch))
@@ -182,6 +197,13 @@ public class DescriptorsTestServiceApplicationTests {
         assertEquals(result.get("testId"), "1212");
     }
 
+    @Test
+    void removeByDescriptorId() {
+        webTestClient.delete()
+                .uri("/" + removeDescriptorId)
+                .exchange()
+                .expectStatus().is2xxSuccessful();
+    }
 
     @SuppressWarnings("unchecked")
     @Test
@@ -232,7 +254,7 @@ public class DescriptorsTestServiceApplicationTests {
 
     @NotNull
     private URI buildUriWithEncodedQueryString(Map<String, String> queryParams,
-            String housesCollectionUrl) throws URISyntaxException {
+                                               String housesCollectionUrl) throws URISyntaxException {
         String encodedQueryParams = queryParams.entrySet().stream()
                 .map(entry -> entry.getKey() + "=" + urlEncode(entry.getValue()))
                 .collect(Collectors.joining("&"));
