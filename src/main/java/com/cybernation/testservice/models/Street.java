@@ -20,7 +20,7 @@ import static com.cybernation.testservice.models.Street.MODEL_NAME;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@ModelName(name = MODEL_NAME)
+@ModelName(MODEL_NAME)
 public class Street extends MongoCommonModel {
     public static final String MODEL_NAME = "Street";
 
