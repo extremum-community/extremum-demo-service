@@ -1,6 +1,7 @@
 package com.cybernation.testservice.models;
 
 import com.extremum.common.models.PostgresCommonModel;
+import com.extremum.common.models.SoftDeletePostgresModel;
 import com.extremum.common.models.annotation.ModelName;
 import com.extremum.common.models.annotation.ModelRequestDto;
 import com.extremum.common.models.annotation.ModelResponseDto;
