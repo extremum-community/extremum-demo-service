@@ -1,6 +1,6 @@
 package com.cybernation.testservice.models;
 
-import com.extremum.common.models.SoftDeletablePostgresCommonModel;
+import com.extremum.common.models.SoftDeletePostgresModel;
 import com.extremum.common.models.annotation.ModelName;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,7 +19,7 @@ import java.util.List;
 @Table(name = "department")
 @ModelName(Department.MODEL_NAME)
 @Getter @Setter
-public class Department extends SoftDeletablePostgresCommonModel {
+public class Department extends SoftDeletePostgresModel {
     public static final String MODEL_NAME = "Department";
 
     private String name;
