@@ -2,6 +2,8 @@ package com.cybernation.testservice;
 
 import com.cybernation.testservice.models.DemoMongoModelRequestDto;
 import com.cybernation.testservice.models.DemoMongoModelResponseDto;
+import com.cybernation.testservice.models.DepartmentRequestDto;
+import com.cybernation.testservice.models.DepartmentResponseDto;
 import com.extremum.common.response.Response;
 import com.fasterxml.jackson.databind.node.TextNode;
 import com.github.fge.jackson.jsonpointer.JsonPointer;
@@ -9,9 +11,8 @@ import com.github.fge.jackson.jsonpointer.JsonPointerException;
 import com.github.fge.jsonpatch.JsonPatch;
 import com.github.fge.jsonpatch.JsonPatchOperation;
 import com.github.fge.jsonpatch.ReplaceOperation;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;
@@ -22,26 +23,24 @@ import org.springframework.web.reactive.function.BodyInserters;
 import java.util.Collections;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class DescriptorsTestServiceApplicationTests extends BaseApplicationTests {
     @Autowired
     private WebTestClient webTestClient;
 
     private String descriptorId;
-    private String everythingDescriptorId;
-    private String removeDescriptorId;
+    private String everythingMongoDescriptorId;
+    private String jpaDescriptorId;
 
-    @BeforeAll
+    @BeforeEach
     void loadData() {
         DemoMongoModelRequestDto dto = new DemoMongoModelRequestDto();
         dto.setTestId("3333");
         DemoMongoModelResponseDto responseBody = webTestClient
                 .post()
-                .uri("/api")
+                .uri("/api/mongo")
                 .body(BodyInserters.fromObject(dto))
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .exchange()
@@ -52,12 +51,12 @@ class DescriptorsTestServiceApplicationTests extends BaseApplicationTests {
                 .getResponseBody();
         descriptorId = responseBody.getId().getExternalId();
 
-        DemoMongoModelRequestDto everythingDto = new DemoMongoModelRequestDto();
-        everythingDto.setTestId("1000");
+        DemoMongoModelRequestDto everythingMongoDto = new DemoMongoModelRequestDto();
+        everythingMongoDto.setTestId("1000");
         DemoMongoModelResponseDto everythingBody = webTestClient
                 .post()
-                .uri("/api")
-                .body(BodyInserters.fromObject(everythingDto))
+                .uri("/api/mongo")
+                .body(BodyInserters.fromObject(everythingMongoDto))
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .exchange()
                 .expectStatus().is2xxSuccessful()
@@ -65,32 +64,33 @@ class DescriptorsTestServiceApplicationTests extends BaseApplicationTests {
                 .value(System.out::println)
                 .returnResult()
                 .getResponseBody();
-        everythingDescriptorId = everythingBody.getId().getExternalId();
+        everythingMongoDescriptorId = everythingBody.getId().getExternalId();
 
-        DemoMongoModelRequestDto removalDto = new DemoMongoModelRequestDto();
-        DemoMongoModelResponseDto removalResponse = webTestClient
+        DepartmentRequestDto everythingJpaDto = new DepartmentRequestDto();
+        everythingJpaDto.setName("test_depart");
+        DepartmentResponseDto departmentResponseDto = webTestClient
                 .post()
-                .uri("/api")
-                .body(BodyInserters.fromObject(removalDto))
+                .uri("/api/jpa")
+                .body(BodyInserters.fromObject(everythingJpaDto))
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .exchange()
                 .expectStatus().is2xxSuccessful()
-                .expectBody(DemoMongoModelResponseDto.class)
+                .expectBody(DepartmentResponseDto.class)
                 .value(System.out::println)
                 .returnResult()
                 .getResponseBody();
-        removeDescriptorId = removalResponse.getId().getExternalId();
+        jpaDescriptorId = departmentResponseDto.getId().getExternalId();
     }
 
     @Test
     void getById() {
         webTestClient.get()
-                .uri("/api/12112")
+                .uri("/api/mongo/12112")
                 .exchange()
                 .expectStatus().is5xxServerError();
 
         DemoMongoModelResponseDto responseBody = webTestClient.get()
-                .uri("/api/" + descriptorId)
+                .uri("/api/mongo/" + descriptorId)
                 .exchange()
                 .expectStatus().is2xxSuccessful()
                 .expectBody(DemoMongoModelResponseDto.class)
@@ -98,22 +98,24 @@ class DescriptorsTestServiceApplicationTests extends BaseApplicationTests {
                 .returnResult()
                 .getResponseBody();
 
-        assertNotNull(responseBody);
-        assertEquals(responseBody.getVersion().longValue(), 1L);
-        assertEquals(responseBody.getTestId(), "1212");
+        assertAll(() -> {
+            assertNotNull(responseBody);
+            assertEquals(responseBody.getVersion().longValue(), 0L);
+            assertEquals(responseBody.getTestId(), "3333");
+        });
     }
 
     @Test
     void updateById() {
         webTestClient
                 .put()
-                .uri("/api/12112")
+                .uri("/api/mongo/12112")
                 .body(BodyInserters.fromObject(new DemoMongoModelRequestDto()))
                 .exchange()
                 .expectStatus().is5xxServerError();
 
         DemoMongoModelResponseDto responseBody = webTestClient.put()
-                .uri("/api/" + descriptorId)
+                .uri("/api/mongo/" + descriptorId)
                 .body(BodyInserters.fromObject(new DemoMongoModelRequestDto("1212")))
                 .exchange()
                 .expectStatus().is2xxSuccessful()
@@ -127,10 +129,10 @@ class DescriptorsTestServiceApplicationTests extends BaseApplicationTests {
 
     @Test
     @SuppressWarnings("unchecked")
-    void getByDescriptorId() {
+    void getMongoByDescriptorId() {
         Map<String, Object> responseBody = (Map<String, Object>) webTestClient
                 .get()
-                .uri("/" + everythingDescriptorId)
+                .uri("/" + everythingMongoDescriptorId)
                 .exchange()
                 .expectStatus().is2xxSuccessful()
                 .expectBody(Response.class)
@@ -144,13 +146,13 @@ class DescriptorsTestServiceApplicationTests extends BaseApplicationTests {
 
     @Test
     @SuppressWarnings("unchecked")
-    void patchByDescriptorId() throws JsonPointerException {
+    void patchMongoByDescriptorId() throws JsonPointerException {
         JsonPatchOperation operation = new ReplaceOperation(new JsonPointer("/testId"), new TextNode("1212"));
         JsonPatch jsonPatch = new JsonPatch(Collections.singletonList(operation));
 
         Map<String, Object> result = (Map<String, Object>) webTestClient
                 .patch()
-                .uri("/" + everythingDescriptorId)
+                .uri("/" + everythingMongoDescriptorId)
                 .body(BodyInserters.fromObject(jsonPatch))
                 .exchange()
                 .expectStatus().is2xxSuccessful()
@@ -164,10 +166,48 @@ class DescriptorsTestServiceApplicationTests extends BaseApplicationTests {
     }
 
     @Test
-    void removeByDescriptorId() {
+    void removeMongoByDescriptorId() {
         webTestClient.delete()
-                .uri("/" + removeDescriptorId)
+                .uri("/" + everythingMongoDescriptorId)
                 .exchange()
                 .expectStatus().is2xxSuccessful();
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    void getJpaByDescriptorId() {
+        Map<String, Object> responseBody = (Map<String, Object>) webTestClient
+                .get()
+                .uri("/" + jpaDescriptorId)
+                .exchange()
+                .expectStatus().is2xxSuccessful()
+                .expectBody(Response.class)
+                .value(System.out::println)
+                .returnResult()
+                .getResponseBody().getResult();
+
+        assertNotNull(responseBody);
+        assertEquals(responseBody.get("name"), "test_depart");
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    void patchJpaByDescriptorId() throws JsonPointerException {
+        JsonPatchOperation operation = new ReplaceOperation(new JsonPointer("/name"), new TextNode("prod_depart"));
+        JsonPatch jsonPatch = new JsonPatch(Collections.singletonList(operation));
+
+        Map<String, Object> result = (Map<String, Object>) webTestClient
+                .patch()
+                .uri("/" + jpaDescriptorId)
+                .body(BodyInserters.fromObject(jsonPatch))
+                .exchange()
+                .expectStatus().is2xxSuccessful()
+                .expectBody(Response.class)
+                .value(System.out::println)
+                .returnResult()
+                .getResponseBody().getResult();
+
+        assertNotNull(result);
+        assertEquals(result.get("name"), "prod_depart");
     }
 }
