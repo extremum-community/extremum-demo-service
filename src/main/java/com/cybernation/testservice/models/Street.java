@@ -2,7 +2,7 @@ package com.cybernation.testservice.models;
 
 import com.extremum.common.models.MongoCommonModel;
 import com.extremum.common.models.annotation.ModelName;
-import com.extremum.everything.CollectionElementType;
+import com.extremum.everything.collection.CollectionElementType;
 import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 
