@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/mongo")
 public class DemoMongoModelController {
     private final DemoMongoModelManagementService managementService;
 

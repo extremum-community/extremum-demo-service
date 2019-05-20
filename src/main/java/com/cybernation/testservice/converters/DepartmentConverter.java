@@ -6,6 +6,7 @@ import com.cybernation.testservice.models.DepartmentResponseDto;
 import com.cybernation.testservice.models.EmployeeResponseDto;
 import com.extremum.common.collection.CollectionReference;
 import com.extremum.common.dto.converters.ConversionConfig;
+import com.extremum.common.dto.converters.FromRequestDtoConverter;
 import com.extremum.common.dto.converters.ToRequestDtoConverter;
 import com.extremum.common.dto.converters.ToResponseDtoConverter;
 import lombok.RequiredArgsConstructor;
@@ -17,9 +18,10 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class DepartmentConverter implements ToRequestDtoConverter<Department, DepartmentRequestDto>,
-        ToResponseDtoConverter<Department, DepartmentResponseDto> {
+        ToResponseDtoConverter<Department, DepartmentResponseDto>, FromRequestDtoConverter<Department, DepartmentRequestDto> {
     private final EmployeeConverter employeeConverter;
 
+    @Override
     public Department convertFromRequest(DepartmentRequestDto dto) {
         if (dto == null) {
             return null;
