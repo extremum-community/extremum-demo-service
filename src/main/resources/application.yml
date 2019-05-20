@@ -6,13 +6,15 @@ redis:
 mongo:
   uri: mongodb://localhost:27017
   dbName: test
+  repository-packages: com.cybernation.testservice.repositories
 
 jpa:
   #uri: jdbc:postgresql://localhost:5432/postgres
   username: postgres
   generate-ddl: true
   show-sql: true
-  package-names: com.cybernation.testservice.models
+  entity-packages: com.cybernation.testservice.models
+  repository-packages: com.cybernation.testservice.repositories
 
 descriptors:
   descriptorsMapName: descriptors
