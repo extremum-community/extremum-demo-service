@@ -25,7 +25,7 @@ public class DepartmentCustomEmployeesFetcher implements CollectionFetcher<Depar
 
     @Override
     public String getHostFieldName() {
-        return "customEmployees";
+        return Department.CUSTOM_EMPLOYEES;
     }
 
     @Override

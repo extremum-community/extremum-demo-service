@@ -1,12 +1,10 @@
 package com.cybernation.testservice.models;
 
 import com.extremum.common.models.PostgresCommonModel;
-import com.extremum.common.models.SoftDeletePostgresModel;
 import com.extremum.common.models.annotation.ModelName;
 import com.extremum.common.models.annotation.ModelRequestDto;
 import com.extremum.common.models.annotation.ModelResponseDto;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.CascadeType;
@@ -30,6 +28,7 @@ import java.util.List;
 @ModelResponseDto(DepartmentResponseDto.class)
 public class Department extends PostgresCommonModel {
     public static final String MODEL_NAME = "Department";
+    public static final String CUSTOM_EMPLOYEES = "customEmployees";
 
     private String name;
     @Getter(onMethod_ = {@OneToMany(mappedBy = "department", cascade = CascadeType.ALL)})
