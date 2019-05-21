@@ -51,6 +51,7 @@ public class DepartmentConverter implements ToRequestDtoConverter<Department, De
                 .map(employee -> employeeConverter.convertToResponse(employee, conversionConfig))
                 .collect(Collectors.toList());
         dto.setEmployees(new CollectionReference<>(employees));
+        dto.setCustomEmployees(new CollectionReference<>(employees));
 
         dto.setVersion(department.getVersion());
         return dto;

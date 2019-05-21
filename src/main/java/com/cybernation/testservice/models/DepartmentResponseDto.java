@@ -21,6 +21,8 @@ public class DepartmentResponseDto implements ResponseDto {
     private String name;
     @OwnedCollection
     private CollectionReference<EmployeeResponseDto> employees;
+    @OwnedCollection
+    private CollectionReference<EmployeeResponseDto> customEmployees;
     
     @Override
     @JsonIgnore
