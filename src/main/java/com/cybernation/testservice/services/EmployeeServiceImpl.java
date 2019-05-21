@@ -15,9 +15,9 @@ import java.util.UUID;
 public class EmployeeServiceImpl extends PostgresCommonServiceImpl<Employee> implements EmployeeService {
     private final EmployeeDao employeeDao;
 
-    public EmployeeServiceImpl(EmployeeDao dao, EmployeeDao employeeDao) {
+    public EmployeeServiceImpl(EmployeeDao dao) {
         super(dao);
-        this.employeeDao = employeeDao;
+        this.employeeDao = dao;
     }
 
     @Override
