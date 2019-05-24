@@ -21,12 +21,13 @@ import org.springframework.web.reactive.function.BodyInserters;
 
 import java.util.Collections;
 import java.util.Map;
-import java.util.UUID;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class DescriptorsTestServiceApplicationTests extends BaseApplicationTests {
@@ -224,6 +225,59 @@ class DescriptorsTestServiceApplicationTests extends BaseApplicationTests {
 
         Response response = webTestClient.get()
                 .uri("/" + model.getUuid().getExternalId())
+                .exchange()
+                .expectStatus().is2xxSuccessful()
+                .expectBody(Response.class)
+                .value(System.out::println)
+                .returnResult()
+                .getResponseBody();
+
+        assertThat(response, is(notNullValue()));
+        assertThat(response.getStatus(), is(ResponseStatusEnum.FAIL));
+        assertThat(response.getCode(), is(404));
+    }
+
+    @Test
+    void whenGettingANonExistentRecordViaEverythingEverything_thenHttpCode200AndCode404InResponseMessageShouldBeReturned() {
+        Response response = webTestClient.get()
+                .uri("/does-not-exist")
+                .exchange()
+                .expectStatus().is2xxSuccessful()
+                .expectBody(Response.class)
+                .value(System.out::println)
+                .returnResult()
+                .getResponseBody();
+
+        assertThat(response, is(notNullValue()));
+        assertThat(response.getStatus(), is(ResponseStatusEnum.FAIL));
+        assertThat(response.getCode(), is(404));
+    }
+
+    @Test
+    void whenPatchingANonExistentRecordViaEverythingEverything_thenHttpCode200AndCode404InResponseMessageShouldBeReturned()
+            throws Exception{
+        JsonPatchOperation operation = new ReplaceOperation(new JsonPointer("/testId"), new TextNode("1212"));
+        JsonPatch jsonPatch = new JsonPatch(Collections.singletonList(operation));
+        
+        Response response = webTestClient.patch()
+                .uri("/does-not-exist")
+                .body(BodyInserters.fromObject(jsonPatch))
+                .exchange()
+                .expectStatus().is2xxSuccessful()
+                .expectBody(Response.class)
+                .value(System.out::println)
+                .returnResult()
+                .getResponseBody();
+
+        assertThat(response, is(notNullValue()));
+        assertThat(response.getStatus(), is(ResponseStatusEnum.FAIL));
+        assertThat(response.getCode(), is(404));
+    }
+
+    @Test
+    void whenDeletigANonExistentRecordViaEverythingEverything_thenHttpCode200AndCode404InResponseMessageShouldBeReturned() {
+        Response response = webTestClient.delete()
+                .uri("/does-not-exist")
                 .exchange()
                 .expectStatus().is2xxSuccessful()
                 .expectBody(Response.class)
