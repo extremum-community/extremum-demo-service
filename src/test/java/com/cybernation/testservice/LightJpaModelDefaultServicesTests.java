@@ -94,16 +94,15 @@ class LightJpaModelDefaultServicesTests extends BaseApplicationTests {
                 .exchange()
                 .expectStatus().is2xxSuccessful();
 
-        // TODO: restore when 'get non-existent entity' do not throw 500 error anymore
-//        Response response = webTestClient.get()
-//                .uri("/" + flyExternalId())
-//                .exchange()
-//                .expectStatus().is2xxSuccessful()
-//                .expectBody(Response.class)
-//                .value(System.out::println)
-//                .returnResult()
-//                .getResponseBody();
-//        assertThat(response, is(notNullValue()));
-//        assertThat(response.getCode(), is(404));
+        Response response = webTestClient.get()
+                .uri("/" + flyExternalId())
+                .exchange()
+                .expectStatus().is2xxSuccessful()
+                .expectBody(Response.class)
+                .value(System.out::println)
+                .returnResult()
+                .getResponseBody();
+        assertThat(response, is(notNullValue()));
+        assertThat(response.getCode(), is(404));
     }
 }
