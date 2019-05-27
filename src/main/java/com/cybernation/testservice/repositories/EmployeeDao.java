@@ -13,4 +13,6 @@ import java.util.UUID;
 @Repository
 public interface EmployeeDao extends SpringDataJpaCommonDao<Employee> {
     List<Employee> findByDepartmentId(UUID departmentId);
+
+    long countByDepartmentId(UUID departmentId);
 }
