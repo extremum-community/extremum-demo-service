@@ -5,6 +5,7 @@ import com.cybernation.testservice.models.Street;
 import com.cybernation.testservice.services.HouseService;
 import com.cybernation.testservice.services.StreetService;
 import com.extremum.common.response.Response;
+import com.extremum.common.response.ResponseStatusEnum;
 import com.google.common.collect.ImmutableMap;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Test;
@@ -23,6 +24,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -120,5 +123,21 @@ class MongoCollectionTests extends BaseApplicationTests {
         Map<String, Object> houseMap = (Map<String, Object>) housesCollectionList.get(0);
         assertThat(houseMap.get("id"), is(equalTo(house2.getUuid().getExternalId())));
         assertThat(houseMap.get("number"), is("2a"));
+    }
+
+    @Test
+    void fetchANonExistentCollection() {
+        Response response = webTestClient.get()
+                .uri("/collection/no-such-collection")
+                .exchange()
+                .expectStatus().is2xxSuccessful()
+                .expectBody(Response.class)
+                .value(System.out::println)
+                .returnResult()
+                .getResponseBody();
+
+        assertThat(response, is(notNullValue()));
+        assertThat(response.getStatus(), is(ResponseStatusEnum.FAIL));
+        assertThat(response.getCode(), is(404));
     }
 }
