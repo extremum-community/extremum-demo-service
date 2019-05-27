@@ -59,6 +59,13 @@ class MongoCollectionTests extends BaseApplicationTests {
     @SuppressWarnings("unchecked")
     private List<Object> create2HousesAnd1StreetAndObtainHousesFromStreetHousesCollection(
             Map<String, String> queryParams) throws Exception {
+        Response response = create2HousesAnd1StreetAndObtainHousesFromStreetHousesCollectionResponse(queryParams);
+        return (List<Object>) response.getResult();
+    }
+
+    @SuppressWarnings("unchecked")
+    private Response create2HousesAnd1StreetAndObtainHousesFromStreetHousesCollectionResponse(
+            Map<String, String> queryParams) throws URISyntaxException {
         house1 = houseService.create(new House("1"));
         house2 = houseService.create(new House("2a"));
 
@@ -81,14 +88,14 @@ class MongoCollectionTests extends BaseApplicationTests {
         // encoding query parameters manually because WebTestClient does not encode + sign
         // by default, and the default servlet container does decode it
         URI uri = buildUriWithEncodedQueryString(queryParams, housesCollectionUrl);
-        return (List<Object>) webTestClient.get()
+        return webTestClient.get()
                 .uri(uri)
                 .exchange()
                 .expectStatus().is2xxSuccessful()
                 .expectBody(Response.class)
                 .value(System.out::println)
                 .returnResult()
-                .getResponseBody().getResult();
+                .getResponseBody();
     }
 
     @NotNull
@@ -139,5 +146,18 @@ class MongoCollectionTests extends BaseApplicationTests {
         assertThat(response, is(notNullValue()));
         assertThat(response.getStatus(), is(ResponseStatusEnum.FAIL));
         assertThat(response.getCode(), is(404));
+    }
+
+    @Test
+    void testThatPaginationIsReturned() throws Exception {
+        Response response = create2HousesAnd1StreetAndObtainHousesFromStreetHousesCollectionResponse(
+                Collections.emptyMap());
+
+        assertThat(response.getPagination(), is(notNullValue()));
+        assertThat(response.getPagination().getCount(), is(2));
+        assertThat(response.getPagination().getOffset(), is(0));
+        assertThat(response.getPagination().getTotal(), is(2));
+        assertThat(response.getPagination().getSince(), is(nullValue()));
+        assertThat(response.getPagination().getUntil(), is(nullValue()));
     }
 }
