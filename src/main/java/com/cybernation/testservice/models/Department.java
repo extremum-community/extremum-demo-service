@@ -2,8 +2,6 @@ package com.cybernation.testservice.models;
 
 import com.extremum.common.models.PostgresCommonModel;
 import com.extremum.common.models.annotation.ModelName;
-import com.extremum.common.models.annotation.ModelRequestDto;
-import com.extremum.common.models.annotation.ModelResponseDto;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,8 +22,6 @@ import java.util.List;
 @Getter
 @Setter
 @ModelName(Department.MODEL_NAME)
-@ModelRequestDto(DepartmentRequestDto.class)
-@ModelResponseDto(DepartmentResponseDto.class)
 public class Department extends PostgresCommonModel {
     public static final String MODEL_NAME = "Department";
     public static final String CUSTOM_EMPLOYEES = "customEmployees";
