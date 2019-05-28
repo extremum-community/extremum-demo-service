@@ -1,9 +1,9 @@
 package com.cybernation.testservice.converters;
 
-import com.cybernation.testservice.models.House;
-import com.cybernation.testservice.models.HouseRequestDto;
-import com.cybernation.testservice.models.HouseResponseDto;
-import com.cybernation.testservice.services.HouseService;
+import com.cybernation.testservice.models.mongo.House;
+import com.cybernation.testservice.dto.HouseRequestDto;
+import com.cybernation.testservice.dto.HouseResponseDto;
+import com.cybernation.testservice.services.mongo.HouseService;
 import com.extremum.common.dto.converters.ConversionConfig;
 import com.extremum.common.dto.converters.ToRequestDtoConverter;
 import com.extremum.common.dto.converters.ToResponseDtoConverter;

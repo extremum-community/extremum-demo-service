@@ -1,9 +1,9 @@
 package com.cybernation.testservice.converters;
 
-import com.cybernation.testservice.models.Department;
-import com.cybernation.testservice.models.DepartmentRequestDto;
-import com.cybernation.testservice.models.DepartmentResponseDto;
-import com.cybernation.testservice.models.EmployeeResponseDto;
+import com.cybernation.testservice.models.jpa.persistable.Department;
+import com.cybernation.testservice.dto.DepartmentRequestDto;
+import com.cybernation.testservice.dto.DepartmentResponseDto;
+import com.cybernation.testservice.dto.EmployeeResponseDto;
 import com.extremum.common.collection.CollectionReference;
 import com.extremum.common.dto.converters.ConversionConfig;
 import com.extremum.common.dto.converters.FromRequestDtoConverter;

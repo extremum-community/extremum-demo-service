@@ -1,6 +1,9 @@
 package com.cybernation.testservice.converters;
 
-import com.cybernation.testservice.models.*;
+import com.cybernation.testservice.dto.FlyResponseDto;
+import com.cybernation.testservice.dto.SwarmRequestDto;
+import com.cybernation.testservice.dto.SwarmResponseDto;
+import com.cybernation.testservice.models.jpa.basic.Swarm;
 import com.extremum.common.collection.CollectionReference;
 import com.extremum.common.dto.converters.ConversionConfig;
 import com.extremum.common.dto.converters.FromRequestDtoConverter;

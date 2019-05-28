@@ -1,8 +1,8 @@
 package com.cybernation.testservice.converters;
 
-import com.cybernation.testservice.models.Fly;
-import com.cybernation.testservice.models.FlyRequestDto;
-import com.cybernation.testservice.models.FlyResponseDto;
+import com.cybernation.testservice.models.jpa.basic.Fly;
+import com.cybernation.testservice.dto.FlyRequestDto;
+import com.cybernation.testservice.dto.FlyResponseDto;
 import com.extremum.common.dto.converters.ConversionConfig;
 import com.extremum.common.dto.converters.FromRequestDtoConverter;
 import com.extremum.common.dto.converters.ToRequestDtoConverter;

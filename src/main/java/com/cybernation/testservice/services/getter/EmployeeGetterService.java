@@ -1,7 +1,7 @@
 package com.cybernation.testservice.services.getter;
 
-import com.cybernation.testservice.models.Employee;
-import com.cybernation.testservice.services.EmployeeService;
+import com.cybernation.testservice.models.jpa.persistable.Employee;
+import com.cybernation.testservice.services.jpa.EmployeeService;
 import com.extremum.everything.services.GetterService;
 import org.springframework.stereotype.Service;
 

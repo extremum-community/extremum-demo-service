@@ -1,8 +1,8 @@
 package com.cybernation.testservice;
 
-import com.cybernation.testservice.models.Fly;
-import com.cybernation.testservice.models.Swarm;
-import com.cybernation.testservice.services.SwarmService;
+import com.cybernation.testservice.models.jpa.basic.Fly;
+import com.cybernation.testservice.models.jpa.basic.Swarm;
+import com.cybernation.testservice.services.jpa.SwarmService;
 import com.extremum.common.response.Response;
 import com.extremum.common.response.ResponseStatusEnum;
 import org.junit.jupiter.api.BeforeAll;

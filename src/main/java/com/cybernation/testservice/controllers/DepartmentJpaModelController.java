@@ -1,9 +1,9 @@
 package com.cybernation.testservice.controllers;
 
 import com.cybernation.testservice.converters.DepartmentConverter;
-import com.cybernation.testservice.models.DepartmentRequestDto;
-import com.cybernation.testservice.models.DepartmentResponseDto;
-import com.cybernation.testservice.services.DepartmentServiceImpl;
+import com.cybernation.testservice.dto.DepartmentRequestDto;
+import com.cybernation.testservice.dto.DepartmentResponseDto;
+import com.cybernation.testservice.services.jpa.DepartmentServiceImpl;
 import com.extremum.common.dto.converters.ConversionConfig;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

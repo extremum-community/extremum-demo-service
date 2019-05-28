@@ -1,8 +1,8 @@
 package com.cybernation.testservice.converters;
 
-import com.cybernation.testservice.models.Employee;
-import com.cybernation.testservice.models.EmployeeRequestDto;
-import com.cybernation.testservice.models.EmployeeResponseDto;
+import com.cybernation.testservice.models.jpa.persistable.Employee;
+import com.cybernation.testservice.dto.EmployeeRequestDto;
+import com.cybernation.testservice.dto.EmployeeResponseDto;
 import com.extremum.common.dto.converters.ConversionConfig;
 import com.extremum.common.dto.converters.ToRequestDtoConverter;
 import com.extremum.common.dto.converters.ToResponseDtoConverter;
