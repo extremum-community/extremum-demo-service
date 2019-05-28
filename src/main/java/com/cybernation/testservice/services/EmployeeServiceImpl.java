@@ -3,6 +3,7 @@ package com.cybernation.testservice.services;
 import com.cybernation.testservice.models.Employee;
 import com.cybernation.testservice.repositories.EmployeeDao;
 import com.extremum.services.impl.PostgresCommonServiceImpl;
+import com.extremum.everything.collection.CollectionFragment;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,7 +22,9 @@ public class EmployeeServiceImpl extends PostgresCommonServiceImpl<Employee> imp
     }
 
     @Override
-    public List<Employee> findByDepartmentId(UUID departmentId) {
-        return employeeDao.findByDepartmentId(departmentId);
+    public CollectionFragment<Employee> findByDepartmentId(UUID departmentId) {
+        List<Employee> employees = employeeDao.findByDepartmentId(departmentId);
+        long total = employeeDao.countByDepartmentId(departmentId);
+        return CollectionFragment.forFragment(employees, total);
     }
 }

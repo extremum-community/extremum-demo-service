@@ -3,6 +3,7 @@ package com.cybernation.testservice.services;
 import com.cybernation.testservice.models.Fly;
 import com.cybernation.testservice.repositories.FlyDao;
 import com.extremum.services.impl.PostgresBasicServiceImpl;
+import com.extremum.everything.collection.CollectionFragment;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,7 +22,9 @@ public class FlyServiceImpl extends PostgresBasicServiceImpl<Fly> implements Fly
     }
 
     @Override
-    public List<Fly> findBySwarmId(UUID swarmId) {
-        return flyDao.findBySwarmId(swarmId);
+    public CollectionFragment<Fly> findBySwarmId(UUID swarmId) {
+        List<Fly> flies = flyDao.findBySwarmId(swarmId);
+        long total = flyDao.countBySwarmId(swarmId);
+        return CollectionFragment.forFragment(flies, total);
     }
 }

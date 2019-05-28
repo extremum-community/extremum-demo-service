@@ -13,4 +13,6 @@ import java.util.UUID;
 @Repository
 public interface FlyDao extends SpringDataJpaCommonDao<Fly> {
     List<Fly> findBySwarmId(UUID swarmId);
+
+    long countBySwarmId(UUID swarmId);
 }
