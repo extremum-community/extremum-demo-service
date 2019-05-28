@@ -3,12 +3,11 @@ package com.cybernation.testservice.services.collectionfetcher;
 import com.cybernation.testservice.models.Fly;
 import com.cybernation.testservice.models.Swarm;
 import com.cybernation.testservice.services.FlyService;
+import com.extremum.everything.collection.CollectionFragment;
 import com.extremum.everything.collection.Projection;
 import com.extremum.everything.services.CollectionFetcher;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * @author rpuch
@@ -29,7 +28,7 @@ public class SwarmCustomFliesFetcher implements CollectionFetcher<Swarm, Fly> {
     }
 
     @Override
-    public List<Fly> fetchCollection(Swarm swarm, Projection projection) {
+    public CollectionFragment<Fly> fetchCollection(Swarm swarm, Projection projection) {
         return flyService.findBySwarmId(swarm.getId());
     }
 }
