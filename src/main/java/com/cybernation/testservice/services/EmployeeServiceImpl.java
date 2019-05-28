@@ -2,7 +2,7 @@ package com.cybernation.testservice.services;
 
 import com.cybernation.testservice.models.Employee;
 import com.cybernation.testservice.repositories.EmployeeDao;
-import com.extremum.common.service.impl.PostgresCommonServiceImpl;
+import com.extremum.services.impl.PostgresCommonServiceImpl;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

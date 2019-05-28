@@ -82,7 +82,7 @@
 
 		<dependency>
 			<groupId>com.extremum</groupId>
-			<artifactId>extremum-common-starter</artifactId>
+			<artifactId>extremum-jpa-starter</artifactId>
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
 	</dependencies>

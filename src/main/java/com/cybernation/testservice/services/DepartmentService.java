@@ -1,7 +1,7 @@
 package com.cybernation.testservice.services;
 
 import com.cybernation.testservice.models.Department;
-import com.extremum.common.service.PostgresCommonService;
+import com.extremum.services.PostgresCommonService;
 
 /**
  * @author rpuch

@@ -1,7 +1,7 @@
 package com.cybernation.testservice.services;
 
 import com.cybernation.testservice.models.Fly;
-import com.extremum.common.service.PostgresBasicService;
+import com.extremum.services.PostgresBasicService;
 
 import java.util.List;
 import java.util.UUID;

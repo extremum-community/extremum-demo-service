@@ -1,7 +1,7 @@
 package com.cybernation.testservice.models;
 
-import com.extremum.common.models.SoftDeletePostgresModel;
 import com.extremum.common.models.annotation.ModelName;
+import com.extremum.models.SoftDeletePostgresModel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,7 +13,8 @@ import javax.persistence.*;
 @Entity
 @Table(name = "employee")
 @ModelName("Employee")
-@Getter @Setter
+@Getter
+@Setter
 public class Employee extends SoftDeletePostgresModel {
     public static final String MODEL_NAME = "Employee";
 
