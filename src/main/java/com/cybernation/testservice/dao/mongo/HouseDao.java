@@ -1,12 +1,10 @@
 package com.cybernation.testservice.dao.mongo;
 
 import com.cybernation.testservice.models.mongo.House;
-import com.extremum.common.dao.impl.SpringDataMongoCommonDao;
-import org.springframework.stereotype.Repository;
+import com.extremum.common.dao.MongoCommonDao;
 
 /**
  * @author rpuch
  */
-@Repository
-public interface HouseDao extends SpringDataMongoCommonDao<House> {
+public interface HouseDao extends MongoCommonDao<House> {
 }

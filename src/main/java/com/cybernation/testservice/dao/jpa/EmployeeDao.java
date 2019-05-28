@@ -1,8 +1,7 @@
 package com.cybernation.testservice.dao.jpa;
 
 import com.cybernation.testservice.models.jpa.persistable.Employee;
-import com.extremum.jpa.dao.impl.SpringDataJpaCommonDao;
-import org.springframework.stereotype.Repository;
+import com.extremum.jpa.dao.PostgresCommonDao;
 
 import java.util.List;
 import java.util.UUID;
@@ -10,8 +9,7 @@ import java.util.UUID;
 /**
  * @author rpuch
  */
-@Repository
-public interface EmployeeDao extends SpringDataJpaCommonDao<Employee> {
+public interface EmployeeDao extends PostgresCommonDao<Employee> {
     List<Employee> findByDepartmentId(UUID departmentId);
 
     long countByDepartmentId(UUID departmentId);
