@@ -156,7 +156,7 @@ class MongoCollectionTests extends BaseApplicationTests {
         assertThat(response.getPagination(), is(notNullValue()));
         assertThat(response.getPagination().getCount(), is(2));
         assertThat(response.getPagination().getOffset(), is(0));
-        assertThat(response.getPagination().getTotal(), is(2));
+        assertThat(response.getPagination().getTotal(), is(2L));
         assertThat(response.getPagination().getSince(), is(nullValue()));
         assertThat(response.getPagination().getUntil(), is(nullValue()));
     }
