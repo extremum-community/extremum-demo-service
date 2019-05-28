@@ -6,6 +6,7 @@ import com.cybernation.testservice.models.House;
 import com.cybernation.testservice.models.Street;
 import com.cybernation.testservice.services.HouseService;
 import com.cybernation.testservice.services.StreetService;
+import com.extremum.common.descriptor.Descriptor;
 import com.extremum.common.response.Response;
 import com.fasterxml.jackson.databind.node.TextNode;
 import com.github.fge.jackson.jsonpointer.JsonPointer;
@@ -40,9 +41,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -54,8 +53,8 @@ public class DescriptorsTestServiceApplicationTests {
     private WebTestClient webTestClient;
     private static GenericContainer redis = new GenericContainer("redis:5.0.4").withExposedPorts(6379);
     private static GenericContainer mongo = new GenericContainer("mongo:3.4-xenial").withExposedPorts(27017);
-    private String descriptorId;
-    private String everythingDescriptorId;
+    private Descriptor descriptorId;
+    private Descriptor everythingDescriptorId;
 
     private House house1;
     private House house2;
@@ -86,7 +85,7 @@ public class DescriptorsTestServiceApplicationTests {
                 .value(System.out::println)
                 .returnResult()
                 .getResponseBody();
-        descriptorId = responseBody.getId().getExternalId();
+        descriptorId = responseBody.getId();
 
         DemoMongoModelRequestDto everythingDto = new DemoMongoModelRequestDto();
         dto.setTestId("1000");
@@ -101,7 +100,7 @@ public class DescriptorsTestServiceApplicationTests {
                 .value(System.out::println)
                 .returnResult()
                 .getResponseBody();
-        everythingDescriptorId = everythingBody.getId().getExternalId();
+        everythingDescriptorId = everythingBody.getId();
     }
 
     @Test
