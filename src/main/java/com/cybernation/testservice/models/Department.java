@@ -1,7 +1,7 @@
 package com.cybernation.testservice.models;
 
 import com.extremum.common.models.annotation.ModelName;
-import com.extremum.models.PostgresCommonModel;
+import com.extremum.jpa.models.PostgresCommonModel;
 import lombok.Getter;
 import lombok.Setter;
 

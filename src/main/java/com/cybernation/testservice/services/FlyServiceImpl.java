@@ -2,8 +2,8 @@ package com.cybernation.testservice.services;
 
 import com.cybernation.testservice.models.Fly;
 import com.cybernation.testservice.repositories.FlyDao;
-import com.extremum.services.impl.PostgresBasicServiceImpl;
 import com.extremum.everything.collection.CollectionFragment;
+import com.extremum.jpa.services.impl.PostgresBasicServiceImpl;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
