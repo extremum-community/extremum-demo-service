@@ -1,8 +1,8 @@
 package com.cybernation.testservice;
 
-import com.cybernation.testservice.models.Department;
-import com.cybernation.testservice.models.Employee;
-import com.cybernation.testservice.services.DepartmentService;
+import com.cybernation.testservice.models.jpa.persistable.Department;
+import com.cybernation.testservice.models.jpa.persistable.Employee;
+import com.cybernation.testservice.services.jpa.DepartmentService;
 import com.extremum.common.response.Response;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

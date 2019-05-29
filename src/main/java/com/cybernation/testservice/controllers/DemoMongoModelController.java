@@ -1,8 +1,8 @@
 package com.cybernation.testservice.controllers;
 
-import com.cybernation.testservice.models.DemoMongoModelRequestDto;
-import com.cybernation.testservice.models.DemoMongoModelResponseDto;
-import com.cybernation.testservice.services.DemoMongoModelManagementService;
+import com.cybernation.testservice.dto.DemoMongoModelRequestDto;
+import com.cybernation.testservice.dto.DemoMongoModelResponseDto;
+import com.cybernation.testservice.services.mongo.DemoMongoModelManagementService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

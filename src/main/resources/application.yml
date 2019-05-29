@@ -6,7 +6,7 @@ redis:
 mongo:
   uri: mongodb://localhost:27017
   dbName: test
-  repository-packages: com.cybernation.testservice.repositories
+  repository-packages: com.cybernation.testservice.dao
 
 jpa:
   #uri: jdbc:postgresql://localhost:5432/postgres
@@ -14,7 +14,7 @@ jpa:
   generate-ddl: true
   show-sql: true
   entity-packages: com.cybernation.testservice.models
-  repository-packages: com.cybernation.testservice.repositories
+  repository-packages: com.cybernation.testservice.dao
 
 descriptors:
   descriptorsMapName: descriptors

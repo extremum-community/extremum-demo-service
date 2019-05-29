@@ -1,8 +1,8 @@
 package com.cybernation.testservice.converters;
 
-import com.cybernation.testservice.models.DemoMongoModel;
-import com.cybernation.testservice.models.DemoMongoModelRequestDto;
-import com.cybernation.testservice.models.DemoMongoModelResponseDto;
+import com.cybernation.testservice.models.mongo.DemoMongoModel;
+import com.cybernation.testservice.dto.DemoMongoModelRequestDto;
+import com.cybernation.testservice.dto.DemoMongoModelResponseDto;
 import com.extremum.common.dto.converters.ConversionConfig;
 import com.extremum.common.dto.converters.FromRequestDtoConverter;
 import com.extremum.common.dto.converters.ToRequestDtoConverter;

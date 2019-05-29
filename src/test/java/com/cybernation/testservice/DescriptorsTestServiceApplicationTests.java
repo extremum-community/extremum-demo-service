@@ -1,7 +1,11 @@
 package com.cybernation.testservice;
 
-import com.cybernation.testservice.models.*;
-import com.cybernation.testservice.services.DemoMongoService;
+import com.cybernation.testservice.dto.DemoMongoModelRequestDto;
+import com.cybernation.testservice.dto.DemoMongoModelResponseDto;
+import com.cybernation.testservice.dto.DepartmentRequestDto;
+import com.cybernation.testservice.dto.DepartmentResponseDto;
+import com.cybernation.testservice.models.mongo.DemoMongoModel;
+import com.cybernation.testservice.services.mongo.DemoMongoService;
 import com.extremum.common.response.Response;
 import com.extremum.common.response.ResponseStatusEnum;
 import com.fasterxml.jackson.databind.node.TextNode;

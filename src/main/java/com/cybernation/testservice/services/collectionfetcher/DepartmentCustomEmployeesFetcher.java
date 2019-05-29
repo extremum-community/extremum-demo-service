@@ -1,8 +1,8 @@
 package com.cybernation.testservice.services.collectionfetcher;
 
-import com.cybernation.testservice.models.Department;
-import com.cybernation.testservice.models.Employee;
-import com.cybernation.testservice.services.EmployeeService;
+import com.cybernation.testservice.models.jpa.persistable.Department;
+import com.cybernation.testservice.models.jpa.persistable.Employee;
+import com.cybernation.testservice.services.jpa.EmployeeService;
 import com.extremum.everything.collection.CollectionFragment;
 import com.extremum.everything.collection.Projection;
 import com.extremum.everything.services.CollectionFetcher;

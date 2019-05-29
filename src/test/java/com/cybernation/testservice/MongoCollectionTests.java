@@ -1,9 +1,9 @@
 package com.cybernation.testservice;
 
-import com.cybernation.testservice.models.House;
-import com.cybernation.testservice.models.Street;
-import com.cybernation.testservice.services.HouseService;
-import com.cybernation.testservice.services.StreetService;
+import com.cybernation.testservice.models.mongo.House;
+import com.cybernation.testservice.models.mongo.Street;
+import com.cybernation.testservice.services.mongo.HouseService;
+import com.cybernation.testservice.services.mongo.StreetService;
 import com.extremum.common.response.Response;
 import com.extremum.common.response.ResponseStatusEnum;
 import com.google.common.collect.ImmutableMap;
