@@ -1,7 +1,7 @@
 package com.cybernation.testservice.repositories;
 
 import com.cybernation.testservice.models.Swarm;
-import com.extremum.common.dao.impl.SpringDataJpaCommonDao;
+import com.extremum.jpa.dao.impl.SpringDataJpaCommonDao;
 import org.springframework.stereotype.Repository;
 
 /**

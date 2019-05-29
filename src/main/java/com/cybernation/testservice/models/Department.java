@@ -1,7 +1,7 @@
 package com.cybernation.testservice.models;
 
-import com.extremum.common.models.PostgresCommonModel;
 import com.extremum.common.models.annotation.ModelName;
+import com.extremum.jpa.models.PostgresCommonModel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,7 +11,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
-
 
 
 /**
