@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
  * @author rpuch
  */
 @Repository
-interface SpringDataSwarmDao extends SwarmDao, SpringDataJpaCommonDao<Swarm> {
+public interface SpringDataSwarmDao extends SwarmDao, SpringDataJpaCommonDao<Swarm> {
 }
