@@ -23,7 +23,7 @@ public class SwarmCustomFliesFetcher implements CollectionFetcher<Swarm, Fly> {
     }
 
     @Override
-    public String getHostPropertyName() {
+    public String getHostAttributeName() {
         return Swarm.CUSTOM_FLIES;
     }
 

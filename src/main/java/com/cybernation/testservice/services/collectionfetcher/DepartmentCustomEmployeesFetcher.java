@@ -23,7 +23,7 @@ public class DepartmentCustomEmployeesFetcher implements CollectionFetcher<Depar
     }
 
     @Override
-    public String getHostPropertyName() {
+    public String getHostAttributeName() {
         return Department.CUSTOM_EMPLOYEES;
     }
 
