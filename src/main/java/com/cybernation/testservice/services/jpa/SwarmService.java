@@ -7,4 +7,5 @@ import com.extremum.jpa.services.PostgresBasicService;
  * @author rpuch
  */
 public interface SwarmService extends PostgresBasicService<Swarm> {
+    Swarm findAsJpaReference(String id);
 }
