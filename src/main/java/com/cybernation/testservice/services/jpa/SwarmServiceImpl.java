@@ -1,9 +1,9 @@
 package com.cybernation.testservice.services.jpa;
 
 import com.cybernation.testservice.dao.jpa.SwarmDao;
-import com.cybernation.testservice.dao.jpa.impl.SpringDataSwarmDao;
 import com.cybernation.testservice.models.jpa.basic.Swarm;
 import com.extremum.jpa.services.impl.PostgresBasicServiceImpl;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -13,15 +13,15 @@ import java.util.UUID;
  */
 @Service
 public class SwarmServiceImpl extends PostgresBasicServiceImpl<Swarm> implements SwarmService {
-    private final SpringDataSwarmDao repository;
+    private final JpaRepository<Swarm, UUID> repositoryToTestGetOne;
 
-    public SwarmServiceImpl(SwarmDao dao, SpringDataSwarmDao repository) {
+    public SwarmServiceImpl(SwarmDao dao, JpaRepository<Swarm, UUID> repositoryToTestGetOne) {
         super(dao);
-        this.repository = repository;
+        this.repositoryToTestGetOne = repositoryToTestGetOne;
     }
 
     @Override
     public Swarm findAsJpaReference(String id) {
-        return repository.getOne(UUID.fromString(id));
+        return repositoryToTestGetOne.getOne(UUID.fromString(id));
     }
 }
