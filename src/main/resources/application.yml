@@ -16,8 +16,6 @@ jpa:
 descriptors:
   descriptorsMapName: descriptors
   internalIdsMapName: internalIds
-  collectionDescriptorsMapName: collection_descriptors
-  collectionCoordinatesMapName: collection_descriptors_coordinates_idx
 
 spring:
   main:
