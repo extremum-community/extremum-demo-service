@@ -83,7 +83,7 @@
 		<dependency>
 			<groupId>com.extremum</groupId>
 			<artifactId>extremum-jpa-starter</artifactId>
-			<version>1.0.3-SNAPSHOT</version>
+			<version>1.0.4-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 
