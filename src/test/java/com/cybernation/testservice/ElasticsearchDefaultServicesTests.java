@@ -1,7 +1,7 @@
 package com.cybernation.testservice;
 
-import com.cybernation.testservice.models.jpa.basic.Fly;
-import com.cybernation.testservice.services.jpa.FlyService;
+import com.cybernation.testservice.models.elasticsearch.RubberBand;
+import com.cybernation.testservice.services.elasticsearch.RubberBandService;
 import com.extremum.common.response.Response;
 import com.fasterxml.jackson.databind.node.TextNode;
 import com.github.fge.jackson.jsonpointer.JsonPointer;
@@ -25,34 +25,36 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class LightJpaModelDefaultServicesTests extends BaseApplicationTests {
+class ElasticsearchDefaultServicesTests extends BaseApplicationTests {
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired
     private WebTestClient webTestClient;
 
     @Autowired
-    private FlyService flyService;
+    private RubberBandService rubberBandService;
 
-    private Fly fly;
+    private RubberBand rubberBand;
 
     @BeforeEach
-    void createAFreshFly() {
-        fly = new Fly();
-        fly.setName("Mosca");
+    void createAFreshRubberBand() {
+        rubberBand = new RubberBand();
+        rubberBand.setName("My band");
+        rubberBand.setColor("Red");
 
-        fly = flyService.create(fly);
+        rubberBand = rubberBandService.create(rubberBand);
     }
 
     @Test
     void testEverythingGet() {
         Map<String, Object> responseBody = retrieveViaEverythingGet();
-        assertThat(responseBody.get("name"), is("Mosca"));
+        assertThat(responseBody.get("name"), is("My band"));
+        assertThat(responseBody.get("color"), is("Red"));
     }
 
     @SuppressWarnings("unchecked")
     private Map<String, Object> retrieveViaEverythingGet() {
         return (Map<String, Object>) webTestClient.get()
-                    .uri("/" + flyExternalId())
+                    .uri("/" + rubberBandExternalId())
                     .exchange()
                     .expectStatus().is2xxSuccessful()
                     .expectBody(Response.class)
@@ -62,18 +64,19 @@ class LightJpaModelDefaultServicesTests extends BaseApplicationTests {
                     .getResult();
     }
 
-    private String flyExternalId() {
-        return fly.getUuid().getExternalId();
+    private String rubberBandExternalId() {
+        return rubberBand.getUuid().getExternalId();
     }
 
     @SuppressWarnings("unchecked")
     @Test
     void testEverythingPatch() throws Exception {
-        JsonPatchOperation operation = new ReplaceOperation(new JsonPointer("/name"), new TextNode("Mosca II"));
+        JsonPatchOperation operation = new ReplaceOperation(new JsonPointer("/name"),
+                new TextNode("Someone else's band"));
         JsonPatch jsonPatch = new JsonPatch(Collections.singletonList(operation));
 
         Map<String, Object> responseBody = (Map<String, Object>) webTestClient.patch()
-                .uri("/" + flyExternalId())
+                .uri("/" + rubberBandExternalId())
                 .body(BodyInserters.fromObject(jsonPatch))
                 .exchange()
                 .expectStatus().is2xxSuccessful()
@@ -82,21 +85,21 @@ class LightJpaModelDefaultServicesTests extends BaseApplicationTests {
                 .returnResult()
                 .getResponseBody()
                 .getResult();
-        assertThat(responseBody.get("name"), is("Mosca II"));
+        assertThat(responseBody.get("name"), is("Someone else's band"));
 
         responseBody = retrieveViaEverythingGet();
-        assertThat(responseBody.get("name"), is("Mosca II"));
+        assertThat(responseBody.get("name"), is("Someone else's band"));
     }
 
     @Test
     void testEverythingDelete() {
         webTestClient.delete()
-                .uri("/" + flyExternalId())
+                .uri("/" + rubberBandExternalId())
                 .exchange()
                 .expectStatus().is2xxSuccessful();
 
         Response response = webTestClient.get()
-                .uri("/" + flyExternalId())
+                .uri("/" + rubberBandExternalId())
                 .exchange()
                 .expectStatus().is2xxSuccessful()
                 .expectBody(Response.class)
