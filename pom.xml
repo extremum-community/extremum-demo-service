@@ -133,6 +133,13 @@
 			<artifactId>extremum-elasticsearch-starter</artifactId>
 			<version>${extremum.common.version}</version>
 		</dependency>
+
+		<!-- Adding Extremum Everything-Everything framework support -->
+		<dependency>
+			<groupId>com.extremum</groupId>
+			<artifactId>extremum-everything-starter</artifactId>
+			<version>${extremum.common.version}</version>
+		</dependency>
 	</dependencies>
 
 	<build>
