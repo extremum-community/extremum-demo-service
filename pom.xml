@@ -16,7 +16,41 @@
 
 	<properties>
 		<java.version>1.8</java.version>
+
+		<extremum.common.version>1.0.4-SNAPSHOT</extremum.common.version>
+
+		<testcontainers.version>1.11.3</testcontainers.version>
+		<elasticsearch.version>7.1.0</elasticsearch.version>
 	</properties>
+
+	<repositories>
+		<repository>
+			<id>spring-libs-snapshot</id>
+			<url>https://repo.spring.io/libs-snapshot</url>
+		</repository>
+	</repositories>
+
+	<dependencyManagement>
+		<dependencies>
+			<!-- It is required to override spring-data-elasticsearch and elasticsearch
+				 dependencies version coming from spring-boot -->
+			<dependency>
+				<groupId>org.springframework.data</groupId>
+				<artifactId>spring-data-elasticsearch</artifactId>
+				<version>3.2.0.RC1</version>
+			</dependency>
+			<dependency>
+				<groupId>org.elasticsearch.client</groupId>
+				<artifactId>elasticsearch-rest-high-level-client</artifactId>
+				<version>${elasticsearch.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.elasticsearch</groupId>
+				<artifactId>elasticsearch</artifactId>
+				<version>${elasticsearch.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 	<dependencies>
 		<dependency>
@@ -45,7 +79,13 @@
 		<dependency>
 			<groupId>org.testcontainers</groupId>
 			<artifactId>junit-jupiter</artifactId>
-			<version>1.11.1</version>
+			<version>${testcontainers.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.testcontainers</groupId>
+			<artifactId>elasticsearch</artifactId>
+			<version>${testcontainers.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -80,10 +120,18 @@
 			<scope>test</scope>
 		</dependency>
 
+		<!-- Adding extremum-common JPA support -->
 		<dependency>
 			<groupId>com.extremum</groupId>
 			<artifactId>extremum-jpa-starter</artifactId>
-			<version>1.0.4-SNAPSHOT</version>
+			<version>${extremum.common.version}</version>
+		</dependency>
+
+		<!-- Adding extremum-common Elasticsearch support -->
+		<dependency>
+			<groupId>com.extremum</groupId>
+			<artifactId>extremum-elasticsearch-starter</artifactId>
+			<version>${extremum.common.version}</version>
 		</dependency>
 	</dependencies>
 

@@ -13,6 +13,9 @@ jpa:
   entity-packages: com.cybernation.testservice.models
   repository-packages: com.cybernation.testservice.dao
 
+elasticsearch:
+  repository-packages: com.cybernation.testservice.dao.elasticsearch
+
 descriptors:
   descriptorsMapName: descriptors
   internalIdsMapName: internalIds
@@ -23,6 +26,7 @@ spring:
 logging:
   level:
     org.springframework.web: DEBUG
+    tracer: TRACE
 
 custom:
   field-destroyer:
