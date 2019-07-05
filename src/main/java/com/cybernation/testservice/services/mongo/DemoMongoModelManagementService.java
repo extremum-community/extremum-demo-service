@@ -18,6 +18,7 @@ import java.util.Optional;
 public class DemoMongoModelManagementService {
     private final DemoMongoServiceImpl service;
     private final DemoMongoModelConverter converter;
+    private final DescriptorService descriptorService;
 
     public DemoMongoModelResponseDto create(DemoMongoModelRequestDto dto) {
         return converter.convertToResponse(service.create(converter.convertFromRequest(dto)), ConversionConfig.builder().build());
@@ -43,6 +44,7 @@ public class DemoMongoModelManagementService {
 
 
     private Descriptor checkDescriptorByExternalId(String externalId) {
-        return DescriptorService.loadByExternalId(externalId).orElseThrow(() -> new CommonException("Not found descriptor for externalId", 404));
+        return descriptorService.loadByExternalId(externalId)
+                .orElseThrow(() -> new CommonException("Not found descriptor for externalId", 404));
     }
 }
