@@ -4,11 +4,11 @@ import com.cybernation.testservice.models.jpa.persistable.Department;
 import com.cybernation.testservice.dto.DepartmentRequestDto;
 import com.cybernation.testservice.dto.DepartmentResponseDto;
 import com.cybernation.testservice.dto.EmployeeResponseDto;
-import com.extremum.common.collection.CollectionReference;
 import com.extremum.common.dto.converters.ConversionConfig;
 import com.extremum.common.dto.converters.FromRequestDtoConverter;
 import com.extremum.common.dto.converters.ToRequestDtoConverter;
 import com.extremum.common.dto.converters.ToResponseDtoConverter;
+import com.extremum.sharedmodels.fundamental.CollectionReference;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

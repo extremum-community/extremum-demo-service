@@ -1,22 +1,18 @@
 package com.cybernation.testservice.dto;
 
 import com.cybernation.testservice.models.jpa.basic.Fly;
-import com.extremum.common.descriptor.Descriptor;
-import com.extremum.common.dto.ResponseDto;
+import com.extremum.sharedmodels.fundamental.CommonResponseDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.time.ZonedDateTime;
+import lombok.Setter;
+import lombok.ToString;
 
 @NoArgsConstructor
-@Data
-public class FlyResponseDto implements ResponseDto {
-    private Descriptor id;
-    private Long version;
-    private ZonedDateTime created;
-    private ZonedDateTime modified;
-
+@Getter
+@Setter
+@ToString
+public class FlyResponseDto extends CommonResponseDto {
     private String name;
 
     @Override

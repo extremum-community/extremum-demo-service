@@ -4,7 +4,7 @@ import com.cybernation.testservice.converters.DemoMongoModelConverter;
 import com.cybernation.testservice.models.mongo.DemoMongoModel;
 import com.cybernation.testservice.dto.DemoMongoModelRequestDto;
 import com.cybernation.testservice.dto.DemoMongoModelResponseDto;
-import com.extremum.common.descriptor.Descriptor;
+import com.extremum.sharedmodels.descriptor.Descriptor;
 import com.extremum.common.descriptor.service.DescriptorService;
 import com.extremum.common.dto.converters.ConversionConfig;
 import com.extremum.common.exceptions.CommonException;

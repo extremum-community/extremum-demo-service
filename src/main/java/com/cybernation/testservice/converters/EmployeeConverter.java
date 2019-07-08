@@ -1,12 +1,12 @@
 package com.cybernation.testservice.converters;
 
-import com.cybernation.testservice.models.jpa.persistable.Employee;
 import com.cybernation.testservice.dto.EmployeeRequestDto;
 import com.cybernation.testservice.dto.EmployeeResponseDto;
+import com.cybernation.testservice.models.jpa.persistable.Employee;
 import com.extremum.common.dto.converters.ConversionConfig;
 import com.extremum.common.dto.converters.ToRequestDtoConverter;
 import com.extremum.common.dto.converters.ToResponseDtoConverter;
-import com.extremum.common.stucts.IdOrObjectStruct;
+import com.extremum.sharedmodels.basic.IdOrObjectStruct;
 import org.springframework.stereotype.Service;
 
 @Service
