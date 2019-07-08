@@ -1,13 +1,13 @@
 package com.cybernation.testservice.converters;
 
 import com.cybernation.testservice.dto.HouseResponseDto;
-import com.cybernation.testservice.models.mongo.Street;
 import com.cybernation.testservice.dto.StreetRequestDto;
 import com.cybernation.testservice.dto.StreetResponseDto;
-import com.extremum.common.collection.CollectionReference;
+import com.cybernation.testservice.models.mongo.Street;
 import com.extremum.common.dto.converters.ConversionConfig;
 import com.extremum.common.dto.converters.ToRequestDtoConverter;
 import com.extremum.common.dto.converters.ToResponseDtoConverter;
+import com.extremum.sharedmodels.fundamental.CollectionReference;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

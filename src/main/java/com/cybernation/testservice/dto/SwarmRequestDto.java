@@ -1,8 +1,8 @@
 package com.cybernation.testservice.dto;
 
-import com.extremum.common.collection.CollectionReference;
 import com.extremum.common.collection.conversion.OwnedCollection;
 import com.extremum.sharedmodels.dto.RequestDto;
+import com.extremum.sharedmodels.fundamental.CollectionReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
