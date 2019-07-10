@@ -2,7 +2,7 @@ package com.cybernation.testservice.dto;
 
 import com.cybernation.testservice.models.jpa.persistable.Department;
 import com.cybernation.testservice.models.jpa.persistable.Employee;
-import com.extremum.sharedmodels.basic.IdOrObjectStruct;
+import com.extremum.sharedmodels.basic.IdOrObject;
 import com.extremum.sharedmodels.descriptor.Descriptor;
 import com.extremum.sharedmodels.fundamental.CommonResponseDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -17,7 +17,7 @@ import lombok.ToString;
 @ToString
 public class EmployeeResponseDto extends CommonResponseDto {
     private String name;
-    private IdOrObjectStruct<Descriptor, Department> department;
+    private IdOrObject<Descriptor, Department> department;
 
     @Override
     @JsonIgnore
