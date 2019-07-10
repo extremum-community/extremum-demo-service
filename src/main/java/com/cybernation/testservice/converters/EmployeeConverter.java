@@ -6,7 +6,7 @@ import com.cybernation.testservice.models.jpa.persistable.Employee;
 import com.extremum.common.dto.converters.ConversionConfig;
 import com.extremum.common.dto.converters.ToRequestDtoConverter;
 import com.extremum.common.dto.converters.ToResponseDtoConverter;
-import com.extremum.sharedmodels.basic.IdOrObjectStruct;
+import com.extremum.sharedmodels.basic.IdOrObject;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -38,7 +38,7 @@ public class EmployeeConverter implements ToRequestDtoConverter<Employee, Employ
         dto.setModified(employee.getModified());
         dto.setName(employee.getName());
         dto.setVersion(employee.getVersion());
-        dto.setDepartment(new IdOrObjectStruct<>(employee.getDepartment().getUuid()));
+        dto.setDepartment(new IdOrObject<>(employee.getDepartment().getUuid()));
         return dto;
     }
 
