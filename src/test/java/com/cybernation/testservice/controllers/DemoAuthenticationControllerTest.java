@@ -7,14 +7,13 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.JsonPath;
 import io.extremum.authentication.models.dto.AuthenticationRequestDto;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.testcontainers.shaded.com.google.common.net.HttpHeaders;
@@ -24,7 +23,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.TestInstance.Lifecycle;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@ActiveProfiles("auth")
 @AutoConfigureWebTestClient
 @TestInstance(Lifecycle.PER_CLASS)
 class DemoAuthenticationControllerTest extends BaseApplicationTests {
@@ -35,14 +33,13 @@ class DemoAuthenticationControllerTest extends BaseApplicationTests {
 
     private String authToken;
 
-    @BeforeAll
-    @SuppressWarnings("unchecked")
-    void setUp() {
+    @BeforeEach
+    void setUp() throws JsonProcessingException {
         AuthenticationRequestDto dto = new AuthenticationRequestDto();
         dto.setApiKey("test");
         dto.setLocale("ru_RU");
         dto.setTimezone("test");
-        webTestClient.post()
+        Response response = webTestClient.post()
                 .uri("/auth")
                 .header(HttpHeaders.ACCEPT_LANGUAGE, "all")
                 .header(HttpHeaders.USER_AGENT, "test")
@@ -52,14 +49,9 @@ class DemoAuthenticationControllerTest extends BaseApplicationTests {
                 .expectStatus().is2xxSuccessful()
                 .returnResult(Response.class)
                 .getResponseBody()
-                .subscribe(response -> {
-                    try {
-                        String responseAsString = objectMapper.writeValueAsString(response.getResult());
-                        authToken = JsonPath.parse(responseAsString).read("$.session.token");
-                    } catch (JsonProcessingException e) {
-                        e.printStackTrace();
-                    }
-                });
+                .blockFirst();
+        String valueAsString = objectMapper.writeValueAsString(response);
+        authToken = JsonPath.parse(valueAsString).read("$.result.session.token");
     }
 
     @Test

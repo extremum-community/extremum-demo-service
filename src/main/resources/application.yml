@@ -29,6 +29,12 @@ logging:
     tracer: TRACE
 
 custom:
+  twilio:
+    url: test
+    api-key: test
+  mandrill:
+    url: test
+    api-key: test
   auth:
     secret: mytestsecret
   field-destroyer:
