@@ -164,36 +164,36 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
 
-<!--            <plugin>-->
-<!--                <groupId>org.apache.maven.plugins</groupId>-->
-<!--                <artifactId>maven-enforcer-plugin</artifactId>-->
-<!--                <version>3.0.0-M2</version>-->
-<!--                <configuration>-->
-<!--                    <rules>-->
-<!--                        <banDuplicatePomDependencyVersions/>-->
-<!--                        <banDuplicateClasses>-->
-<!--                            <findAllDuplicates>true</findAllDuplicates>-->
-<!--                            <dependencies/>-->
-<!--                        </banDuplicateClasses>-->
-<!--                    </rules>-->
-<!--                </configuration>-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <id>enforce-ban-duplicate-classes</id>-->
-<!--                        <goals>-->
-<!--                            <goal>enforce</goal>-->
-<!--                        </goals>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-<!---->
-<!--                <dependencies>-->
-<!--                    <dependency>-->
-<!--                        <groupId>org.codehaus.mojo</groupId>-->
-<!--                        <artifactId>extra-enforcer-rules</artifactId>-->
-<!--                        <version>1.2</version>-->
-<!--                    </dependency>-->
-<!--                </dependencies>-->
-<!--            </plugin>-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>3.0.0-M2</version>
+                <configuration>
+                    <rules>
+                        <banDuplicatePomDependencyVersions/>
+                        <banDuplicateClasses>
+                            <findAllDuplicates>true</findAllDuplicates>
+                            <dependencies/>
+                        </banDuplicateClasses>
+                    </rules>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>enforce-ban-duplicate-classes</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                    </execution>
+                </executions>
+
+                <dependencies>
+                    <dependency>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>extra-enforcer-rules</artifactId>
+                        <version>1.2</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
 
             <plugin>
                 <groupId>org.gaul</groupId>
