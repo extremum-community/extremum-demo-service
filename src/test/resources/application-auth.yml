@@ -1,0 +1,7 @@
+custom:
+  twilio:
+    api-key: test
+    url: test
+  mandrill:
+    url: test
+    api-key: test

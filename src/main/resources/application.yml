@@ -29,6 +29,8 @@ logging:
     tracer: TRACE
 
 custom:
+  auth:
+    secret: mytestsecret
   field-destroyer:
     analyzable-package-prefix: com.cybernation.testservice
   model:
