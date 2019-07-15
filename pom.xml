@@ -171,6 +171,10 @@
                 <configuration>
                     <rules>
                         <banDuplicatePomDependencyVersions/>
+                        <banDuplicateClasses>
+                            <findAllDuplicates>true</findAllDuplicates>
+                            <dependencies />
+                        </banDuplicateClasses>
                     </rules>
                 </configuration>
                 <executions>
