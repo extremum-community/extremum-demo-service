@@ -13,6 +13,7 @@ import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
@@ -66,6 +67,19 @@ class DemoAuthenticationControllerTest extends BaseApplicationTests {
     }
 
     @Test
+    void testBadRequireAuth() {
+        webTestClient.get()
+                .uri("/api/req_auth")
+                .exchange()
+                .expectStatus().is2xxSuccessful()
+                .expectBody(Response.class)
+                .value(response -> {
+                    assertEquals(ResponseStatusEnum.FAIL, response.getStatus());
+                    assertEquals(HttpStatus.UNAUTHORIZED.value(), response.getCode().intValue());
+                });
+    }
+
+    @Test
     void testReqClient() {
         webTestClient.get()
                 .uri("/api/req_client")
@@ -75,7 +89,18 @@ class DemoAuthenticationControllerTest extends BaseApplicationTests {
                 .expectBody(Response.class)
                 .value(response -> {
                     assertEquals(ResponseStatusEnum.FAIL, response.getStatus());
-                    assertEquals(401, response.getCode().intValue());
+                    assertEquals(HttpStatus.UNAUTHORIZED.value(), response.getCode().intValue());
                 });
+    }
+
+    @Test
+    void testReqAnonym() {
+        webTestClient.get()
+                .uri("/api/req_anonym")
+                .header(HttpHeaders.AUTHORIZATION, format("Bearer %s", authToken))
+                .exchange()
+                .expectStatus().is2xxSuccessful()
+                .expectBody(String.class)
+                .isEqualTo("You have anonym role!");
     }
 }

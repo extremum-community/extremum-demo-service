@@ -11,15 +11,22 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api")
 public class DemoAuthenticationController {
+    @RequiresAuthentication
+    @GetMapping("/req_auth")
+    public ResponseEntity<String> requireAuth() {
+        return ResponseEntity.ok("You are authenticated!");
+    }
+
     @RequiresRoles(RolesConstants.CLIENT)
     @GetMapping("/req_client")
     public ResponseEntity<String> requireClientRole() {
         return ResponseEntity.ok("You have client role!");
     }
 
-    @RequiresAuthentication
-    @GetMapping("/req_auth")
-    public ResponseEntity<String> requireAuth() {
-        return ResponseEntity.ok("You are authenticated!");
+
+    @RequiresRoles(RolesConstants.ANONYMOUS)
+    @GetMapping("/req_anonym")
+    public ResponseEntity<String> requireAnonymRole() {
+        return ResponseEntity.ok("You have anonym role!");
     }
 }

@@ -29,10 +29,10 @@ logging:
     tracer: TRACE
 
 custom:
-  twilio:
+  sms:
     url: test
     api-key: test
-  mandrill:
+  email:
     url: test
     api-key: test
   auth:
