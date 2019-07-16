@@ -1,6 +1,7 @@
 package com.cybernation.testservice.models.jpa.basic;
 
 import com.extremum.common.models.annotation.ModelName;
+import com.extremum.everything.security.NoDataSecurity;
 import com.extremum.jpa.models.PostgresBasicModel;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,6 +21,7 @@ import java.util.List;
 @Getter
 @Setter
 @ModelName(Swarm.MODEL_NAME)
+@NoDataSecurity
 public class Swarm extends PostgresBasicModel {
     public static final String MODEL_NAME = "Swarm";
     public static final String CUSTOM_FLIES = "customFlies";
