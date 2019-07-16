@@ -10,6 +10,7 @@ import io.extremum.authentication.models.dto.AuthenticationRequestDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
+import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,12 +22,15 @@ import org.testcontainers.shaded.com.google.common.net.HttpHeaders;
 
 import static java.lang.String.format;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.TestInstance.Lifecycle;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureWebTestClient
 @TestInstance(Lifecycle.PER_CLASS)
 class DemoAuthenticationControllerTest extends BaseApplicationTests {
+    @Autowired
+    private RedissonClient redissonClient;
     @Autowired
     private ObjectMapper objectMapper;
     @Autowired
@@ -67,7 +71,7 @@ class DemoAuthenticationControllerTest extends BaseApplicationTests {
     }
 
     @Test
-    void testBadRequireAuth() {
+    void testBadRequireAuth() throws InterruptedException {
         webTestClient.get()
                 .uri("/api/req_auth")
                 .exchange()
@@ -77,10 +81,15 @@ class DemoAuthenticationControllerTest extends BaseApplicationTests {
                     assertEquals(ResponseStatusEnum.FAIL, response.getStatus());
                     assertEquals(HttpStatus.UNAUTHORIZED.value(), response.getCode().intValue());
                 });
+
+        Thread.sleep(5000);
+
+        Object value = redissonClient.getMap("auth_test").get("req_auth");
+        assertNull(value);
     }
 
     @Test
-    void testReqClient() {
+    void testReqClient() throws InterruptedException {
         webTestClient.get()
                 .uri("/api/req_client")
                 .header(HttpHeaders.AUTHORIZATION, format("Bearer %s", authToken))
@@ -91,6 +100,11 @@ class DemoAuthenticationControllerTest extends BaseApplicationTests {
                     assertEquals(ResponseStatusEnum.FAIL, response.getStatus());
                     assertEquals(HttpStatus.UNAUTHORIZED.value(), response.getCode().intValue());
                 });
+
+        Thread.sleep(5000);
+
+        String value = (String) redissonClient.getMap("auth_test").get("req_client");
+        assertNull(value);
     }
 
     @Test
