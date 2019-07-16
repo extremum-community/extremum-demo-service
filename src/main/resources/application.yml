@@ -29,6 +29,14 @@ logging:
     tracer: TRACE
 
 custom:
+  sms:
+    url: test
+    api-key: test
+  email:
+    url: test
+    api-key: test
+  auth:
+    secret: mytestsecret
   field-destroyer:
     analyzable-package-prefix: com.cybernation.testservice
   model:

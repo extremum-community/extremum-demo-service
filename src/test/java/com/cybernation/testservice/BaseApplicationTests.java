@@ -7,7 +7,7 @@ import org.testcontainers.elasticsearch.ElasticsearchContainer;
 
 import java.util.stream.Stream;
 
-abstract class BaseApplicationTests {
+public abstract class BaseApplicationTests {
     private static final Logger LOGGER = LoggerFactory.getLogger(BaseApplicationTests.class);
 
     private static final GenericContainer redis = new GenericContainer("redis:5.0.4")
