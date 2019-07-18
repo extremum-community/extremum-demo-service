@@ -1,6 +1,7 @@
 package com.cybernation.testservice.models.jpa.persistable;
 
 import com.extremum.common.models.annotation.ModelName;
+import com.extremum.everything.security.NoDataSecurity;
 import com.extremum.jpa.models.PostgresCommonModel;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,6 +22,7 @@ import java.util.List;
 @Getter
 @Setter
 @ModelName(Department.MODEL_NAME)
+@NoDataSecurity
 public class Department extends PostgresCommonModel {
     public static final String MODEL_NAME = "Department";
     public static final String CUSTOM_EMPLOYEES = "customEmployees";
