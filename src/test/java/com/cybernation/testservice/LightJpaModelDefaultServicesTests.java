@@ -46,18 +46,19 @@ class LightJpaModelDefaultServicesTests extends BaseApplicationTests {
 
     @Test
     void testEverythingGet() {
-        Map<String, Object> responseBody = retrieveViaEverythingGet();
+        Map<String, Object> responseBody = retrieveViaEverythingGetSuccessfully();
         assertThat(responseBody.get("name"), is("Mosca"));
     }
 
     @SuppressWarnings("unchecked")
-    private Map<String, Object> retrieveViaEverythingGet() {
+    private Map<String, Object> retrieveViaEverythingGetSuccessfully() {
         return (Map<String, Object>) webTestClient.get()
                     .uri("/" + flyExternalId())
                     .exchange()
                     .expectStatus().is2xxSuccessful()
                     .expectBody(Response.class)
                     .value(System.out::println)
+                    .value(ResponseAssert.isSuccessful())
                     .returnResult()
                     .getResponseBody()
                     .getResult();
@@ -80,17 +81,18 @@ class LightJpaModelDefaultServicesTests extends BaseApplicationTests {
                 .expectStatus().is2xxSuccessful()
                 .expectBody(Response.class)
                 .value(System.out::println)
+                .value(ResponseAssert.isSuccessful())
                 .returnResult()
                 .getResponseBody()
                 .getResult();
         assertThat(responseBody.get("name"), is("Mosca II"));
 
-        responseBody = retrieveViaEverythingGet();
+        responseBody = retrieveViaEverythingGetSuccessfully();
         assertThat(responseBody.get("name"), is("Mosca II"));
     }
 
     @Test
-    void testEverythingDelete() {
+    void givenAModelIsAlreadyDeleted_whenDeletingIt_thenShouldReturn404() {
         webTestClient.delete()
                 .uri("/" + flyExternalId())
                 .exchange()
