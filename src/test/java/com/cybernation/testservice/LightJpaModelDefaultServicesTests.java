@@ -3,6 +3,7 @@ package com.cybernation.testservice;
 import com.cybernation.testservice.models.jpa.basic.Fly;
 import com.cybernation.testservice.services.jpa.FlyService;
 import com.extremum.common.response.Response;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.node.TextNode;
 import com.github.fge.jackson.jsonpointer.JsonPointer;
 import com.github.fge.jsonpatch.JsonPatch;
@@ -16,10 +17,12 @@ import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWeb
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
+import org.testcontainers.shaded.com.google.common.net.HttpHeaders;
 
 import java.util.Collections;
 import java.util.Map;
 
+import static com.cybernation.testservice.Authorization.bearer;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -36,12 +39,19 @@ class LightJpaModelDefaultServicesTests extends BaseApplicationTests {
 
     private Fly fly;
 
+    private String anonToken;
+
     @BeforeEach
     void createAFreshFly() {
         fly = new Fly();
         fly.setName("Mosca");
 
         fly = flyService.create(fly);
+    }
+
+    @BeforeEach
+    void obtainAnonToken() throws JsonProcessingException {
+        anonToken = new Authenticator(webTestClient).obtainAnonAuthToken();
     }
 
     @Test
@@ -53,15 +63,16 @@ class LightJpaModelDefaultServicesTests extends BaseApplicationTests {
     @SuppressWarnings("unchecked")
     private Map<String, Object> retrieveViaEverythingGetSuccessfully() {
         return (Map<String, Object>) webTestClient.get()
-                    .uri("/" + flyExternalId())
-                    .exchange()
-                    .expectStatus().is2xxSuccessful()
-                    .expectBody(Response.class)
-                    .value(System.out::println)
-                    .value(ResponseAssert.isSuccessful())
-                    .returnResult()
-                    .getResponseBody()
-                    .getResult();
+                .uri("/" + flyExternalId())
+                .header(HttpHeaders.AUTHORIZATION, bearer(anonToken))
+                .exchange()
+                .expectStatus().is2xxSuccessful()
+                .expectBody(Response.class)
+                .value(System.out::println)
+                .value(ResponseAssert.isSuccessful())
+                .returnResult()
+                .getResponseBody()
+                .getResult();
     }
 
     private String flyExternalId() {
@@ -76,6 +87,7 @@ class LightJpaModelDefaultServicesTests extends BaseApplicationTests {
 
         Map<String, Object> responseBody = (Map<String, Object>) webTestClient.patch()
                 .uri("/" + flyExternalId())
+                .header(HttpHeaders.AUTHORIZATION, bearer(anonToken))
                 .body(BodyInserters.fromObject(jsonPatch))
                 .exchange()
                 .expectStatus().is2xxSuccessful()
@@ -95,11 +107,16 @@ class LightJpaModelDefaultServicesTests extends BaseApplicationTests {
     void givenAModelIsAlreadyDeleted_whenDeletingIt_thenShouldReturn404() {
         webTestClient.delete()
                 .uri("/" + flyExternalId())
+                .header(HttpHeaders.AUTHORIZATION, bearer(anonToken))
                 .exchange()
-                .expectStatus().is2xxSuccessful();
+                .expectStatus().is2xxSuccessful()
+                .expectBody(Response.class)
+                .value(System.out::println)
+                .value(ResponseAssert.isSuccessful());
 
         Response response = webTestClient.get()
                 .uri("/" + flyExternalId())
+                .header(HttpHeaders.AUTHORIZATION, bearer(anonToken))
                 .exchange()
                 .expectStatus().is2xxSuccessful()
                 .expectBody(Response.class)
