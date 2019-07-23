@@ -20,6 +20,7 @@ import org.springframework.web.reactive.function.BodyInserters;
 import java.util.Collections;
 import java.util.Map;
 
+import static com.cybernation.testservice.ResponseAssert.isSuccessful;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -55,14 +56,15 @@ class ElasticsearchDefaultServicesTests extends BaseApplicationTests {
     @SuppressWarnings("unchecked")
     private Map<String, Object> retrieveViaEverythingGet() {
         return (Map<String, Object>) webTestClient.get()
-                    .uri("/" + rubberBandExternalId())
-                    .exchange()
-                    .expectStatus().is2xxSuccessful()
-                    .expectBody(Response.class)
-                    .value(System.out::println)
-                    .returnResult()
-                    .getResponseBody()
-                    .getResult();
+                .uri("/" + rubberBandExternalId())
+                .exchange()
+                .expectStatus().is2xxSuccessful()
+                .expectBody(Response.class)
+                .value(System.out::println)
+                .value(isSuccessful())
+                .returnResult()
+                .getResponseBody()
+                .getResult();
     }
 
     private String rubberBandExternalId() {
@@ -83,6 +85,7 @@ class ElasticsearchDefaultServicesTests extends BaseApplicationTests {
                 .expectStatus().is2xxSuccessful()
                 .expectBody(Response.class)
                 .value(System.out::println)
+                .value(isSuccessful())
                 .returnResult()
                 .getResponseBody()
                 .getResult();
@@ -97,7 +100,10 @@ class ElasticsearchDefaultServicesTests extends BaseApplicationTests {
         webTestClient.delete()
                 .uri("/" + rubberBandExternalId())
                 .exchange()
-                .expectStatus().is2xxSuccessful();
+                .expectStatus().is2xxSuccessful()
+                .expectBody(Response.class)
+                .value(System.out::println)
+                .value(isSuccessful());
 
         Response response = webTestClient.get()
                 .uri("/" + rubberBandExternalId())

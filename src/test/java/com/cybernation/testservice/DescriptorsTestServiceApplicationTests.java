@@ -27,6 +27,7 @@ import org.springframework.web.reactive.function.BodyInserters;
 import java.util.Collections;
 import java.util.Map;
 
+import static com.cybernation.testservice.ResponseAssert.isSuccessful;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -150,6 +151,7 @@ class DescriptorsTestServiceApplicationTests extends BaseApplicationTests {
                 .expectStatus().is2xxSuccessful()
                 .expectBody(Response.class)
                 .value(System.out::println)
+                .value(isSuccessful())
                 .returnResult()
                 .getResponseBody().getResult();
 
@@ -171,6 +173,7 @@ class DescriptorsTestServiceApplicationTests extends BaseApplicationTests {
                 .expectStatus().is2xxSuccessful()
                 .expectBody(Response.class)
                 .value(System.out::println)
+                .value(isSuccessful())
                 .returnResult()
                 .getResponseBody().getResult();
 
@@ -196,6 +199,7 @@ class DescriptorsTestServiceApplicationTests extends BaseApplicationTests {
                 .expectStatus().is2xxSuccessful()
                 .expectBody(Response.class)
                 .value(System.out::println)
+                .value(isSuccessful())
                 .returnResult()
                 .getResponseBody().getResult();
 
@@ -217,6 +221,7 @@ class DescriptorsTestServiceApplicationTests extends BaseApplicationTests {
                 .expectStatus().is2xxSuccessful()
                 .expectBody(Response.class)
                 .value(System.out::println)
+                .value(isSuccessful())
                 .returnResult()
                 .getResponseBody().getResult();
 

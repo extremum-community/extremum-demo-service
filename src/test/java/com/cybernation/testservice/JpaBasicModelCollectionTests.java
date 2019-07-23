@@ -16,6 +16,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import java.util.List;
 import java.util.Map;
 
+import static com.cybernation.testservice.ResponseAssert.isSuccessful;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -53,7 +54,7 @@ class JpaBasicModelCollectionTests extends BaseApplicationTests {
                 .expectStatus().is2xxSuccessful()
                 .expectBody(Response.class)
                 .value(System.out::println)
-                .value(matcher -> assertThat(matcher.getStatus(), is(ResponseStatusEnum.OK)))
+                .value(isSuccessful())
                 .returnResult()
                 .getResponseBody().getResult();
 
@@ -85,7 +86,7 @@ class JpaBasicModelCollectionTests extends BaseApplicationTests {
                 .expectStatus().is2xxSuccessful()
                 .expectBody(Response.class)
                 .value(System.out::println)
-                .value(matcher -> assertThat(matcher.getStatus(), is(ResponseStatusEnum.OK)))
+                .value(isSuccessful())
                 .returnResult()
                 .getResponseBody().getResult();
 
