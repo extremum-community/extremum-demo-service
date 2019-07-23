@@ -4,17 +4,21 @@ import com.cybernation.testservice.models.jpa.persistable.Department;
 import com.cybernation.testservice.models.jpa.persistable.Employee;
 import com.cybernation.testservice.services.jpa.DepartmentService;
 import com.extremum.common.response.Response;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpHeaders;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import java.util.List;
 import java.util.Map;
 
+import static com.cybernation.testservice.Authorization.bearer;
 import static com.cybernation.testservice.ResponseAssert.isSuccessful;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -32,6 +36,13 @@ class JpaCollectionTests extends BaseApplicationTests {
 
     private Department department;
 
+    private String anonToken;
+
+    @BeforeEach
+    void obtainAnonToken() throws JsonProcessingException {
+        anonToken = new Authenticator(webTestClient).obtainAnonAuthToken();
+    }
+
     @BeforeAll
     void createDepartment() {
         department = new Department();
@@ -48,6 +59,7 @@ class JpaCollectionTests extends BaseApplicationTests {
 
         Map<String, Object> departmentMap = (Map<String, Object>) webTestClient.get()
                 .uri("/" + department.getUuid())
+                .header(HttpHeaders.AUTHORIZATION, bearer(anonToken))
                 .exchange()
                 .expectStatus().is2xxSuccessful()
                 .expectBody(Response.class)
@@ -81,6 +93,7 @@ class JpaCollectionTests extends BaseApplicationTests {
     void fetchACollectionWithCustomFetcher() {
         Map<String, Object> departmentMap = (Map<String, Object>) webTestClient.get()
                 .uri("/" + department.getUuid())
+                .header(HttpHeaders.AUTHORIZATION, bearer(anonToken))
                 .exchange()
                 .expectStatus().is2xxSuccessful()
                 .expectBody(Response.class)

@@ -3,6 +3,7 @@ package com.cybernation.testservice;
 import com.cybernation.testservice.models.elasticsearch.RubberBand;
 import com.cybernation.testservice.services.elasticsearch.RubberBandService;
 import com.extremum.common.response.Response;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.node.TextNode;
 import com.github.fge.jackson.jsonpointer.JsonPointer;
 import com.github.fge.jsonpatch.JsonPatch;
@@ -14,12 +15,14 @@ import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpHeaders;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 
 import java.util.Collections;
 import java.util.Map;
 
+import static com.cybernation.testservice.Authorization.bearer;
 import static com.cybernation.testservice.ResponseAssert.isSuccessful;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -36,6 +39,13 @@ class ElasticsearchDefaultServicesTests extends BaseApplicationTests {
     private RubberBandService rubberBandService;
 
     private RubberBand rubberBand;
+
+    private String anonToken;
+
+    @BeforeEach
+    void obtainAnonToken() throws JsonProcessingException {
+        anonToken = new Authenticator(webTestClient).obtainAnonAuthToken();
+    }
 
     @BeforeEach
     void createAFreshRubberBand() {
@@ -57,6 +67,7 @@ class ElasticsearchDefaultServicesTests extends BaseApplicationTests {
     private Map<String, Object> retrieveViaEverythingGet() {
         return (Map<String, Object>) webTestClient.get()
                 .uri("/" + rubberBandExternalId())
+                .header(HttpHeaders.AUTHORIZATION, bearer(anonToken))
                 .exchange()
                 .expectStatus().is2xxSuccessful()
                 .expectBody(Response.class)
@@ -80,6 +91,7 @@ class ElasticsearchDefaultServicesTests extends BaseApplicationTests {
 
         Map<String, Object> responseBody = (Map<String, Object>) webTestClient.patch()
                 .uri("/" + rubberBandExternalId())
+                .header(HttpHeaders.AUTHORIZATION, bearer(anonToken))
                 .body(BodyInserters.fromObject(jsonPatch))
                 .exchange()
                 .expectStatus().is2xxSuccessful()
@@ -99,6 +111,7 @@ class ElasticsearchDefaultServicesTests extends BaseApplicationTests {
     void testEverythingDelete() {
         webTestClient.delete()
                 .uri("/" + rubberBandExternalId())
+                .header(HttpHeaders.AUTHORIZATION, bearer(anonToken))
                 .exchange()
                 .expectStatus().is2xxSuccessful()
                 .expectBody(Response.class)
@@ -107,6 +120,7 @@ class ElasticsearchDefaultServicesTests extends BaseApplicationTests {
 
         Response response = webTestClient.get()
                 .uri("/" + rubberBandExternalId())
+                .header(HttpHeaders.AUTHORIZATION, bearer(anonToken))
                 .exchange()
                 .expectStatus().is2xxSuccessful()
                 .expectBody(Response.class)
