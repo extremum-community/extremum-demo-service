@@ -23,12 +23,15 @@ descriptors:
 spring:
   main:
     allow-bean-definition-overriding: true
+
 logging:
   level:
-    org.springframework.web: DEBUG
-    tracer: TRACE
+    org.springframework.web: TRACE
+
 
 custom:
+  shiro:
+    excluded-paths: /api/mongo/**,/api/jpa/**,/*,/collection/*
   sms:
     url: test
     api-key: test

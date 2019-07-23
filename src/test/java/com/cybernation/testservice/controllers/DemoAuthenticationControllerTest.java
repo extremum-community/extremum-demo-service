@@ -10,7 +10,6 @@ import io.extremum.authentication.models.dto.AuthenticationRequestDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -29,8 +28,6 @@ import static org.junit.jupiter.api.TestInstance.Lifecycle;
 @AutoConfigureWebTestClient
 @TestInstance(Lifecycle.PER_CLASS)
 class DemoAuthenticationControllerTest extends BaseApplicationTests {
-    @Autowired
-    private RedissonClient redissonClient;
     @Autowired
     private ObjectMapper objectMapper;
     @Autowired
@@ -62,7 +59,7 @@ class DemoAuthenticationControllerTest extends BaseApplicationTests {
     @Test
     void testRequireAuth() {
         webTestClient.get()
-                .uri("/api/req_auth")
+                .uri("/api/auth/req_auth")
                 .header(HttpHeaders.AUTHORIZATION, format("Bearer %s", authToken))
                 .exchange()
                 .expectStatus().is2xxSuccessful()
@@ -71,9 +68,10 @@ class DemoAuthenticationControllerTest extends BaseApplicationTests {
     }
 
     @Test
-    void testBadRequireAuth() throws InterruptedException {
+    void testRequireAuthWithoutBearer() {
         webTestClient.get()
-                .uri("/api/req_auth")
+                .uri("/api/auth/req_auth")
+                .header(HttpHeaders.AUTHORIZATION, authToken)
                 .exchange()
                 .expectStatus().is2xxSuccessful()
                 .expectBody(Response.class)
@@ -81,17 +79,25 @@ class DemoAuthenticationControllerTest extends BaseApplicationTests {
                     assertEquals(ResponseStatusEnum.FAIL, response.getStatus());
                     assertEquals(HttpStatus.UNAUTHORIZED.value(), response.getCode().intValue());
                 });
-
-        Thread.sleep(5000);
-
-        Object value = redissonClient.getMap("auth_test").get("req_auth");
-        assertNull(value);
     }
 
     @Test
-    void testReqClient() throws InterruptedException {
+    void testBadRequireAuth() {
         webTestClient.get()
-                .uri("/api/req_client")
+                .uri("/api/auth/req_auth")
+                .exchange()
+                .expectStatus().is2xxSuccessful()
+                .expectBody(Response.class)
+                .value(response -> {
+                    assertEquals(ResponseStatusEnum.FAIL, response.getStatus());
+                    assertEquals(HttpStatus.UNAUTHORIZED.value(), response.getCode().intValue());
+                });
+    }
+
+    @Test
+    void testReqClient() {
+        webTestClient.get()
+                .uri("/api/auth/req_client")
                 .header(HttpHeaders.AUTHORIZATION, format("Bearer %s", authToken))
                 .exchange()
                 .expectStatus().is2xxSuccessful()
@@ -101,16 +107,12 @@ class DemoAuthenticationControllerTest extends BaseApplicationTests {
                     assertEquals(HttpStatus.UNAUTHORIZED.value(), response.getCode().intValue());
                 });
 
-        Thread.sleep(5000);
-
-        String value = (String) redissonClient.getMap("auth_test").get("req_client");
-        assertNull(value);
     }
 
     @Test
     void testReqAnonym() {
         webTestClient.get()
-                .uri("/api/req_anonym")
+                .uri("/api/auth/req_anonym")
                 .header(HttpHeaders.AUTHORIZATION, format("Bearer %s", authToken))
                 .exchange()
                 .expectStatus().is2xxSuccessful()
