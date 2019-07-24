@@ -8,6 +8,7 @@ import com.cybernation.testservice.models.mongo.DemoMongoModel;
 import com.cybernation.testservice.services.mongo.DemoMongoService;
 import com.extremum.common.response.Response;
 import com.extremum.common.response.ResponseStatusEnum;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.node.TextNode;
 import com.github.fge.jackson.jsonpointer.JsonPointer;
 import com.github.fge.jackson.jsonpointer.JsonPointerException;
@@ -27,6 +28,8 @@ import org.springframework.web.reactive.function.BodyInserters;
 import java.util.Collections;
 import java.util.Map;
 
+import static com.cybernation.testservice.Authorization.bearer;
+import static com.cybernation.testservice.ResponseAssert.isSuccessful;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -46,6 +49,13 @@ class DescriptorsTestServiceApplicationTests extends BaseApplicationTests {
     private String descriptorId;
     private String everythingMongoDescriptorId;
     private String jpaDescriptorId;
+
+    private String anonToken;
+
+    @BeforeEach
+    void obtainAnonToken() throws JsonProcessingException {
+        anonToken = new Authenticator(webTestClient).obtainAnonAuthToken();
+    }
 
     @BeforeEach
     void loadData() {
@@ -146,10 +156,12 @@ class DescriptorsTestServiceApplicationTests extends BaseApplicationTests {
         Map<String, Object> responseBody = (Map<String, Object>) webTestClient
                 .get()
                 .uri("/" + everythingMongoDescriptorId)
+                .header(HttpHeaders.AUTHORIZATION, bearer(anonToken))
                 .exchange()
                 .expectStatus().is2xxSuccessful()
                 .expectBody(Response.class)
                 .value(System.out::println)
+                .value(isSuccessful())
                 .returnResult()
                 .getResponseBody().getResult();
 
@@ -166,11 +178,13 @@ class DescriptorsTestServiceApplicationTests extends BaseApplicationTests {
         Map<String, Object> result = (Map<String, Object>) webTestClient
                 .patch()
                 .uri("/" + everythingMongoDescriptorId)
+                .header(HttpHeaders.AUTHORIZATION, bearer(anonToken))
                 .body(BodyInserters.fromObject(jsonPatch))
                 .exchange()
                 .expectStatus().is2xxSuccessful()
                 .expectBody(Response.class)
                 .value(System.out::println)
+                .value(isSuccessful())
                 .returnResult()
                 .getResponseBody().getResult();
 
@@ -192,10 +206,12 @@ class DescriptorsTestServiceApplicationTests extends BaseApplicationTests {
         Map<String, Object> responseBody = (Map<String, Object>) webTestClient
                 .get()
                 .uri("/" + jpaDescriptorId)
+                .header(HttpHeaders.AUTHORIZATION, bearer(anonToken))
                 .exchange()
                 .expectStatus().is2xxSuccessful()
                 .expectBody(Response.class)
                 .value(System.out::println)
+                .value(isSuccessful())
                 .returnResult()
                 .getResponseBody().getResult();
 
@@ -212,11 +228,13 @@ class DescriptorsTestServiceApplicationTests extends BaseApplicationTests {
         Map<String, Object> result = (Map<String, Object>) webTestClient
                 .patch()
                 .uri("/" + jpaDescriptorId)
+                .header(HttpHeaders.AUTHORIZATION, bearer(anonToken))
                 .body(BodyInserters.fromObject(jsonPatch))
                 .exchange()
                 .expectStatus().is2xxSuccessful()
                 .expectBody(Response.class)
                 .value(System.out::println)
+                .value(isSuccessful())
                 .returnResult()
                 .getResponseBody().getResult();
 
@@ -231,6 +249,7 @@ class DescriptorsTestServiceApplicationTests extends BaseApplicationTests {
 
         Response response = webTestClient.get()
                 .uri("/" + model.getUuid().getExternalId())
+                .header(HttpHeaders.AUTHORIZATION, bearer(anonToken))
                 .exchange()
                 .expectStatus().is2xxSuccessful()
                 .expectBody(Response.class)

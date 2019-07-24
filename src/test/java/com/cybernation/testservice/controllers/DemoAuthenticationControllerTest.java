@@ -1,12 +1,10 @@
 package com.cybernation.testservice.controllers;
 
+import com.cybernation.testservice.Authenticator;
 import com.cybernation.testservice.BaseApplicationTests;
 import com.extremum.common.response.Response;
 import com.extremum.common.response.ResponseStatusEnum;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jayway.jsonpath.JsonPath;
-import io.extremum.authentication.models.dto.AuthenticationRequestDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -14,13 +12,11 @@ import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
-import org.springframework.web.reactive.function.BodyInserters;
-import org.testcontainers.shaded.com.google.common.net.HttpHeaders;
 
-import static java.lang.String.format;
+import static com.cybernation.testservice.Authorization.bearer;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.TestInstance.Lifecycle;
@@ -32,38 +28,20 @@ class DemoAuthenticationControllerTest extends BaseApplicationTests {
     @Autowired
     private RedissonClient redissonClient;
     @Autowired
-    private ObjectMapper objectMapper;
-    @Autowired
     private WebTestClient webTestClient;
 
     private String authToken;
 
     @BeforeEach
-    void setUp() throws JsonProcessingException {
-        AuthenticationRequestDto dto = new AuthenticationRequestDto();
-        dto.setApiKey("test");
-        dto.setLocale("ru_RU");
-        dto.setTimezone("test");
-        Response response = webTestClient.post()
-                .uri("/auth")
-                .header(HttpHeaders.ACCEPT_LANGUAGE, "all")
-                .header(HttpHeaders.USER_AGENT, "test")
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(BodyInserters.fromObject(dto))
-                .exchange()
-                .expectStatus().is2xxSuccessful()
-                .returnResult(Response.class)
-                .getResponseBody()
-                .blockFirst();
-        String valueAsString = objectMapper.writeValueAsString(response);
-        authToken = JsonPath.parse(valueAsString).read("$.result.session.token");
+    void obtainAnonAuthToken() throws JsonProcessingException {
+        authToken = new Authenticator(webTestClient).obtainAnonAuthToken();
     }
 
     @Test
     void testRequireAuth() {
         webTestClient.get()
                 .uri("/api/req_auth")
-                .header(HttpHeaders.AUTHORIZATION, format("Bearer %s", authToken))
+                .header(HttpHeaders.AUTHORIZATION, bearer(authToken))
                 .exchange()
                 .expectStatus().is2xxSuccessful()
                 .expectBody(String.class)
@@ -92,7 +70,7 @@ class DemoAuthenticationControllerTest extends BaseApplicationTests {
     void testReqClient() throws InterruptedException {
         webTestClient.get()
                 .uri("/api/req_client")
-                .header(HttpHeaders.AUTHORIZATION, format("Bearer %s", authToken))
+                .header(HttpHeaders.AUTHORIZATION, bearer(authToken))
                 .exchange()
                 .expectStatus().is2xxSuccessful()
                 .expectBody(Response.class)
@@ -111,7 +89,7 @@ class DemoAuthenticationControllerTest extends BaseApplicationTests {
     void testReqAnonym() {
         webTestClient.get()
                 .uri("/api/req_anonym")
-                .header(HttpHeaders.AUTHORIZATION, format("Bearer %s", authToken))
+                .header(HttpHeaders.AUTHORIZATION, bearer(authToken))
                 .exchange()
                 .expectStatus().is2xxSuccessful()
                 .expectBody(String.class)
