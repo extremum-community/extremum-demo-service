@@ -2,6 +2,8 @@ package com.cybernation.testservice;
 
 import com.extremum.common.mapper.SystemJsonObjectMapper;
 import com.extremum.common.response.Response;
+import com.extremum.sharedmodels.personal.Credential;
+import com.extremum.sharedmodels.personal.VerifyType;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.JsonPath;
@@ -10,6 +12,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.testcontainers.shaded.com.google.common.net.HttpHeaders;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author rpuch
@@ -22,12 +27,25 @@ public class Authenticator {
     }
 
     public String obtainAnonAuthToken() throws JsonProcessingException {
+        return obtainTokenWithCredentials(null);
+    }
+
+    public String obtainAuthTokenWithLoginAndPassword(String login, String password) throws JsonProcessingException {
+        List<Credential> credentials = new ArrayList<>();
+        credentials.add(new Credential("test", VerifyType.USERNAME, login));
+        credentials.add(new Credential("test", VerifyType.PASSWORD, password));
+
+        return obtainTokenWithCredentials(credentials);
+    }
+
+    private String obtainTokenWithCredentials(List<Credential> credentials) throws JsonProcessingException {
         ObjectMapper objectMapper = new SystemJsonObjectMapper(new MockedMapperDependencies());
 
         AuthenticationRequestDto dto = new AuthenticationRequestDto();
         dto.setApiKey("test");
         dto.setLocale("ru_RU");
         dto.setTimezone("test");
+        dto.setCredentials(credentials);
         Response response = webTestClient.post()
                 .uri("/auth")
                 .header(HttpHeaders.ACCEPT_LANGUAGE, "all")
