@@ -43,12 +43,9 @@ class ElasticsearchDefaultServicesTests extends BaseApplicationTests {
     private String anonToken;
 
     @BeforeEach
-    void obtainAnonToken() throws JsonProcessingException {
+    void createAFreshRubberBand() throws JsonProcessingException {
         anonToken = new Authenticator(webTestClient).obtainAnonAuthToken();
-    }
 
-    @BeforeEach
-    void createAFreshRubberBand() {
         rubberBand = new RubberBand();
         rubberBand.setName("My band");
         rubberBand.setColor("Red");

@@ -23,6 +23,7 @@ descriptors:
 spring:
   main:
     allow-bean-definition-overriding: true
+
 logging:
   level:
     com.extremum.everything.aop: DEBUG

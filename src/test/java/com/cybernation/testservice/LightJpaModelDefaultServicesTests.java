@@ -42,16 +42,13 @@ class LightJpaModelDefaultServicesTests extends BaseApplicationTests {
     private String anonToken;
 
     @BeforeEach
-    void createAFreshFly() {
+    void createAFreshFly() throws JsonProcessingException {
+        anonToken = new Authenticator(webTestClient).obtainAnonAuthToken();
+
         fly = new Fly();
         fly.setName("Mosca");
 
         fly = flyService.create(fly);
-    }
-
-    @BeforeEach
-    void obtainAnonToken() throws JsonProcessingException {
-        anonToken = new Authenticator(webTestClient).obtainAnonAuthToken();
     }
 
     @Test

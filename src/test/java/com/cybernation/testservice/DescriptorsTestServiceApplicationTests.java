@@ -33,9 +33,7 @@ import static com.cybernation.testservice.ResponseAssert.isSuccessful;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureWebTestClient
@@ -53,17 +51,15 @@ class DescriptorsTestServiceApplicationTests extends BaseApplicationTests {
     private String anonToken;
 
     @BeforeEach
-    void obtainAnonToken() throws JsonProcessingException {
+    void loadData() throws JsonProcessingException {
         anonToken = new Authenticator(webTestClient).obtainAnonAuthToken();
-    }
 
-    @BeforeEach
-    void loadData() {
         DemoMongoModelRequestDto dto = new DemoMongoModelRequestDto();
         dto.setTestId("3333");
         DemoMongoModelResponseDto responseBody = webTestClient
                 .post()
                 .uri("/api/mongo")
+                .header(HttpHeaders.AUTHORIZATION, bearer(anonToken))
                 .body(BodyInserters.fromObject(dto))
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .exchange()
@@ -79,6 +75,7 @@ class DescriptorsTestServiceApplicationTests extends BaseApplicationTests {
         DemoMongoModelResponseDto everythingBody = webTestClient
                 .post()
                 .uri("/api/mongo")
+                .header(HttpHeaders.AUTHORIZATION, bearer(anonToken))
                 .body(BodyInserters.fromObject(everythingMongoDto))
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .exchange()
@@ -94,6 +91,7 @@ class DescriptorsTestServiceApplicationTests extends BaseApplicationTests {
         DepartmentResponseDto departmentResponseDto = webTestClient
                 .post()
                 .uri("/api/jpa")
+                .header(HttpHeaders.AUTHORIZATION, bearer(anonToken))
                 .body(BodyInserters.fromObject(everythingJpaDto))
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .exchange()
@@ -109,11 +107,13 @@ class DescriptorsTestServiceApplicationTests extends BaseApplicationTests {
     void getById() {
         webTestClient.get()
                 .uri("/api/mongo/12112")
+                .header(HttpHeaders.AUTHORIZATION, bearer(anonToken))
                 .exchange()
                 .expectStatus().is5xxServerError();
 
         DemoMongoModelResponseDto responseBody = webTestClient.get()
                 .uri("/api/mongo/" + descriptorId)
+                .header(HttpHeaders.AUTHORIZATION, bearer(anonToken))
                 .exchange()
                 .expectStatus().is2xxSuccessful()
                 .expectBody(DemoMongoModelResponseDto.class)
@@ -133,12 +133,14 @@ class DescriptorsTestServiceApplicationTests extends BaseApplicationTests {
         webTestClient
                 .put()
                 .uri("/api/mongo/12112")
+                .header(HttpHeaders.AUTHORIZATION, bearer(anonToken))
                 .body(BodyInserters.fromObject(new DemoMongoModelRequestDto()))
                 .exchange()
                 .expectStatus().is5xxServerError();
 
         DemoMongoModelResponseDto responseBody = webTestClient.put()
                 .uri("/api/mongo/" + descriptorId)
+                .header(HttpHeaders.AUTHORIZATION, bearer(anonToken))
                 .body(BodyInserters.fromObject(new DemoMongoModelRequestDto("1212")))
                 .exchange()
                 .expectStatus().is2xxSuccessful()
@@ -266,6 +268,7 @@ class DescriptorsTestServiceApplicationTests extends BaseApplicationTests {
     void whenGettingANonExistentRecordViaEverythingEverything_thenHttpCode200AndCode404InResponseMessageShouldBeReturned() {
         Response response = webTestClient.get()
                 .uri("/does-not-exist")
+                .header(HttpHeaders.AUTHORIZATION, bearer(anonToken))
                 .exchange()
                 .expectStatus().is2xxSuccessful()
                 .expectBody(Response.class)
@@ -280,12 +283,13 @@ class DescriptorsTestServiceApplicationTests extends BaseApplicationTests {
 
     @Test
     void whenPatchingANonExistentRecordViaEverythingEverything_thenHttpCode200AndCode404InResponseMessageShouldBeReturned()
-            throws Exception{
+            throws Exception {
         JsonPatchOperation operation = new ReplaceOperation(new JsonPointer("/testId"), new TextNode("1212"));
         JsonPatch jsonPatch = new JsonPatch(Collections.singletonList(operation));
-        
+
         Response response = webTestClient.patch()
                 .uri("/does-not-exist")
+                .header(HttpHeaders.AUTHORIZATION, bearer(anonToken))
                 .body(BodyInserters.fromObject(jsonPatch))
                 .exchange()
                 .expectStatus().is2xxSuccessful()
@@ -303,6 +307,7 @@ class DescriptorsTestServiceApplicationTests extends BaseApplicationTests {
     void whenDeletigANonExistentRecordViaEverythingEverything_thenHttpCode200AndCode404InResponseMessageShouldBeReturned() {
         Response response = webTestClient.delete()
                 .uri("/does-not-exist")
+                .header(HttpHeaders.AUTHORIZATION, bearer(anonToken))
                 .exchange()
                 .expectStatus().is2xxSuccessful()
                 .expectBody(Response.class)

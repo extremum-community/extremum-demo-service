@@ -76,6 +76,7 @@ class JpaCollectionTests extends BaseApplicationTests {
         // by default, and the default servlet container does decode it
         List<Map<String, Object>> employees = (List<Map<String, Object>>) webTestClient.get()
                 .uri(employeesCollectionUrl)
+                .header(HttpHeaders.AUTHORIZATION,bearer(anonToken))
                 .exchange()
                 .expectStatus().is2xxSuccessful()
                 .expectBody(Response.class)
@@ -110,6 +111,7 @@ class JpaCollectionTests extends BaseApplicationTests {
         // by default, and the default servlet container does decode it
         List<Map<String, Object>> employees = (List<Map<String, Object>>) webTestClient.get()
                 .uri(employeesCollectionUrl)
+                .header(HttpHeaders.AUTHORIZATION,bearer(anonToken))
                 .exchange()
                 .expectStatus().is2xxSuccessful()
                 .expectBody(Response.class)
