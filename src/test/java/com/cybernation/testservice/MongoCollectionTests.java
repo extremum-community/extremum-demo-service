@@ -108,6 +108,7 @@ class MongoCollectionTests extends BaseApplicationTests {
         URI uri = buildUriWithEncodedQueryString(queryParams, housesCollectionUrl);
         return webTestClient.get()
                 .uri(uri)
+                .header(HttpHeaders.AUTHORIZATION,bearer(anonToken))
                 .exchange()
                 .expectStatus().is2xxSuccessful()
                 .expectBody(Response.class)
@@ -154,6 +155,7 @@ class MongoCollectionTests extends BaseApplicationTests {
     void fetchANonExistentCollection() {
         Response response = webTestClient.get()
                 .uri("/collection/no-such-collection")
+                .header(HttpHeaders.AUTHORIZATION,bearer(anonToken))
                 .exchange()
                 .expectStatus().is2xxSuccessful()
                 .expectBody(Response.class)

@@ -78,6 +78,7 @@ class JpaBasicModelCollectionTests extends BaseApplicationTests {
         // by default, and the default servlet container does decode it
         List<Map<String, Object>> flies = (List<Map<String, Object>>) webTestClient.get()
                 .uri(fliesCollectionUrl)
+                .header(HttpHeaders.AUTHORIZATION, bearer(anonToken))
                 .exchange()
                 .expectStatus().is2xxSuccessful()
                 .expectBody(Response.class)
@@ -111,6 +112,7 @@ class JpaBasicModelCollectionTests extends BaseApplicationTests {
         // by default, and the default servlet container does decode it
         List<Map<String, Object>> flies = (List<Map<String, Object>>) webTestClient.get()
                 .uri(fliesCollectionUrl)
+                .header(HttpHeaders.AUTHORIZATION,bearer(anonToken))
                 .exchange()
                 .expectStatus().is2xxSuccessful()
                 .expectBody(Response.class)
