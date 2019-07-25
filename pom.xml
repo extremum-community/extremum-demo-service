@@ -63,12 +63,12 @@
             <artifactId>spring-boot-starter-webflux</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.extremum</groupId>
+            <groupId>io.extremum.auth</groupId>
             <artifactId>extremum-authentication-starter</artifactId>
             <version>${extremum.auth.version}</version>
         </dependency>
         <dependency>
-            <groupId>io.extremum</groupId>
+            <groupId>io.extremum.auth</groupId>
             <artifactId>shiro-security-provider</artifactId>
             <version>${extremum.auth.version}</version>
         </dependency>

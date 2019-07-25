@@ -6,13 +6,16 @@ import com.cybernation.testservice.services.mongo.HouseService;
 import com.cybernation.testservice.services.mongo.StreetService;
 import com.extremum.common.response.Response;
 import com.extremum.common.response.ResponseStatusEnum;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.common.collect.ImmutableMap;
 import org.jetbrains.annotations.NotNull;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpHeaders;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import java.io.UnsupportedEncodingException;
@@ -25,6 +28,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static com.cybernation.testservice.Authorization.bearer;
+import static com.cybernation.testservice.ResponseAssert.isSuccessful;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -47,6 +52,13 @@ class MongoCollectionTests extends BaseApplicationTests {
     private HouseService houseService;
     @Autowired
     private StreetService streetService;
+
+    private String anonToken;
+
+    @BeforeEach
+    void obtainAnonToken() throws JsonProcessingException {
+        anonToken = new Authenticator(webTestClient).obtainAnonAuthToken();
+    }
 
     @SuppressWarnings("unchecked")
     @Test
@@ -78,10 +90,12 @@ class MongoCollectionTests extends BaseApplicationTests {
 
         Map<String, Object> streetMap = (Map<String, Object>) webTestClient.get()
                 .uri("/" + street.getUuid())
+                .header(HttpHeaders.AUTHORIZATION, bearer(anonToken))
                 .exchange()
                 .expectStatus().is2xxSuccessful()
                 .expectBody(Response.class)
                 .value(System.out::println)
+                .value(isSuccessful())
                 .returnResult()
                 .getResponseBody().getResult();
 

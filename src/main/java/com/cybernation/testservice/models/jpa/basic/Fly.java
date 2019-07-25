@@ -1,8 +1,11 @@
 package com.cybernation.testservice.models.jpa.basic;
 
 import com.extremum.common.models.annotation.ModelName;
+import com.extremum.everything.security.Access;
+import com.extremum.everything.security.EverythingRequiredRoles;
 import com.extremum.everything.security.NoDataSecurity;
 import com.extremum.jpa.models.PostgresBasicModel;
+import io.extremum.authentication.RolesConstants;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,6 +19,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @ModelName(Fly.MODEL_NAME)
+@EverythingRequiredRoles(defaultAccess = @Access(RolesConstants.ANONYMOUS))
 @NoDataSecurity
 public class Fly extends PostgresBasicModel {
     public static final String MODEL_NAME = "Fly";

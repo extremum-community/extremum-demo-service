@@ -26,12 +26,11 @@ spring:
 
 logging:
   level:
-    org.springframework.web: TRACE
-
+    com.extremum.everything.aop: DEBUG
+    org.springframework.web: DEBUG
+    tracer: TRACE
 
 custom:
-  shiro:
-    excluded-paths: /api/mongo/**,/api/jpa/**,/*,/collection/*
   sms:
     url: test
     api-key: test
