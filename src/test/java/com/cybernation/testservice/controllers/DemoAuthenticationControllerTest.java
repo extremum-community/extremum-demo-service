@@ -36,7 +36,7 @@ class DemoAuthenticationControllerTest extends BaseApplicationTests {
     @Test
     void testRequireAuth() {
         webTestClient.get()
-                .uri("/api/req_auth")
+                .uri("/api/auth/req_auth")
                 .header(HttpHeaders.AUTHORIZATION, bearer(authToken))
                 .exchange()
                 .expectStatus().is2xxSuccessful()
@@ -89,7 +89,7 @@ class DemoAuthenticationControllerTest extends BaseApplicationTests {
     @Test
     void testReqAnonym() {
         webTestClient.get()
-                .uri("/api/req_anonym")
+                .uri("/api/auth/req_anonym")
                 .header(HttpHeaders.AUTHORIZATION, bearer(authToken))
                 .exchange()
                 .expectStatus().is2xxSuccessful()
