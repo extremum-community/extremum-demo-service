@@ -36,4 +36,11 @@ class ResponseAssert {
             }
         };
     }
+
+    static Consumer<Response> is403() {
+        return response -> assertAll(
+                () -> assertThat("Response status", response.getStatus(), is(ResponseStatusEnum.FAIL)),
+                () -> assertThat("Response code", response.getCode(), is(403))
+        );
+    }
 }

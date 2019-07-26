@@ -18,7 +18,8 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class DepartmentConverter implements ToRequestDtoConverter<Department, DepartmentRequestDto>,
-        ToResponseDtoConverter<Department, DepartmentResponseDto>, FromRequestDtoConverter<Department, DepartmentRequestDto> {
+        ToResponseDtoConverter<Department, DepartmentResponseDto>,
+        FromRequestDtoConverter<Department, DepartmentRequestDto> {
     private final EmployeeConverter employeeConverter;
 
     @Override
