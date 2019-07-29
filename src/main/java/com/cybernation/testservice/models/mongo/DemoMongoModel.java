@@ -5,6 +5,7 @@ import com.extremum.common.models.annotation.ModelName;
 import com.extremum.everything.security.Access;
 import com.extremum.everything.security.EverythingRequiredRoles;
 import com.extremum.everything.security.NoDataSecurity;
+import com.extremum.sharedmodels.annotation.CapturedModel;
 import io.extremum.authentication.RolesConstants;
 import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -18,6 +19,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @ModelName(DemoMongoModel.MODEL_NAME)
 @EverythingRequiredRoles(defaultAccess = @Access(RolesConstants.ANONYMOUS))
 @NoDataSecurity
+@CapturedModel
 public class DemoMongoModel extends MongoCommonModel {
     public static final String MODEL_NAME = "DemoMongoModel";
     private String testId;

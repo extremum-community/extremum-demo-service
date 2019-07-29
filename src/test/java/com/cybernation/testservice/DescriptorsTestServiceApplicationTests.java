@@ -101,6 +101,14 @@ class DescriptorsTestServiceApplicationTests extends BaseApplicationTests {
                 .returnResult()
                 .getResponseBody();
         jpaDescriptorId = departmentResponseDto.getId().getExternalId();
+
+        webTestClient.post()
+                .uri("/api/subscription/" + everythingMongoDescriptorId)
+                .header(HttpHeaders.AUTHORIZATION, bearer(anonToken))
+                .exchange()
+                .expectStatus().is2xxSuccessful()
+                .expectBody(Response.class)
+                .value(isSuccessful());
     }
 
     @Test
