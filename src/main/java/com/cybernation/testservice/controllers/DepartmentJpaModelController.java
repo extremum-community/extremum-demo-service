@@ -3,7 +3,7 @@ package com.cybernation.testservice.controllers;
 import com.cybernation.testservice.converters.DepartmentConverter;
 import com.cybernation.testservice.dto.DepartmentRequestDto;
 import com.cybernation.testservice.dto.DepartmentResponseDto;
-import com.cybernation.testservice.services.jpa.DepartmentServiceImpl;
+import com.cybernation.testservice.services.jpa.DepartmentService;
 import com.extremum.common.dto.converters.ConversionConfig;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/jpa")
 @RequiredArgsConstructor
 public class DepartmentJpaModelController {
-    private final DepartmentServiceImpl service;
+    private final DepartmentService service;
     private final DepartmentConverter converter;
 
     @PostMapping
