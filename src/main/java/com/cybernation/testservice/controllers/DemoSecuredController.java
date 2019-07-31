@@ -1,6 +1,6 @@
 package com.cybernation.testservice.controllers;
 
-import io.extremum.authentication.RolesConstants;
+import io.extremum.authentication.api.RolesConstants;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/auth")
-public class DemoAuthenticationController {
+public class DemoSecuredController {
     @RequiresAuthentication
     @GetMapping("/req_auth")
     public ResponseEntity<String> requireAuth() {

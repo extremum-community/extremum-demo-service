@@ -6,7 +6,7 @@ import com.extremum.everything.collection.CollectionElementType;
 import com.extremum.everything.security.Access;
 import com.extremum.everything.security.EverythingRequiredRoles;
 import com.extremum.everything.security.NoDataSecurity;
-import io.extremum.authentication.RolesConstants;
+import io.extremum.authentication.api.RolesConstants;
 import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 
