@@ -5,7 +5,7 @@ import com.extremum.elasticsearch.model.ElasticsearchCommonModel;
 import com.extremum.everything.security.Access;
 import com.extremum.everything.security.EverythingRequiredRoles;
 import com.extremum.everything.security.NoDataSecurity;
-import io.extremum.authentication.RolesConstants;
+import io.extremum.authentication.api.RolesConstants;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.elasticsearch.annotations.Document;
