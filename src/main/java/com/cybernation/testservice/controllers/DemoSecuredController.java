@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/auth")
-public class DemoAuthenticationController {
+public class DemoSecuredController {
     @RequiresAuthentication
     @GetMapping("/req_auth")
     public ResponseEntity<String> requireAuth() {

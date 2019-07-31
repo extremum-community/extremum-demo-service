@@ -1,4 +1,4 @@
-package com.cybernation.testservice.controllers;
+package com.cybernation.testservice;
 
 import com.cybernation.testservice.Authenticator;
 import com.cybernation.testservice.BaseApplicationTests;
@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.TestInstance.Lifecycle;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureWebTestClient
 @TestInstance(Lifecycle.PER_CLASS)
-class DemoAuthenticationControllerTest extends BaseApplicationTests {
+class SecuredControllerDemoTest extends BaseApplicationTests {
     @Autowired
     private WebTestClient webTestClient;
 
