@@ -3,9 +3,9 @@ package com.cybernation.testservice.models.mongo;
 import com.extremum.common.models.MongoCommonModel;
 import com.extremum.common.models.annotation.ModelName;
 import com.extremum.everything.collection.CollectionElementType;
-import com.extremum.everything.security.Access;
-import com.extremum.everything.security.EverythingRequiredRoles;
-import com.extremum.everything.security.NoDataSecurity;
+import com.extremum.security.Access;
+import com.extremum.security.ExtremumRequiredRoles;
+import com.extremum.security.NoDataSecurity;
 import io.extremum.authentication.api.RolesConstants;
 import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -25,7 +25,7 @@ import static com.cybernation.testservice.models.mongo.Street.MODEL_NAME;
 @AllArgsConstructor
 @ToString
 @ModelName(MODEL_NAME)
-@EverythingRequiredRoles(defaultAccess = @Access(RolesConstants.ANONYMOUS))
+@ExtremumRequiredRoles(defaultAccess = @Access(RolesConstants.ANONYMOUS))
 @NoDataSecurity
 public class Street extends MongoCommonModel {
     public static final String MODEL_NAME = "Street";

@@ -1,9 +1,9 @@
 package com.cybernation.testservice.models.jpa.persistable;
 
 import com.extremum.common.models.annotation.ModelName;
-import com.extremum.everything.security.Access;
-import com.extremum.everything.security.EverythingRequiredRoles;
-import com.extremum.everything.security.NoDataSecurity;
+import com.extremum.security.Access;
+import com.extremum.security.ExtremumRequiredRoles;
+import com.extremum.security.NoDataSecurity;
 import com.extremum.jpa.models.PostgresCommonModel;
 import io.extremum.authentication.api.RolesConstants;
 import lombok.Getter;
@@ -25,7 +25,7 @@ import java.util.List;
 @Getter
 @Setter
 @ModelName(Department.MODEL_NAME)
-@EverythingRequiredRoles(defaultAccess = @Access(RolesConstants.ANONYMOUS))
+@ExtremumRequiredRoles(defaultAccess = @Access(RolesConstants.ANONYMOUS))
 @NoDataSecurity
 public class Department extends PostgresCommonModel {
     public static final String MODEL_NAME = "Department";

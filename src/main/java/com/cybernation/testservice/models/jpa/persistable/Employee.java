@@ -1,7 +1,7 @@
 package com.cybernation.testservice.models.jpa.persistable;
 
 import com.extremum.common.models.annotation.ModelName;
-import com.extremum.everything.security.NoDataSecurity;
+import com.extremum.security.NoDataSecurity;
 import com.extremum.jpa.models.SoftDeletePostgresModel;
 import lombok.Getter;
 import lombok.Setter;
