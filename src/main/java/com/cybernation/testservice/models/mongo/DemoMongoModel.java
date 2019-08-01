@@ -2,7 +2,6 @@ package com.cybernation.testservice.models.mongo;
 
 import com.extremum.common.models.MongoCommonModel;
 import com.extremum.common.models.annotation.ModelName;
-import com.extremum.security.Access;
 import com.extremum.security.ExtremumRequiredRoles;
 import com.extremum.security.NoDataSecurity;
 import io.extremum.authentication.api.RolesConstants;
@@ -16,7 +15,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Setter
 @ToString
 @ModelName(DemoMongoModel.MODEL_NAME)
-@ExtremumRequiredRoles(defaultAccess = @Access(RolesConstants.ANONYMOUS))
+@ExtremumRequiredRoles(defaultAccess = RolesConstants.ANONYMOUS)
 @NoDataSecurity
 public class DemoMongoModel extends MongoCommonModel {
     public static final String MODEL_NAME = "DemoMongoModel";

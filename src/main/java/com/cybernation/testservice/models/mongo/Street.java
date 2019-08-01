@@ -3,7 +3,6 @@ package com.cybernation.testservice.models.mongo;
 import com.extremum.common.models.MongoCommonModel;
 import com.extremum.common.models.annotation.ModelName;
 import com.extremum.everything.collection.CollectionElementType;
-import com.extremum.security.Access;
 import com.extremum.security.ExtremumRequiredRoles;
 import com.extremum.security.NoDataSecurity;
 import io.extremum.authentication.api.RolesConstants;
@@ -25,7 +24,7 @@ import static com.cybernation.testservice.models.mongo.Street.MODEL_NAME;
 @AllArgsConstructor
 @ToString
 @ModelName(MODEL_NAME)
-@ExtremumRequiredRoles(defaultAccess = @Access(RolesConstants.ANONYMOUS))
+@ExtremumRequiredRoles(defaultAccess = RolesConstants.ANONYMOUS)
 @NoDataSecurity
 public class Street extends MongoCommonModel {
     public static final String MODEL_NAME = "Street";
