@@ -1,10 +1,9 @@
 package com.cybernation.testservice.models.jpa.basic;
 
 import com.extremum.common.models.annotation.ModelName;
-import com.extremum.everything.security.Access;
-import com.extremum.everything.security.EverythingRequiredRoles;
-import com.extremum.everything.security.NoDataSecurity;
 import com.extremum.jpa.models.PostgresBasicModel;
+import com.extremum.security.ExtremumRequiredRoles;
+import com.extremum.security.NoDataSecurity;
 import io.extremum.authentication.api.RolesConstants;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,7 +23,7 @@ import java.util.List;
 @Getter
 @Setter
 @ModelName(Swarm.MODEL_NAME)
-@EverythingRequiredRoles(defaultAccess = @Access(RolesConstants.ANONYMOUS))
+@ExtremumRequiredRoles(defaultAccess = RolesConstants.ANONYMOUS)
 @NoDataSecurity
 public class Swarm extends PostgresBasicModel {
     public static final String MODEL_NAME = "Swarm";

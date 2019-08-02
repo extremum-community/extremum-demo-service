@@ -2,9 +2,8 @@ package com.cybernation.testservice.models.auth;
 
 import com.extremum.common.models.MongoCommonModel;
 import com.extremum.common.models.annotation.ModelName;
-import com.extremum.everything.security.Access;
-import com.extremum.everything.security.EverythingRequiredRoles;
-import com.extremum.everything.security.NoDataSecurity;
+import com.extremum.security.ExtremumRequiredRoles;
+import com.extremum.security.NoDataSecurity;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,7 +11,7 @@ import lombok.Setter;
  * @author rpuch
  */
 @ModelName(TopSecret.MODEL_NAME)
-@EverythingRequiredRoles(defaultAccess = @Access("ROLE_TOP_SECRET"))
+@ExtremumRequiredRoles(defaultAccess = "ROLE_TOP_SECRET")
 @Getter
 @Setter
 @NoDataSecurity
