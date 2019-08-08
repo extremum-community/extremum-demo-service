@@ -21,8 +21,8 @@ public abstract class BaseApplicationTests {
         Stream.of(redis, mongo, postgres).forEach(GenericContainer::start);
         System.setProperty("redis.uri", "redis://" + redis.getContainerIpAddress() + ":" + redis.getFirstMappedPort());
         String mongoUri = "mongodb://" + mongo.getContainerIpAddress() + ":" + mongo.getFirstMappedPort();
-        System.setProperty("mongo.main-uri", mongoUri);
-        System.setProperty("mongo.descriptors-uri", mongoUri);
+        System.setProperty("mongo.service-db--uri", mongoUri);
+        System.setProperty("mongo.descriptors-db-uri", mongoUri);
         String postgresUrl = String.format("jdbc:postgresql://%s:%d/%s",
                 postgres.getContainerIpAddress(), postgres.getFirstMappedPort(), "postgres");
         System.setProperty("jpa.uri", postgresUrl);
