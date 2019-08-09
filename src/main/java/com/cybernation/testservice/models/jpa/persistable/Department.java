@@ -4,7 +4,6 @@ import com.extremum.common.models.annotation.ModelName;
 import com.extremum.jpa.models.PostgresCommonModel;
 import com.extremum.security.ExtremumRequiredRoles;
 import com.extremum.security.NoDataSecurity;
-import com.extremum.watch.annotation.CapturedModel;
 import io.extremum.authentication.api.RolesConstants;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,7 +26,6 @@ import java.util.List;
 @ModelName(Department.MODEL_NAME)
 @ExtremumRequiredRoles(defaultAccess = RolesConstants.ANONYMOUS)
 @NoDataSecurity
-@CapturedModel
 public class Department extends PostgresCommonModel {
     public static final String MODEL_NAME = "Department";
     public static final String CUSTOM_EMPLOYEES = "customEmployees";
