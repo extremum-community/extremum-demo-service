@@ -49,6 +49,5 @@ custom:
   model:
     package-names: com.cybernation.testservice.models
   watch:
-    subscription:
-      idle-time: 1
-      time-to-live: 1
+    subscription-time-to-live-days: 1
+    subscription-idle-time-days: 1
