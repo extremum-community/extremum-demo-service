@@ -3,6 +3,7 @@ package com.cybernation.testservice;
 import com.cybernation.testservice.models.watch.Spectacle;
 import com.cybernation.testservice.services.watch.SpectacleService;
 import com.extremum.common.response.Response;
+import com.extremum.common.utils.poll.Poller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.node.TextNode;
 import com.github.fge.jackson.jsonpointer.JsonPointer;
@@ -10,7 +11,6 @@ import com.github.fge.jackson.jsonpointer.JsonPointerException;
 import com.github.fge.jsonpatch.JsonPatch;
 import com.github.fge.jsonpatch.JsonPatchOperation;
 import com.github.fge.jsonpatch.ReplaceOperation;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -21,8 +21,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 
-import java.util.Arrays;
-import java.util.Collections;
+import java.time.Duration;
 import java.util.List;
 import java.util.Map;
 
@@ -62,91 +61,39 @@ class WatchTests extends BaseApplicationTests {
         spectacle = spectacleService.create(spectacle);
     }
 
-//    @Test
-    void testEverythingGet() {
-        Map<String, Object> responseBody = retrieveViaEverythingGet();
-        assertThat(responseBody.get("name"), is("My band"));
-        assertThat(responseBody.get("color"), is("Red"));
+    @Test
+    void whenSubscribedAndModelPatched_thenOneWatchEventShouldBeAvailableViaGET() throws Exception {
+        subscribeToSpectacle();
+        patchViaEverythingEverything();
+
+        List<Map<String, Object>> events = getNonEmptyEvents();
+
+        assertThatThereIsOneEventForPatchingNameProperty(events);
     }
 
-    @SuppressWarnings("unchecked")
-    private Map<String, Object> retrieveViaEverythingGet() {
-        return (Map<String, Object>) webTestClient.get()
-                .uri("/" + spectacleExternalId())
+    private void subscribeToSpectacle() {
+        webTestClient.put()
+                .uri("/api/watch")
                 .header(HttpHeaders.AUTHORIZATION, bearer(anonToken))
+                .body(BodyInserters.fromObject(singletonList(spectacleExternalId())))
                 .exchange()
                 .expectStatus().is2xxSuccessful()
                 .expectBody(Response.class)
                 .value(System.out::println)
                 .value(isSuccessful())
-                .returnResult()
-                .getResponseBody()
-                .getResult();
+                .returnResult();
     }
 
     private String spectacleExternalId() {
         return spectacle.getUuid().getExternalId();
     }
 
-    @Test
-    void testEverythingPatch() throws Exception {
-        subscribeToSpectacle();
-        patchViaEverythingEverything();
-        
-        List<Map<String, Object>> events = (List<Map<String, Object>>) webTestClient.get()
-                        .uri("/api/watch")
-                        .header(HttpHeaders.AUTHORIZATION, bearer(anonToken))
-                        .exchange()
-                        .expectStatus().is2xxSuccessful()
-                        .expectBody(Response.class)
-                        .value(System.out::println)
-                        .value(isSuccessful())
-                        .returnResult()
-                        .getResponseBody()
-                        .getResult();
-
-        assertThat(events, hasSize(1));
-        Map<String, Object> event = events.get(0);
-
-        assertThat(event.get("object"), is(notNullValue()));
-        assertThat(event.get("object"), is(instanceOf(Map.class)));
-        Map<String, Object> object = (Map<String, Object>) event.get("object");
-        assertThat(object, hasEntry(is("id"), equalTo(spectacleExternalId())));
-        assertThat(object, hasEntry(is("model"), is("Spectacle")));
-        assertThat(object, hasKey("created"));
-        assertThat(object, hasKey("modified"));
-        assertThat(object, hasKey("version"));
-
-        assertThat(event.get("patch"), is(notNullValue()));
-        assertThat(event.get("patch"), is(instanceOf(List.class)));
-        List<Map<String, Object>> operations = (List<Map<String, Object>>) event.get("patch");
-        assertThat(operations, hasSize(1));
-        Map<String, Object> operation = operations.get(0);
-        assertThat(operation, hasEntry(is("op"), is("replace")));
-        assertThat(operation, hasEntry(is("path"), is("/name")));
-        assertThat(operation, hasEntry(is("value"), is("Unforgiven II")));
-    }
-
-    private void subscribeToSpectacle() {
-        webTestClient.put()
-                        .uri("/api/watch")
-                        .header(HttpHeaders.AUTHORIZATION, bearer(anonToken))
-                        .body(BodyInserters.fromObject(singletonList(spectacleExternalId())))
-                        .exchange()
-                        .expectStatus().is2xxSuccessful()
-                        .expectBody(Response.class)
-                        .value(System.out::println)
-                        .value(isSuccessful())
-                        .returnResult();
-    }
-
-    @SuppressWarnings("unchecked")
     private void patchViaEverythingEverything() throws JsonPointerException {
         JsonPatchOperation operation = new ReplaceOperation(new JsonPointer("/name"),
                 new TextNode("Unforgiven II"));
         JsonPatch jsonPatch = new JsonPatch(singletonList(operation));
 
-        Map<String, Object> responseBody = (Map<String, Object>) webTestClient.patch()
+        webTestClient.patch()
                 .uri("/" + spectacleExternalId())
                 .header(HttpHeaders.AUTHORIZATION, bearer(anonToken))
                 .body(BodyInserters.fromObject(jsonPatch))
@@ -156,35 +103,60 @@ class WatchTests extends BaseApplicationTests {
                 .value(System.out::println)
                 .value(isSuccessful())
                 .returnResult()
-                .getResponseBody()
-                .getResult();
-        assertThat(responseBody.get("name"), is("Unforgiven II"));
-
-        responseBody = retrieveViaEverythingGet();
-        assertThat(responseBody.get("name"), is("Unforgiven II"));
+                .getResponseBody();
     }
 
-    //    @Test
-    void testEverythingDelete() {
-        webTestClient.delete()
-                .uri("/" + spectacleExternalId())
-                .header(HttpHeaders.AUTHORIZATION, bearer(anonToken))
-                .exchange()
-                .expectStatus().is2xxSuccessful()
-                .expectBody(Response.class)
-                .value(System.out::println)
-                .value(isSuccessful());
+    private List<Map<String, Object>> getNonEmptyEvents() {
+        Poller poller = new Poller(Duration.ofSeconds(10));
+        return poller.poll(this::getEvents, events -> events.size() > 0);
+    }
 
-        Response response = webTestClient.get()
-                .uri("/" + spectacleExternalId())
-                .header(HttpHeaders.AUTHORIZATION, bearer(anonToken))
-                .exchange()
-                .expectStatus().is2xxSuccessful()
-                .expectBody(Response.class)
-                .value(System.out::println)
-                .returnResult()
-                .getResponseBody();
-        assertThat(response, is(notNullValue()));
-        assertThat(response.getCode(), is(404));
+    @SuppressWarnings("unchecked")
+    private List<Map<String, Object>> getEvents() {
+        return (List<Map<String, Object>>) webTestClient.get()
+                            .uri("/api/watch")
+                            .header(HttpHeaders.AUTHORIZATION, bearer(anonToken))
+                            .exchange()
+                            .expectStatus().is2xxSuccessful()
+                            .expectBody(Response.class)
+                            .value(System.out::println)
+                            .value(isSuccessful())
+                            .returnResult()
+                            .getResponseBody()
+                            .getResult();
+    }
+
+    private void assertThatThereIsOneEventForPatchingNameProperty(List<Map<String, Object>> events) {
+        assertThat(events, hasSize(1));
+        Map<String, Object> event = events.get(0);
+
+        assertThatObjectSectionIsCorrect(event);
+
+        Map<String, Object> operation = getSingleOperation(event);
+
+        assertThat(operation, hasEntry(is("op"), is("replace")));
+        assertThat(operation, hasEntry(is("path"), is("/name")));
+        assertThat(operation, hasEntry(is("value"), is("Unforgiven II")));
+    }
+
+    private void assertThatObjectSectionIsCorrect(Map<String, Object> event) {
+        assertThat(event.get("object"), is(notNullValue()));
+        assertThat(event.get("object"), is(instanceOf(Map.class)));
+        @SuppressWarnings("unchecked")
+        Map<String, Object> object = (Map<String, Object>) event.get("object");
+        assertThat(object, hasEntry(is("id"), equalTo(spectacleExternalId())));
+        assertThat(object, hasEntry(is("model"), is("Spectacle")));
+        assertThat(object, hasKey("created"));
+        assertThat(object, hasKey("modified"));
+        assertThat(object, hasKey("version"));
+    }
+
+    private Map<String, Object> getSingleOperation(Map<String, Object> event) {
+        assertThat(event.get("patch"), is(notNullValue()));
+        assertThat(event.get("patch"), is(instanceOf(List.class)));
+        @SuppressWarnings("unchecked")
+        List<Map<String, Object>> operations = (List<Map<String, Object>>) event.get("patch");
+        assertThat(operations, hasSize(1));
+        return operations.get(0);
     }
 }
