@@ -3,7 +3,7 @@ package com.cybernation.testservice;
 import com.cybernation.testservice.models.watch.Spectacle;
 import com.cybernation.testservice.services.watch.SpectacleService;
 import com.extremum.common.response.Response;
-import com.extremum.common.utils.poll.Poller;
+import com.extremum.test.poll.Poller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.node.TextNode;
 import com.github.fge.jackson.jsonpointer.JsonPointer;
