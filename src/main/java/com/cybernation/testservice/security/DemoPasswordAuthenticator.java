@@ -2,8 +2,8 @@ package com.cybernation.testservice.security;
 
 import com.cybernation.testservice.models.auth.User;
 import com.cybernation.testservice.services.auth.UserService;
-import com.extremum.sharedmodels.personal.Credential;
-import com.extremum.sharedmodels.personal.VerifyType;
+import io.extremum.sharedmodels.personal.Credential;
+import io.extremum.sharedmodels.personal.VerifyType;
 import io.extremum.authentication.services.Credentials;
 import io.extremum.authentication.services.ExternalAuthResult;
 import io.extremum.authentication.services.ExternalCredentialsAuthenticator;

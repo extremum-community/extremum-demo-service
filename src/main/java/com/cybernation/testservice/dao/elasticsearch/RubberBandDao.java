@@ -1,8 +1,8 @@
 package com.cybernation.testservice.dao.elasticsearch;
 
 import com.cybernation.testservice.models.elasticsearch.RubberBand;
-import com.extremum.common.dao.CommonDao;
-import com.extremum.elasticsearch.dao.ElasticsearchCommonDao;
+import io.extremum.common.dao.CommonDao;
+import io.extremum.elasticsearch.dao.ElasticsearchCommonDao;
 
 /**
  * @author rpuch

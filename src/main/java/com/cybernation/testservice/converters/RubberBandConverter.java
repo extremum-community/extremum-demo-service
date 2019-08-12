@@ -3,10 +3,10 @@ package com.cybernation.testservice.converters;
 import com.cybernation.testservice.dto.RubberBandRequestDto;
 import com.cybernation.testservice.dto.RubberBandResponseDto;
 import com.cybernation.testservice.models.elasticsearch.RubberBand;
-import com.extremum.common.dto.converters.ConversionConfig;
-import com.extremum.common.dto.converters.FromRequestDtoConverter;
-import com.extremum.common.dto.converters.ToRequestDtoConverter;
-import com.extremum.common.dto.converters.ToResponseDtoConverter;
+import io.extremum.common.dto.converters.ConversionConfig;
+import io.extremum.common.dto.converters.FromRequestDtoConverter;
+import io.extremum.common.dto.converters.ToRequestDtoConverter;
+import io.extremum.common.dto.converters.ToResponseDtoConverter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

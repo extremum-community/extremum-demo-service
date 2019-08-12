@@ -3,7 +3,7 @@ package com.cybernation.testservice;
 import com.cybernation.testservice.models.jpa.persistable.Department;
 import com.cybernation.testservice.models.jpa.persistable.Employee;
 import com.cybernation.testservice.services.jpa.DepartmentService;
-import com.extremum.common.response.Response;
+import io.extremum.common.response.Response;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;

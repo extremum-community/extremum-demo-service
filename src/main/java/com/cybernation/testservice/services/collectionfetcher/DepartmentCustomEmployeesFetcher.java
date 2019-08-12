@@ -3,9 +3,9 @@ package com.cybernation.testservice.services.collectionfetcher;
 import com.cybernation.testservice.models.jpa.persistable.Department;
 import com.cybernation.testservice.models.jpa.persistable.Employee;
 import com.cybernation.testservice.services.jpa.EmployeeService;
-import com.extremum.everything.collection.CollectionFragment;
-import com.extremum.everything.collection.Projection;
-import com.extremum.everything.services.CollectionFetcher;
+import io.extremum.everything.collection.CollectionFragment;
+import io.extremum.everything.collection.Projection;
+import io.extremum.everything.services.CollectionFetcher;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

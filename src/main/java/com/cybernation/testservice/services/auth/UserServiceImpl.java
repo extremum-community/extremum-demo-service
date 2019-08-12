@@ -2,7 +2,7 @@ package com.cybernation.testservice.services.auth;
 
 import com.cybernation.testservice.dao.auth.UserDao;
 import com.cybernation.testservice.models.auth.User;
-import com.extremum.common.service.impl.MongoCommonServiceImpl;
+import io.extremum.common.service.impl.MongoCommonServiceImpl;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

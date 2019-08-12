@@ -1,7 +1,7 @@
 package com.cybernation.testservice.dao.watch;
 
 import com.cybernation.testservice.models.watch.Spectacle;
-import com.extremum.common.dao.MongoCommonDao;
+import io.extremum.common.dao.MongoCommonDao;
 
 /**
  * @author rpuch

@@ -4,7 +4,7 @@ import com.cybernation.testservice.converters.DepartmentConverter;
 import com.cybernation.testservice.dto.DepartmentRequestDto;
 import com.cybernation.testservice.dto.DepartmentResponseDto;
 import com.cybernation.testservice.services.jpa.DepartmentService;
-import com.extremum.common.dto.converters.ConversionConfig;
+import io.extremum.common.dto.converters.ConversionConfig;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

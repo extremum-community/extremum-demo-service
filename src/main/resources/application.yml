@@ -28,7 +28,7 @@ spring:
 
 logging:
   level:
-    com.extremum.everything.aop: DEBUG
+    io.extremum.everything.aop: DEBUG
     org.springframework.web: DEBUG
     tracer: TRACE
 

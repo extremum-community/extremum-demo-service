@@ -1,8 +1,8 @@
 package com.cybernation.testservice;
 
-import com.extremum.common.collection.service.CollectionDescriptorService;
-import com.extremum.common.descriptor.factory.DescriptorFactory;
-import com.extremum.common.mapper.MapperDependencies;
+import io.extremum.common.collection.service.CollectionDescriptorService;
+import io.extremum.common.descriptor.factory.DescriptorFactory;
+import io.extremum.common.mapper.MapperDependencies;
 
 import static org.mockito.Mockito.mock;
 

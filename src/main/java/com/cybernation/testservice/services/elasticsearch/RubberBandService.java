@@ -1,7 +1,7 @@
 package com.cybernation.testservice.services.elasticsearch;
 
 import com.cybernation.testservice.models.elasticsearch.RubberBand;
-import com.extremum.elasticsearch.service.ElasticsearchCommonService;
+import io.extremum.elasticsearch.service.ElasticsearchCommonService;
 
 /**
  * @author rpuch

@@ -1,9 +1,9 @@
 package com.cybernation.testservice.dto;
 
 import com.cybernation.testservice.models.jpa.persistable.Department;
-import com.extremum.common.collection.conversion.OwnedCollection;
-import com.extremum.sharedmodels.fundamental.CollectionReference;
-import com.extremum.sharedmodels.fundamental.CommonResponseDto;
+import io.extremum.common.collection.conversion.OwnedCollection;
+import io.extremum.sharedmodels.fundamental.CollectionReference;
+import io.extremum.sharedmodels.fundamental.CommonResponseDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

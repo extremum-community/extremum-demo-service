@@ -1,7 +1,7 @@
 package com.cybernation.testservice.dto;
 
 import com.cybernation.testservice.models.mongo.DemoMongoModel;
-import com.extremum.sharedmodels.fundamental.CommonResponseDto;
+import io.extremum.sharedmodels.fundamental.CommonResponseDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

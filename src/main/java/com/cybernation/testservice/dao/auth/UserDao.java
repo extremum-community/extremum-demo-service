@@ -1,7 +1,7 @@
 package com.cybernation.testservice.dao.auth;
 
 import com.cybernation.testservice.models.auth.User;
-import com.extremum.common.dao.MongoCommonDao;
+import io.extremum.common.dao.MongoCommonDao;
 
 import java.util.Optional;
 

@@ -1,7 +1,7 @@
 package com.cybernation.testservice.services.auth;
 
 import com.cybernation.testservice.models.auth.TopSecret;
-import com.extremum.common.service.CommonService;
+import io.extremum.common.service.CommonService;
 
 /**
  * @author rpuch

@@ -1,7 +1,7 @@
 package com.cybernation.testservice.controllers;
 
-import com.extremum.everything.controllers.DefaultEverythingEverythingCollectionRestController;
-import com.extremum.everything.services.management.EverythingCollectionManagementService;
+import io.extremum.everything.controllers.DefaultEverythingEverythingCollectionRestController;
+import io.extremum.everything.services.management.EverythingCollectionManagementService;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
