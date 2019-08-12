@@ -1,10 +1,10 @@
 package com.cybernation.testservice.models.watch;
 
-import com.extremum.common.models.MongoCommonModel;
-import com.extremum.common.models.annotation.ModelName;
-import com.extremum.security.ExtremumRequiredRoles;
-import com.extremum.security.NoDataSecurity;
-import com.extremum.watch.annotation.CapturedModel;
+import io.extremum.common.models.MongoCommonModel;
+import io.extremum.common.models.annotation.ModelName;
+import io.extremum.security.ExtremumRequiredRoles;
+import io.extremum.security.NoDataSecurity;
+import io.extremum.watch.annotation.CapturedModel;
 import io.extremum.authentication.api.RolesConstants;
 import lombok.Getter;
 import lombok.Setter;

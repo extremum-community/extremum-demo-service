@@ -3,10 +3,10 @@ package com.cybernation.testservice.converters;
 import com.cybernation.testservice.dto.SpectacleRequestDto;
 import com.cybernation.testservice.dto.SpectacleResponseDto;
 import com.cybernation.testservice.models.watch.Spectacle;
-import com.extremum.common.dto.converters.ConversionConfig;
-import com.extremum.common.dto.converters.FromRequestDtoConverter;
-import com.extremum.common.dto.converters.ToRequestDtoConverter;
-import com.extremum.common.dto.converters.ToResponseDtoConverter;
+import io.extremum.common.dto.converters.ConversionConfig;
+import io.extremum.common.dto.converters.FromRequestDtoConverter;
+import io.extremum.common.dto.converters.ToRequestDtoConverter;
+import io.extremum.common.dto.converters.ToResponseDtoConverter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

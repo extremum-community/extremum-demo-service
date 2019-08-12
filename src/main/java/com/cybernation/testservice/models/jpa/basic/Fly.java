@@ -1,9 +1,9 @@
 package com.cybernation.testservice.models.jpa.basic;
 
-import com.extremum.common.models.annotation.ModelName;
-import com.extremum.jpa.models.PostgresBasicModel;
-import com.extremum.security.ExtremumRequiredRoles;
-import com.extremum.security.NoDataSecurity;
+import io.extremum.common.models.annotation.ModelName;
+import io.extremum.jpa.models.PostgresBasicModel;
+import io.extremum.security.ExtremumRequiredRoles;
+import io.extremum.security.NoDataSecurity;
 import io.extremum.authentication.api.RolesConstants;
 import lombok.Getter;
 import lombok.Setter;

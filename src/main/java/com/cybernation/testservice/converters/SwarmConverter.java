@@ -4,11 +4,11 @@ import com.cybernation.testservice.dto.FlyResponseDto;
 import com.cybernation.testservice.dto.SwarmRequestDto;
 import com.cybernation.testservice.dto.SwarmResponseDto;
 import com.cybernation.testservice.models.jpa.basic.Swarm;
-import com.extremum.common.dto.converters.ConversionConfig;
-import com.extremum.common.dto.converters.FromRequestDtoConverter;
-import com.extremum.common.dto.converters.ToRequestDtoConverter;
-import com.extremum.common.dto.converters.ToResponseDtoConverter;
-import com.extremum.sharedmodels.fundamental.CollectionReference;
+import io.extremum.common.dto.converters.ConversionConfig;
+import io.extremum.common.dto.converters.FromRequestDtoConverter;
+import io.extremum.common.dto.converters.ToRequestDtoConverter;
+import io.extremum.common.dto.converters.ToResponseDtoConverter;
+import io.extremum.sharedmodels.fundamental.CollectionReference;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

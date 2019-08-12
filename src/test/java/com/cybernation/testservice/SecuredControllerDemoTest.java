@@ -2,8 +2,8 @@ package com.cybernation.testservice;
 
 import com.cybernation.testservice.Authenticator;
 import com.cybernation.testservice.BaseApplicationTests;
-import com.extremum.common.response.Response;
-import com.extremum.common.response.ResponseStatusEnum;
+import io.extremum.common.response.Response;
+import io.extremum.common.response.ResponseStatusEnum;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

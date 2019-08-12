@@ -1,9 +1,9 @@
 package com.cybernation.testservice;
 
-import com.extremum.common.mapper.SystemJsonObjectMapper;
-import com.extremum.common.response.Response;
-import com.extremum.sharedmodels.personal.Credential;
-import com.extremum.sharedmodels.personal.VerifyType;
+import io.extremum.common.mapper.SystemJsonObjectMapper;
+import io.extremum.common.response.Response;
+import io.extremum.sharedmodels.personal.Credential;
+import io.extremum.sharedmodels.personal.VerifyType;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.JsonPath;

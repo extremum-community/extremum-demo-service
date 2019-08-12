@@ -2,9 +2,9 @@ package com.cybernation.testservice.dto;
 
 import com.cybernation.testservice.models.jpa.persistable.Department;
 import com.cybernation.testservice.models.jpa.persistable.Employee;
-import com.extremum.sharedmodels.basic.IdOrObject;
-import com.extremum.sharedmodels.descriptor.Descriptor;
-import com.extremum.sharedmodels.fundamental.CommonResponseDto;
+import io.extremum.sharedmodels.basic.IdOrObject;
+import io.extremum.sharedmodels.descriptor.Descriptor;
+import io.extremum.sharedmodels.fundamental.CommonResponseDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

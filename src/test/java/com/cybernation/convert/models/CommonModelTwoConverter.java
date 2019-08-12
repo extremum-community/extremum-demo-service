@@ -1,7 +1,7 @@
 package com.cybernation.convert.models;
 
-import com.extremum.common.dto.converters.ConversionConfig;
-import com.extremum.common.dto.converters.ToResponseDtoConverter;
+import io.extremum.common.dto.converters.ConversionConfig;
+import io.extremum.common.dto.converters.ToResponseDtoConverter;
 import org.springframework.stereotype.Service;
 
 @Service

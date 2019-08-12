@@ -4,9 +4,9 @@ import com.cybernation.testservice.models.mongo.House;
 import com.cybernation.testservice.dto.HouseRequestDto;
 import com.cybernation.testservice.dto.HouseResponseDto;
 import com.cybernation.testservice.services.mongo.HouseService;
-import com.extremum.common.dto.converters.ConversionConfig;
-import com.extremum.common.dto.converters.ToRequestDtoConverter;
-import com.extremum.common.dto.converters.ToResponseDtoConverter;
+import io.extremum.common.dto.converters.ConversionConfig;
+import io.extremum.common.dto.converters.ToRequestDtoConverter;
+import io.extremum.common.dto.converters.ToResponseDtoConverter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

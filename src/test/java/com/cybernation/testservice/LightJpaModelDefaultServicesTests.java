@@ -2,7 +2,7 @@ package com.cybernation.testservice;
 
 import com.cybernation.testservice.models.jpa.basic.Fly;
 import com.cybernation.testservice.services.jpa.FlyService;
-import com.extremum.common.response.Response;
+import io.extremum.common.response.Response;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.node.TextNode;
 import com.github.fge.jackson.jsonpointer.JsonPointer;

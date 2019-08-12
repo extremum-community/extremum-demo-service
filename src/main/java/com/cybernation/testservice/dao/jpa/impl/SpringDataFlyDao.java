@@ -2,7 +2,7 @@ package com.cybernation.testservice.dao.jpa.impl;
 
 import com.cybernation.testservice.dao.jpa.FlyDao;
 import com.cybernation.testservice.models.jpa.basic.Fly;
-import com.extremum.jpa.dao.impl.SpringDataJpaCommonDao;
+import io.extremum.jpa.dao.impl.SpringDataJpaCommonDao;
 import org.springframework.stereotype.Repository;
 
 /**

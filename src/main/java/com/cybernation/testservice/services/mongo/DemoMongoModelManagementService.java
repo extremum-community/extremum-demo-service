@@ -4,10 +4,10 @@ import com.cybernation.testservice.converters.DemoMongoModelConverter;
 import com.cybernation.testservice.models.mongo.DemoMongoModel;
 import com.cybernation.testservice.dto.DemoMongoModelRequestDto;
 import com.cybernation.testservice.dto.DemoMongoModelResponseDto;
-import com.extremum.sharedmodels.descriptor.Descriptor;
-import com.extremum.common.descriptor.service.DescriptorService;
-import com.extremum.common.dto.converters.ConversionConfig;
-import com.extremum.common.exceptions.CommonException;
+import io.extremum.sharedmodels.descriptor.Descriptor;
+import io.extremum.common.descriptor.service.DescriptorService;
+import io.extremum.common.dto.converters.ConversionConfig;
+import io.extremum.common.exceptions.CommonException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
