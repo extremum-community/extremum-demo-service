@@ -16,7 +16,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class DemoMongoModelManagementService {
-    private final DemoMongoServiceImpl service;
+    private final DemoMongoService service;
     private final DemoMongoModelConverter converter;
     private final DescriptorService descriptorService;
 

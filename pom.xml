@@ -73,6 +73,11 @@
             <version>${extremum.auth.version}</version>
         </dependency>
         <dependency>
+            <groupId>com.extremum</groupId>
+            <artifactId>extremum-watch-starter</artifactId>
+            <version>${extremum.common.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
@@ -128,6 +133,12 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>com.extremum</groupId>
+            <artifactId>extremum-test-harness</artifactId>
+            <version>${extremum.common.version}</version>
+            <scope>test</scope>
+        </dependency>
 
         <dependency>
             <groupId>io.projectreactor</groupId>
@@ -173,7 +184,7 @@
                         <banDuplicatePomDependencyVersions/>
                         <banDuplicateClasses>
                             <findAllDuplicates>true</findAllDuplicates>
-                            <dependencies />
+                            <dependencies/>
                         </banDuplicateClasses>
                     </rules>
                 </configuration>

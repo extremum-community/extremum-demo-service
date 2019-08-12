@@ -33,6 +33,9 @@ logging:
     tracer: TRACE
 
 custom:
+  kafka:
+    server: localhost:9092
+    topic: watch_test
   sms:
     url: test
     api-key: test
@@ -45,3 +48,6 @@ custom:
     analyzable-package-prefix: com.cybernation.testservice
   model:
     package-names: com.cybernation.testservice.models
+  watch:
+    subscription-time-to-live-days: 1
+    subscription-idle-time-days: 1

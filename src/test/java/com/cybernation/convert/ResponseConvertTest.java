@@ -15,7 +15,7 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest(classes = ResponseConvertConfig.class)
-public class ResponseConvertTest {
+class ResponseConvertTest {
     @Autowired
     private DtoConversionService service;
 
