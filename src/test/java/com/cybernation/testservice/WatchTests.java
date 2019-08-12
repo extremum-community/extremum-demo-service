@@ -106,7 +106,7 @@ class WatchTests extends BaseApplicationTests {
                 .getResponseBody();
     }
 
-    private List<Map<String, Object>> getNonEmptyEvents() {
+    private List<Map<String, Object>> getNonEmptyEvents() throws InterruptedException {
         Poller poller = new Poller(Duration.ofSeconds(10));
         return poller.poll(this::getEvents, events -> events.size() > 0);
     }
