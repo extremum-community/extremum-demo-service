@@ -73,7 +73,7 @@ class WatchTests extends BaseApplicationTests {
 
     private void subscribeToSpectacle() {
         webTestClient.put()
-                .uri("/api/watch")
+                .uri("/watch")
                 .header(HttpHeaders.AUTHORIZATION, bearer(anonToken))
                 .body(BodyInserters.fromObject(singletonList(spectacleExternalId())))
                 .exchange()
@@ -114,7 +114,7 @@ class WatchTests extends BaseApplicationTests {
     @SuppressWarnings("unchecked")
     private List<Map<String, Object>> getEvents() {
         return (List<Map<String, Object>>) webTestClient.get()
-                            .uri("/api/watch")
+                            .uri("/watch")
                             .header(HttpHeaders.AUTHORIZATION, bearer(anonToken))
                             .exchange()
                             .expectStatus().is2xxSuccessful()
