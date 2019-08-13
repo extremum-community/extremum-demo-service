@@ -16,7 +16,7 @@
 
     <properties>
         <java.version>1.8</java.version>
-        <extremum.common.version>1.0.7-SNAPSHOT</extremum.common.version>
+        <extremum.common.version>1.0.8-SNAPSHOT</extremum.common.version>
         <extremum.auth.version>1.0.0-SNAPSHOT</extremum.auth.version>
         <testcontainers.version>1.11.3</testcontainers.version>
         <elasticsearch.version>7.1.0</elasticsearch.version>
