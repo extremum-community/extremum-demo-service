@@ -1,11 +1,11 @@
 package com.cybernation.testservice.models.mongo;
 
+import io.extremum.authentication.api.constants.RolesConstants;
 import io.extremum.common.models.MongoCommonModel;
 import io.extremum.common.models.annotation.ModelName;
 import io.extremum.everything.collection.CollectionElementType;
 import io.extremum.security.ExtremumRequiredRoles;
 import io.extremum.security.NoDataSecurity;
-import io.extremum.authentication.api.RolesConstants;
 import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 

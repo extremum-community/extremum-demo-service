@@ -1,10 +1,10 @@
 package com.cybernation.testservice.models.elasticsearch;
 
+import io.extremum.authentication.api.constants.RolesConstants;
 import io.extremum.common.models.annotation.ModelName;
 import io.extremum.elasticsearch.model.ElasticsearchCommonModel;
 import io.extremum.security.ExtremumRequiredRoles;
 import io.extremum.security.NoDataSecurity;
-import io.extremum.authentication.api.RolesConstants;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.elasticsearch.annotations.Document;

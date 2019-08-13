@@ -1,13 +1,13 @@
 package com.cybernation.testservice;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jayway.jsonpath.JsonPath;
+import io.extremum.authentication.common.models.dto.AuthenticationRequestDto;
 import io.extremum.common.mapper.SystemJsonObjectMapper;
 import io.extremum.common.response.Response;
 import io.extremum.sharedmodels.personal.Credential;
 import io.extremum.sharedmodels.personal.VerifyType;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jayway.jsonpath.JsonPath;
-import io.extremum.authentication.models.dto.AuthenticationRequestDto;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;

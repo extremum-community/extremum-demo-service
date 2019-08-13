@@ -1,11 +1,11 @@
 package com.cybernation.testservice.models.watch;
 
+import io.extremum.authentication.api.constants.RolesConstants;
 import io.extremum.common.models.MongoCommonModel;
 import io.extremum.common.models.annotation.ModelName;
 import io.extremum.security.ExtremumRequiredRoles;
 import io.extremum.security.NoDataSecurity;
 import io.extremum.watch.annotation.CapturedModel;
-import io.extremum.authentication.api.RolesConstants;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -19,7 +19,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @ExtremumRequiredRoles(defaultAccess = RolesConstants.ANONYMOUS)
 @NoDataSecurity
 @CapturedModel
-@Getter @Setter @ToString
+@Getter
+@Setter
+@ToString
 public class Spectacle extends MongoCommonModel {
     public static final String MODEL_NAME = "Spectacle";
 

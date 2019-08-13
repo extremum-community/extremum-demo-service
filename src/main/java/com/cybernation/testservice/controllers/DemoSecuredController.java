@@ -1,6 +1,6 @@
 package com.cybernation.testservice.controllers;
 
-import io.extremum.authentication.api.RolesConstants;
+import io.extremum.authentication.api.constants.RolesConstants;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.http.ResponseEntity;
