@@ -1,6 +1,6 @@
 package com.cybernation.testservice.controllers;
 
-import io.extremum.authentication.api.RolesConstants;
+import io.extremum.authentication.api.Roles;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.http.ResponseEntity;
@@ -17,14 +17,14 @@ public class DemoSecuredController {
         return ResponseEntity.ok("You are authenticated!");
     }
 
-    @RequiresRoles(RolesConstants.CLIENT)
+    @RequiresRoles(Roles.CLIENT)
     @GetMapping("/req_client")
     public ResponseEntity<String> requireClientRole() {
         return ResponseEntity.ok("You have client role!");
     }
 
 
-    @RequiresRoles(RolesConstants.ANONYMOUS)
+    @RequiresRoles(Roles.ANONYMOUS)
     @GetMapping("/req_anonym")
     public ResponseEntity<String> requireAnonymRole() {
         return ResponseEntity.ok("You have anonym role!");

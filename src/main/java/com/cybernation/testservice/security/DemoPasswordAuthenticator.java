@@ -2,11 +2,11 @@ package com.cybernation.testservice.security;
 
 import com.cybernation.testservice.models.auth.User;
 import com.cybernation.testservice.services.auth.UserService;
+import io.extremum.authentication.common.models.Credentials;
+import io.extremum.authentication.common.models.ExternalAuthResult;
+import io.extremum.authentication.common.services.ExternalCredentialsAuthenticator;
 import io.extremum.sharedmodels.personal.Credential;
 import io.extremum.sharedmodels.personal.VerifyType;
-import io.extremum.authentication.services.Credentials;
-import io.extremum.authentication.services.ExternalAuthResult;
-import io.extremum.authentication.services.ExternalCredentialsAuthenticator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
