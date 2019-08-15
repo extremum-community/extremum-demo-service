@@ -20,6 +20,7 @@ import java.util.List;
  * @author rpuch
  */
 public class Authenticator {
+//    TODO refactor web test client to auth uri
     private final WebTestClient webTestClient;
 
     public Authenticator(WebTestClient webTestClient) {
