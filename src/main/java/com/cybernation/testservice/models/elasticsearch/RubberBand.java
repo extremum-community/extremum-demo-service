@@ -1,6 +1,6 @@
 package com.cybernation.testservice.models.elasticsearch;
 
-import io.extremum.authentication.api.constants.RolesConstants;
+import io.extremum.authentication.api.Roles;
 import io.extremum.common.models.annotation.ModelName;
 import io.extremum.elasticsearch.model.ElasticsearchCommonModel;
 import io.extremum.security.ExtremumRequiredRoles;
@@ -16,7 +16,7 @@ import org.springframework.data.elasticsearch.annotations.Document;
 @ModelName(RubberBand.MODEL_NAME)
 @Getter
 @Setter
-@ExtremumRequiredRoles(defaultAccess = RolesConstants.ANONYMOUS)
+@ExtremumRequiredRoles(defaultAccess = Roles.ANONYMOUS)
 @NoDataSecurity
 public class RubberBand extends ElasticsearchCommonModel {
     public static final String MODEL_NAME = "RubberBand";

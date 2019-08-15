@@ -2,7 +2,7 @@ package com.cybernation.testservice.config;
 
 import com.cybernation.testservice.security.DemoPasswordAuthenticator;
 import com.cybernation.testservice.services.auth.UserService;
-import io.extremum.authentication.api.exceptions.AuthenticationException;
+import io.extremum.authentication.api.AuthenticationException;
 import io.extremum.authentication.common.services.ApiKeyVerifier;
 import io.extremum.authentication.common.services.ExternalCredentialsAuthenticator;
 import org.springframework.context.annotation.Bean;
