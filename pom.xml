@@ -3,9 +3,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.1.3.RELEASE</version>
+        <groupId>io.extremum</groupId>
+        <artifactId>extremum-app-parent</artifactId>
+        <version>1.0.9-SNAPSHOT</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>io.extremum</groupId>
@@ -19,7 +19,6 @@
         <extremum.common.version>1.0.9-SNAPSHOT</extremum.common.version>
         <extremum.auth.version>1.0.0-SNAPSHOT</extremum.auth.version>
         <testcontainers.version>1.11.3</testcontainers.version>
-        <elasticsearch.version>7.1.0</elasticsearch.version>
     </properties>
 
     <repositories>
@@ -31,23 +30,17 @@
 
     <dependencyManagement>
         <dependencies>
-            <!-- It is required to override spring-data-elasticsearch and elasticsearch
-                 dependencies version coming from spring-boot -->
+            <!-- If you don't want to use extremum-app-parent as a parent POM, please uncomment the following
+                 to use dependencies tailored to extremum-common -->
+<!--
             <dependency>
-                <groupId>org.springframework.data</groupId>
-                <artifactId>spring-data-elasticsearch</artifactId>
-                <version>3.2.0.RC1</version>
+                <groupId>io.extremum</groupId>
+                <artifactId>extremum-bom</artifactId>
+                <version>${extremum.common.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
-            <dependency>
-                <groupId>org.elasticsearch.client</groupId>
-                <artifactId>elasticsearch-rest-high-level-client</artifactId>
-                <version>${elasticsearch.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.elasticsearch</groupId>
-                <artifactId>elasticsearch</artifactId>
-                <version>${elasticsearch.version}</version>
-            </dependency>
+-->
         </dependencies>
     </dependencyManagement>
 
@@ -64,11 +57,6 @@
         </dependency>
         <dependency>
             <groupId>io.extremum</groupId>
-            <artifactId>authentication-api</artifactId>
-            <version>${extremum.common.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.extremum</groupId>
             <artifactId>authentication-client-starter</artifactId>
             <version>${extremum.auth.version}</version>
         </dependency>
@@ -80,7 +68,6 @@
         <dependency>
             <groupId>io.extremum</groupId>
             <artifactId>extremum-watch-starter</artifactId>
-            <version>${extremum.common.version}</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -139,7 +126,6 @@
         <dependency>
             <groupId>io.extremum</groupId>
             <artifactId>extremum-test-harness</artifactId>
-            <version>${extremum.common.version}</version>
             <scope>test</scope>
         </dependency>
 
@@ -153,21 +139,18 @@
         <dependency>
             <groupId>io.extremum</groupId>
             <artifactId>extremum-jpa-starter</artifactId>
-            <version>${extremum.common.version}</version>
         </dependency>
 
         <!-- Adding extremum-common Elasticsearch support -->
         <dependency>
             <groupId>io.extremum</groupId>
             <artifactId>extremum-elasticsearch-starter</artifactId>
-            <version>${extremum.common.version}</version>
         </dependency>
 
         <!-- Adding Extremum Everything-Everything framework support -->
         <dependency>
             <groupId>io.extremum</groupId>
             <artifactId>extremum-everything-starter</artifactId>
-            <version>${extremum.common.version}</version>
         </dependency>
     </dependencies>
 
