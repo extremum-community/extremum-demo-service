@@ -6,7 +6,6 @@
         <groupId>io.extremum</groupId>
         <artifactId>extremum-app-parent</artifactId>
         <version>1.0.9-SNAPSHOT</version>
-        <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>io.extremum</groupId>
     <artifactId>extremum-demo-service</artifactId>
@@ -32,15 +31,15 @@
         <dependencies>
             <!-- If you don't want to use extremum-app-parent as a parent POM, please uncomment the following
                  to use dependencies tailored to extremum-common -->
-<!--
-            <dependency>
-                <groupId>io.extremum</groupId>
-                <artifactId>extremum-bom</artifactId>
-                <version>${extremum.common.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
--->
+            <!--
+                        <dependency>
+                            <groupId>io.extremum</groupId>
+                            <artifactId>extremum-bom</artifactId>
+                            <version>${extremum.common.version}</version>
+                            <type>pom</type>
+                            <scope>import</scope>
+                        </dependency>
+            -->
         </dependencies>
     </dependencyManagement>
 
@@ -151,6 +150,13 @@
         <dependency>
             <groupId>io.extremum</groupId>
             <artifactId>extremum-everything-starter</artifactId>
+        </dependency>
+
+        <!--   Add auth-server behavior into demo-app. ONLY FOR TEST CASES!     -->
+        <dependency>
+            <groupId>io.extremum</groupId>
+            <artifactId>authentication-server-starter</artifactId>
+            <version>${extremum.auth.version}</version>
         </dependency>
     </dependencies>
 

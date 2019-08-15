@@ -46,3 +46,9 @@ custom:
   watch:
     subscription-time-to-live-days: 1
     subscription-idle-time-days: 1
+  sms:
+    api-key: test
+    url: test
+  email:
+    api-key: test
+    url: test
