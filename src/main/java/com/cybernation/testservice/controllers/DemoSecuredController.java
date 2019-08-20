@@ -6,6 +6,7 @@ import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -28,5 +29,10 @@ public class DemoSecuredController {
     @GetMapping("/req_anonym")
     public ResponseEntity<String> requireAnonymRole() {
         return ResponseEntity.ok("You have anonym role!");
+    }
+
+    @RequestMapping(value = "/test_options",method = RequestMethod.OPTIONS)
+    public ResponseEntity<String> optionsTrySecured() {
+        return ResponseEntity.ok("OPTIONS not need to be secured!");
     }
 }
