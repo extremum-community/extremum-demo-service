@@ -1,10 +1,8 @@
 package com.cybernation.testservice;
 
-import com.cybernation.testservice.Authenticator;
-import com.cybernation.testservice.BaseApplicationTests;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import io.extremum.common.response.Response;
 import io.extremum.common.response.ResponseStatusEnum;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -22,7 +20,7 @@ import static org.junit.jupiter.api.TestInstance.Lifecycle;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureWebTestClient
 @TestInstance(Lifecycle.PER_CLASS)
-class SecuredControllerDemoTest extends BaseApplicationTests {
+class DemoSecuredControllerTest extends BaseApplicationTests {
     @Autowired
     private WebTestClient webTestClient;
 
@@ -95,5 +93,15 @@ class SecuredControllerDemoTest extends BaseApplicationTests {
                 .expectStatus().is2xxSuccessful()
                 .expectBody(String.class)
                 .isEqualTo("You have anonym role!");
+    }
+
+    @Test
+    void testOptionsNotSecured() {
+        webTestClient.options()
+                .uri("/api/auth/test_options")
+                .exchange()
+                .expectStatus().is2xxSuccessful()
+                .expectBody(String.class)
+                .isEqualTo("OPTIONS not need to be secured!");
     }
 }
