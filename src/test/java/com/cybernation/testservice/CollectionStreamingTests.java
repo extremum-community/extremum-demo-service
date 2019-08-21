@@ -90,7 +90,6 @@ class CollectionStreamingTests extends BaseApplicationTests {
                 .exchange()
                 .expectStatus().is2xxSuccessful()
                 .expectBodyList(HouseResponseDto.class)
-                .value(System.out::println)
                 .returnResult()
                 .getResponseBody();
     }
@@ -103,7 +102,6 @@ class CollectionStreamingTests extends BaseApplicationTests {
                 .exchange()
                 .expectStatus().is2xxSuccessful()
                 .expectBody(Response.class)
-                .value(System.out::println)
                 .value(isSuccessful())
                 .returnResult()
                 .getResponseBody().getResult();
@@ -134,7 +132,6 @@ class CollectionStreamingTests extends BaseApplicationTests {
                 .exchange()
                 .expectStatus().is2xxSuccessful()
                 .expectBodyList(HouseResponseDto.class)
-                .value(System.out::println)
                 .returnResult()
                 .getResponseBody();
 
