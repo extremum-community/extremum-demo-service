@@ -5,6 +5,7 @@ import com.cybernation.testservice.models.jpa.persistable.Employee;
 import com.cybernation.testservice.services.jpa.DepartmentService;
 import io.extremum.common.response.Response;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -53,46 +54,26 @@ class JpaCollectionTests extends BaseApplicationTests {
         department = departmentService.create(department);
     }
 
-    @SuppressWarnings({"unchecked", "ConstantConditions"})
     @Test
     void fetchAnAutoCollection() {
-
-        Map<String, Object> departmentMap = (Map<String, Object>) webTestClient.get()
-                .uri("/" + department.getUuid())
-                .header(HttpHeaders.AUTHORIZATION, bearer(anonToken))
-                .exchange()
-                .expectStatus().is2xxSuccessful()
-                .expectBody(Response.class)
-                .value(System.out::println)
-                .value(isSuccessful())
-                .returnResult()
-                .getResponseBody().getResult();
-
-        Map<String, Object> employeesMap = (Map<String, Object>) departmentMap.get("employees");
-        String employeesCollectionUrl = (String) employeesMap.get("url");
-        assertNotNull(employeesCollectionUrl);
-
-        // encoding query parameters manually because WebTestClient does not encode + sign
-        // by default, and the default servlet container does decode it
-        List<Map<String, Object>> employees = (List<Map<String, Object>>) webTestClient.get()
-                .uri(employeesCollectionUrl)
-                .header(HttpHeaders.AUTHORIZATION,bearer(anonToken))
-                .exchange()
-                .expectStatus().is2xxSuccessful()
-                .expectBody(Response.class)
-                .value(System.out::println)
-                .returnResult()
-                .getResponseBody().getResult();
-
-        assertThat(employees, hasSize(2));
-        assertThat(employees.get(0).get("department"), is(equalTo(department.getUuid().getExternalId())));
-        assertThat(employees.get(1).get("department"), is(equalTo(department.getUuid().getExternalId())));
+        fetchCollectionOfEmployeesAndAssertItContainsTimAndAnn("employees");
     }
 
-    @SuppressWarnings({"unchecked", "ConstantConditions"})
     @Test
     void fetchACollectionWithCustomFetcher() {
-        Map<String, Object> departmentMap = (Map<String, Object>) webTestClient.get()
+        fetchCollectionOfEmployeesAndAssertItContainsTimAndAnn("customEmployees");
+    }
+
+    private void fetchCollectionOfEmployeesAndAssertItContainsTimAndAnn(String employeeCollectionAttributeName) {
+        Map<String, Object> departmentMap = getDepartment();
+        String employeesCollectionUrl = getEmployeesCollectionUrl(employeeCollectionAttributeName, departmentMap);
+        List<Map<String, Object>> employees = fetchEmployees(employeesCollectionUrl);
+
+        assertThatTimAndAnnAreReturned(employees);
+    }
+
+    private Map<String, Object> getDepartment() {
+        Response response = webTestClient.get()
                 .uri("/" + department.getUuid())
                 .header(HttpHeaders.AUTHORIZATION, bearer(anonToken))
                 .exchange()
@@ -101,26 +82,51 @@ class JpaCollectionTests extends BaseApplicationTests {
                 .value(System.out::println)
                 .value(isSuccessful())
                 .returnResult()
-                .getResponseBody().getResult();
+                .getResponseBody();
+        assertThat(response, is(notNullValue()));
 
-        Map<String, Object> employeesMap = (Map<String, Object>) departmentMap.get("customEmployees");
+        @SuppressWarnings("unchecked")
+        Map<String, Object> castResult = (Map<String, Object>) response.getResult();
+        return castResult;
+    }
+
+    @NotNull
+    private String getEmployeesCollectionUrl(String employeeCollectionAttributeName,
+                                             Map<String, Object> departmentMap) {
+        @SuppressWarnings("unchecked")
+        Map<String, Object> employeesMap = (Map<String, Object>) departmentMap.get(employeeCollectionAttributeName);
         String employeesCollectionUrl = (String) employeesMap.get("url");
         assertNotNull(employeesCollectionUrl);
+        return employeesCollectionUrl;
+    }
 
+    private List<Map<String, Object>> fetchEmployees(String employeesCollectionUrl) {
         // encoding query parameters manually because WebTestClient does not encode + sign
         // by default, and the default servlet container does decode it
-        List<Map<String, Object>> employees = (List<Map<String, Object>>) webTestClient.get()
+        Response response = webTestClient.get()
                 .uri(employeesCollectionUrl)
-                .header(HttpHeaders.AUTHORIZATION,bearer(anonToken))
+                .header(HttpHeaders.AUTHORIZATION, bearer(anonToken))
                 .exchange()
                 .expectStatus().is2xxSuccessful()
                 .expectBody(Response.class)
                 .value(System.out::println)
                 .returnResult()
-                .getResponseBody().getResult();
+                .getResponseBody();
+        assertThat(response, is(notNullValue()));
 
+        @SuppressWarnings("unchecked")
+        List<Map<String, Object>> caseResult = (List<Map<String, Object>>) response.getResult();
+        return caseResult;
+    }
+
+    private void assertThatTimAndAnnAreReturned(List<Map<String, Object>> employees) {
         assertThat(employees, hasSize(2));
-        assertThat(employees.get(0).get("department"), is(equalTo(department.getUuid().getExternalId())));
-        assertThat(employees.get(1).get("department"), is(equalTo(department.getUuid().getExternalId())));
+        assertThatEmployeeIsAsExpected(employees.get(0), "Tim");
+        assertThatEmployeeIsAsExpected(employees.get(1), "Ann");
+    }
+
+    private void assertThatEmployeeIsAsExpected(Map<String, Object> employee, String expectedName) {
+        assertThat(employee.get("name"), is(expectedName));
+        assertThat(employee.get("department"), is(equalTo(department.getUuid().getExternalId())));
     }
 }

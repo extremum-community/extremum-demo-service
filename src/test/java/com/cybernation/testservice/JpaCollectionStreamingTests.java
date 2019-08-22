@@ -119,15 +119,15 @@ class JpaCollectionStreamingTests extends BaseApplicationTests {
                 .getResponseBody();
     }
 
-    private void assertThatEmployeeIsAsExpected(String expectedName, String employeeJson) throws JSONException {
-        JSONObject firstEmployee = new JSONObject(employeeJson);
-        assertThat(firstEmployee.getString("name"), is(expectedName));
-        assertThat(firstEmployee.getString("department"), is(equalTo(department.getUuid().getExternalId())));
-    }
-
     private void assertThatTimAndAnnAreReturned(List<String> employeesJsons) throws JSONException {
         assertThat(employeesJsons, hasSize(2));
         assertThatEmployeeIsAsExpected("Tim", employeesJsons.get(0));
         assertThatEmployeeIsAsExpected("Ann", employeesJsons.get(1));
+    }
+
+    private void assertThatEmployeeIsAsExpected(String expectedName, String employeeJson) throws JSONException {
+        JSONObject firstEmployee = new JSONObject(employeeJson);
+        assertThat(firstEmployee.getString("name"), is(expectedName));
+        assertThat(firstEmployee.getString("department"), is(equalTo(department.getUuid().getExternalId())));
     }
 }
