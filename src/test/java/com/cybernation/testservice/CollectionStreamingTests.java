@@ -1,5 +1,6 @@
 package com.cybernation.testservice;
 
+import com.cybernation.testservice.dto.HouseResponseDto;
 import com.cybernation.testservice.models.mongo.House;
 import com.cybernation.testservice.models.mongo.Street;
 import com.cybernation.testservice.services.mongo.HouseService;
@@ -7,7 +8,6 @@ import com.cybernation.testservice.services.mongo.StreetService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.common.collect.ImmutableMap;
 import io.extremum.common.response.Response;
-import io.extremum.common.response.ResponseStatusEnum;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -15,10 +15,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -27,15 +27,15 @@ import java.util.Map;
 import static com.cybernation.testservice.Authorization.bearer;
 import static com.cybernation.testservice.ResponseAssert.isSuccessful;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @AutoConfigureWebTestClient
-class MongoCollectionTests extends BaseApplicationTests {
+class CollectionStreamingTests extends BaseApplicationTests {
     @Autowired
     private WebTestClient webTestClient;
 
@@ -54,45 +54,28 @@ class MongoCollectionTests extends BaseApplicationTests {
         anonToken = new Authenticator(webTestClient).obtainAnonAuthToken();
     }
 
-    @SuppressWarnings("unchecked")
     @Test
-    void fetchACollectionById() throws Exception {
-        List<Object> housesCollectionList = create2HousesAnd1StreetAndObtainHousesFromStreetHousesCollection(
+    void streamAMongoCollectionById() throws Exception {
+        List<HouseResponseDto> housesCollectionList = create2HousesAnd1StreetAndStreamHousesFromStreetHousesCollection(
                 Collections.emptyMap());
 
         assertThat(housesCollectionList, hasSize(2));
-        Map<String, Object> houseMap = (Map<String, Object>) housesCollectionList.get(0);
-        assertThat(houseMap.get("id"), is(equalTo(house1.getUuid().getExternalId())));
-        assertThat(houseMap.get("number"), is("1"));
+        HouseResponseDto firstHouse = housesCollectionList.get(0);
+        assertThat(firstHouse.getId().getExternalId(), is(equalTo(house1.getUuid().getExternalId())));
+        assertThat(firstHouse.getNumber(), is("1"));
     }
 
-    @SuppressWarnings("unchecked")
-    private List<Object> create2HousesAnd1StreetAndObtainHousesFromStreetHousesCollection(
+    private List<HouseResponseDto> create2HousesAnd1StreetAndStreamHousesFromStreetHousesCollection(
             Map<String, String> queryParams) throws Exception {
-        Response response = create2HousesAnd1StreetAndObtainHousesFromStreetHousesCollectionResponse(queryParams);
-        return (List<Object>) response.getResult();
-    }
-
-    @SuppressWarnings("unchecked")
-    private Response create2HousesAnd1StreetAndObtainHousesFromStreetHousesCollectionResponse(
-            Map<String, String> queryParams) throws URISyntaxException {
         house1 = houseService.create(new House("1"));
         house2 = houseService.create(new House("2a"));
 
         Street street = streetService.create(new Street("Test avenue",
                 Arrays.asList(house1.getId().toString(), house2.getId().toString())));
 
-        Map<String, Object> streetMap = (Map<String, Object>) webTestClient.get()
-                .uri("/" + street.getUuid())
-                .header(HttpHeaders.AUTHORIZATION, bearer(anonToken))
-                .exchange()
-                .expectStatus().is2xxSuccessful()
-                .expectBody(Response.class)
-                .value(System.out::println)
-                .value(isSuccessful())
-                .returnResult()
-                .getResponseBody().getResult();
+        Map<String, Object> streetMap = getStreet(street);
 
+        @SuppressWarnings("unchecked")
         Map<String, Object> housesMap = (Map<String, Object>) streetMap.get("houses");
         String housesCollectionUrl = (String) housesMap.get("url");
         assertNotNull(housesCollectionUrl);
@@ -102,19 +85,31 @@ class MongoCollectionTests extends BaseApplicationTests {
         URI uri = TestUris.buildUriWithEncodedQueryString(queryParams, housesCollectionUrl);
         return webTestClient.get()
                 .uri(uri)
+                .accept(MediaType.TEXT_EVENT_STREAM)
                 .header(HttpHeaders.AUTHORIZATION,bearer(anonToken))
                 .exchange()
                 .expectStatus().is2xxSuccessful()
-                .expectBody(Response.class)
-                .value(System.out::println)
+                .expectBodyList(HouseResponseDto.class)
                 .returnResult()
                 .getResponseBody();
     }
 
     @SuppressWarnings("unchecked")
+    private Map<String, Object> getStreet(Street street) {
+        return (Map<String, Object>) webTestClient.get()
+                .uri("/" + street.getUuid())
+                .header(HttpHeaders.AUTHORIZATION, bearer(anonToken))
+                .exchange()
+                .expectStatus().is2xxSuccessful()
+                .expectBody(Response.class)
+                .value(isSuccessful())
+                .returnResult()
+                .getResponseBody().getResult();
+    }
+
     @Test
-    void fetchACollectionByIdWithProjection() throws Exception {
-        List<Object> housesCollectionList = create2HousesAnd1StreetAndObtainHousesFromStreetHousesCollection(
+    void streamAMontoCollectionByIdWithProjection() throws Exception {
+        List<HouseResponseDto> housesCollectionList = create2HousesAnd1StreetAndStreamHousesFromStreetHousesCollection(
                 ImmutableMap.of(
                         "offset", "1",
                         "limit", "10",
@@ -123,38 +118,23 @@ class MongoCollectionTests extends BaseApplicationTests {
                 ));
 
         assertThat(housesCollectionList, hasSize(1));
-        Map<String, Object> houseMap = (Map<String, Object>) housesCollectionList.get(0);
-        assertThat(houseMap.get("id"), is(equalTo(house2.getUuid().getExternalId())));
-        assertThat(houseMap.get("number"), is("2a"));
+        HouseResponseDto house = housesCollectionList.get(0);
+        assertThat(house.getId().getExternalId(), is(equalTo(house2.getUuid().getExternalId())));
+        assertThat(house.getNumber(), is("2a"));
     }
 
     @Test
-    void fetchANonExistentCollection() {
-        Response response = webTestClient.get()
+    void streamANonExistentCollection() {
+        List<HouseResponseDto> houses = webTestClient.get()
                 .uri("/collection/no-such-collection")
+                .accept(MediaType.TEXT_EVENT_STREAM)
                 .header(HttpHeaders.AUTHORIZATION,bearer(anonToken))
                 .exchange()
                 .expectStatus().is2xxSuccessful()
-                .expectBody(Response.class)
-                .value(System.out::println)
+                .expectBodyList(HouseResponseDto.class)
                 .returnResult()
                 .getResponseBody();
 
-        assertThat(response, is(notNullValue()));
-        assertThat(response.getStatus(), is(ResponseStatusEnum.FAIL));
-        assertThat(response.getCode(), is(404));
-    }
-
-    @Test
-    void testThatPaginationIsReturned() throws Exception {
-        Response response = create2HousesAnd1StreetAndObtainHousesFromStreetHousesCollectionResponse(
-                Collections.emptyMap());
-
-        assertThat(response.getPagination(), is(notNullValue()));
-        assertThat(response.getPagination().getCount(), is(2));
-        assertThat(response.getPagination().getOffset(), is(0));
-        assertThat(response.getPagination().getTotal(), is(2L));
-        assertThat(response.getPagination().getSince(), is(nullValue()));
-        assertThat(response.getPagination().getUntil(), is(nullValue()));
+        assertThat(houses, hasSize(0));
     }
 }
