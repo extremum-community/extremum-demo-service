@@ -3,8 +3,10 @@ package com.cybernation.testservice;
 import com.cybernation.testservice.models.jpa.persistable.Department;
 import com.cybernation.testservice.models.jpa.persistable.Employee;
 import com.cybernation.testservice.services.jpa.DepartmentService;
-import io.extremum.common.response.Response;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import io.extremum.common.response.Response;
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import java.util.List;
@@ -28,7 +31,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @AutoConfigureWebTestClient
-class JpaCollectionTests extends BaseApplicationTests {
+class JpaCollectionStreamingTests extends BaseApplicationTests {
     @Autowired
     private WebTestClient webTestClient;
 
@@ -55,21 +58,22 @@ class JpaCollectionTests extends BaseApplicationTests {
     }
 
     @Test
-    void fetchAnAutoCollection() {
-        fetchCollectionOfEmployeesAndAssertItContainsTimAndAnn("employees");
+    void streamAnAutoCollection() throws Exception {
+        streamCollectionOfEmployeesAndAssertItContainsTimAndAnn("employees");
     }
 
     @Test
-    void fetchACollectionWithCustomFetcher() {
-        fetchCollectionOfEmployeesAndAssertItContainsTimAndAnn("customEmployees");
+    void streamACollectionWithCustomFetcher() throws Exception {
+        streamCollectionOfEmployeesAndAssertItContainsTimAndAnn("customEmployees");
     }
 
-    private void fetchCollectionOfEmployeesAndAssertItContainsTimAndAnn(String employeeCollectionAttributeName) {
+    private void streamCollectionOfEmployeesAndAssertItContainsTimAndAnn(String employeeCollectionAttributeName)
+            throws JSONException {
         Map<String, Object> departmentMap = getDepartment();
         String employeesCollectionUrl = getEmployeesCollectionUrl(employeeCollectionAttributeName, departmentMap);
-        List<Map<String, Object>> employees = fetchEmployees(employeesCollectionUrl);
+        List<String> employeesJsons = getEmployeesJsons(employeesCollectionUrl);
 
-        assertThatTimAndAnnAreReturned(employees);
+        assertThatTimAndAnnAreReturned(employeesJsons);
     }
 
     private Map<String, Object> getDepartment() {
@@ -100,33 +104,30 @@ class JpaCollectionTests extends BaseApplicationTests {
         return employeesCollectionUrl;
     }
 
-    private List<Map<String, Object>> fetchEmployees(String employeesCollectionUrl) {
+    private List<String> getEmployeesJsons(String employeesCollectionUrl) {
         // encoding query parameters manually because WebTestClient does not encode + sign
         // by default, and the default servlet container does decode it
-        Response response = webTestClient.get()
+        return webTestClient.get()
                 .uri(employeesCollectionUrl)
+                .accept(MediaType.TEXT_EVENT_STREAM)
                 .header(HttpHeaders.AUTHORIZATION, bearer(anonToken))
                 .exchange()
                 .expectStatus().is2xxSuccessful()
-                .expectBody(Response.class)
+                .expectBodyList(String.class)
                 .value(System.out::println)
                 .returnResult()
                 .getResponseBody();
-        assertThat(response, is(notNullValue()));
-
-        @SuppressWarnings("unchecked")
-        List<Map<String, Object>> caseResult = (List<Map<String, Object>>) response.getResult();
-        return caseResult;
     }
 
-    private void assertThatTimAndAnnAreReturned(List<Map<String, Object>> employees) {
-        assertThat(employees, hasSize(2));
-        assertThatEmployeeIsAsExpected(employees.get(0), "Tim");
-        assertThatEmployeeIsAsExpected(employees.get(1), "Ann");
+    private void assertThatTimAndAnnAreReturned(List<String> employeesJsons) throws JSONException {
+        assertThat(employeesJsons, hasSize(2));
+        assertThatEmployeeIsAsExpected("Tim", employeesJsons.get(0));
+        assertThatEmployeeIsAsExpected("Ann", employeesJsons.get(1));
     }
 
-    private void assertThatEmployeeIsAsExpected(Map<String, Object> employee, String expectedName) {
-        assertThat(employee.get("name"), is(expectedName));
-        assertThat(employee.get("department"), is(equalTo(department.getUuid().getExternalId())));
+    private void assertThatEmployeeIsAsExpected(String expectedName, String employeeJson) throws JSONException {
+        JSONObject firstEmployee = new JSONObject(employeeJson);
+        assertThat(firstEmployee.getString("name"), is(expectedName));
+        assertThat(firstEmployee.getString("department"), is(equalTo(department.getUuid().getExternalId())));
     }
 }

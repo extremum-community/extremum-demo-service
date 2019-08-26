@@ -35,7 +35,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @AutoConfigureWebTestClient
-class CollectionStreamingTests extends BaseApplicationTests {
+class MongoCollectionStreamingTests extends BaseApplicationTests {
     @Autowired
     private WebTestClient webTestClient;
 
