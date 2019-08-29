@@ -4,14 +4,17 @@ import com.cybernation.testservice.dto.EmployeeRequestDto;
 import com.cybernation.testservice.dto.EmployeeResponseDto;
 import com.cybernation.testservice.models.jpa.persistable.Employee;
 import io.extremum.common.dto.converters.ConversionConfig;
+import io.extremum.common.dto.converters.ReactiveToResponseDtoConverter;
 import io.extremum.common.dto.converters.ToRequestDtoConverter;
 import io.extremum.common.dto.converters.ToResponseDtoConverter;
 import io.extremum.sharedmodels.basic.IdOrObject;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Mono;
 
 @Service
 public class EmployeeConverter implements ToRequestDtoConverter<Employee, EmployeeRequestDto>,
-        ToResponseDtoConverter<Employee, EmployeeResponseDto> {
+        ToResponseDtoConverter<Employee, EmployeeResponseDto>,
+        ReactiveToResponseDtoConverter<Employee, EmployeeResponseDto> {
 
     public Employee convertFromRequest(EmployeeRequestDto dto) {
         if (dto == null) {
@@ -45,6 +48,12 @@ public class EmployeeConverter implements ToRequestDtoConverter<Employee, Employ
     @Override
     public Class<? extends EmployeeRequestDto> getRequestDtoType() {
         return EmployeeRequestDto.class;
+    }
+
+    @Override
+    public Mono<EmployeeResponseDto> convertToResponseReactively(Employee employee,
+                                                                 ConversionConfig conversionConfig) {
+        return Mono.just(convertToResponse(employee, conversionConfig));
     }
 
     @Override

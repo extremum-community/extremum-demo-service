@@ -5,15 +5,18 @@ import com.cybernation.testservice.dto.HouseRequestDto;
 import com.cybernation.testservice.dto.HouseResponseDto;
 import com.cybernation.testservice.services.mongo.HouseService;
 import io.extremum.common.dto.converters.ConversionConfig;
+import io.extremum.common.dto.converters.ReactiveToResponseDtoConverter;
 import io.extremum.common.dto.converters.ToRequestDtoConverter;
 import io.extremum.common.dto.converters.ToResponseDtoConverter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Mono;
 
 @Service
 @RequiredArgsConstructor
 public class HouseConverter implements ToRequestDtoConverter<House, HouseRequestDto>,
-        ToResponseDtoConverter<House, HouseResponseDto> {
+        ToResponseDtoConverter<House, HouseResponseDto>,
+        ReactiveToResponseDtoConverter<House, HouseResponseDto> {
     private final HouseService houseService;
 
     public House convertFromRequest(HouseRequestDto dto) {
@@ -47,6 +50,11 @@ public class HouseConverter implements ToRequestDtoConverter<House, HouseRequest
     @Override
     public Class<? extends HouseRequestDto> getRequestDtoType() {
         return HouseRequestDto.class;
+    }
+
+    @Override
+    public Mono<HouseResponseDto> convertToResponseReactively(House house, ConversionConfig conversionConfig) {
+        return Mono.just(convertToResponse(house, conversionConfig));
     }
 
     @Override
