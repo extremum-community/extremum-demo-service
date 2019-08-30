@@ -126,7 +126,7 @@ class MongoCollectionStreamingTests extends BaseApplicationTests {
     @Test
     void streamANonExistentCollection() {
         List<HouseResponseDto> houses = webTestClient.get()
-                .uri("/collection/no-such-collection")
+                .uri("/no-such-collection")
                 .accept(MediaType.TEXT_EVENT_STREAM)
                 .header(HttpHeaders.AUTHORIZATION,bearer(anonToken))
                 .exchange()

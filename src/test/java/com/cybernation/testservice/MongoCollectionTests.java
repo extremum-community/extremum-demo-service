@@ -131,7 +131,7 @@ class MongoCollectionTests extends BaseApplicationTests {
     @Test
     void fetchANonExistentCollection() {
         Response response = webTestClient.get()
-                .uri("/collection/no-such-collection")
+                .uri("/no-such-collection")
                 .header(HttpHeaders.AUTHORIZATION,bearer(anonToken))
                 .exchange()
                 .expectStatus().is2xxSuccessful()
