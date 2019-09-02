@@ -5,17 +5,17 @@ import io.extremum.common.dto.converters.ToResponseDtoConverter;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CommonModelOneConverter implements ToResponseDtoConverter<CommonModelOne, CommonResponseDto> {
+public class CommonModelOneConverter implements ToResponseDtoConverter<CommonModelOne, TestResponseDto> {
     @Override
-    public CommonResponseDto convertToResponse(CommonModelOne commonModelOne, ConversionConfig conversionConfig) {
-        CommonResponseDto commonResponseDto = new CommonResponseDto();
-        commonResponseDto.setName(commonModelOne.getName());
-        return commonResponseDto;
+    public TestResponseDto convertToResponse(CommonModelOne commonModelOne, ConversionConfig conversionConfig) {
+        TestResponseDto testResponseDto = new TestResponseDto();
+        testResponseDto.setName(commonModelOne.getName());
+        return testResponseDto;
     }
 
     @Override
-    public Class<? extends CommonResponseDto> getResponseDtoType() {
-        return CommonResponseDto.class;
+    public Class<? extends TestResponseDto> getResponseDtoType() {
+        return TestResponseDto.class;
     }
 
     @Override

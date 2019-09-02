@@ -2,7 +2,7 @@ package com.cybernation.testservice.services.jpa;
 
 import com.cybernation.testservice.dao.jpa.DepartmentDao;
 import com.cybernation.testservice.models.jpa.persistable.Department;
-import io.extremum.jpa.services.impl.PostgresCommonServiceImpl;
+import io.extremum.jpa.service.impl.PostgresCommonServiceImpl;
 import org.springframework.stereotype.Service;
 
 /**

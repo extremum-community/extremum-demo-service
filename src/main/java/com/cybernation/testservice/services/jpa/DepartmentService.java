@@ -1,7 +1,7 @@
 package com.cybernation.testservice.services.jpa;
 
 import com.cybernation.testservice.models.jpa.persistable.Department;
-import io.extremum.jpa.services.PostgresCommonService;
+import io.extremum.jpa.service.PostgresCommonService;
 
 /**
  * @author rpuch

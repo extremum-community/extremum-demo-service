@@ -1,7 +1,7 @@
 package com.cybernation.testservice.dao.mongo;
 
 import com.cybernation.testservice.models.mongo.House;
-import io.extremum.common.dao.MongoCommonDao;
+import io.extremum.mongo.dao.MongoCommonDao;
 
 /**
  * @author rpuch

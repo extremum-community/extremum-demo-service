@@ -2,7 +2,8 @@ package com.cybernation.testservice.services.jpa;
 
 import com.cybernation.testservice.dao.jpa.SwarmDao;
 import com.cybernation.testservice.models.jpa.basic.Swarm;
-import io.extremum.jpa.services.impl.PostgresBasicServiceImpl;
+
+import io.extremum.jpa.service.impl.PostgresBasicServiceImpl;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 

@@ -1,8 +1,8 @@
 package com.cybernation.testservice.models.jpa.persistable;
 
-import io.extremum.common.models.annotation.ModelName;
+import io.extremum.common.model.annotation.ModelName;
+import io.extremum.jpa.model.SoftDeletePostgresModel;
 import io.extremum.security.NoDataSecurity;
-import io.extremum.jpa.models.SoftDeletePostgresModel;
 import lombok.Getter;
 import lombok.Setter;
 

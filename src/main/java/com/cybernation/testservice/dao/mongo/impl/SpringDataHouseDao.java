@@ -2,7 +2,7 @@ package com.cybernation.testservice.dao.mongo.impl;
 
 import com.cybernation.testservice.dao.mongo.HouseDao;
 import com.cybernation.testservice.models.mongo.House;
-import io.extremum.common.dao.impl.SpringDataMongoCommonDao;
+import io.extremum.mongo.dao.impl.SpringDataMongoCommonDao;
 import org.springframework.stereotype.Repository;
 
 /**
