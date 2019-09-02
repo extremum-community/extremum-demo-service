@@ -1,8 +1,8 @@
 package com.cybernation.testservice.models.mongo;
 
 import io.extremum.authentication.api.Roles;
-import io.extremum.common.models.MongoCommonModel;
-import io.extremum.common.models.annotation.ModelName;
+import io.extremum.common.model.annotation.ModelName;
+import io.extremum.mongo.model.MongoCommonModel;
 import io.extremum.security.ExtremumRequiredRoles;
 import io.extremum.security.NoDataSecurity;
 import lombok.*;

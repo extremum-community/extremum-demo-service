@@ -3,7 +3,7 @@ package com.cybernation.convert;
 import com.cybernation.convert.config.ResponseConvertConfig;
 import com.cybernation.convert.models.CommonModelOne;
 import com.cybernation.convert.models.CommonModelTwo;
-import com.cybernation.convert.models.CommonResponseDto;
+import com.cybernation.convert.models.TestResponseDto;
 import io.extremum.common.dto.converters.ConversionConfig;
 import io.extremum.common.dto.converters.services.DtoConversionService;
 import org.junit.jupiter.api.Test;
@@ -27,7 +27,7 @@ class ResponseConvertTest {
 
         long count = Stream.of(modelOne, modelTwo)
                 .map(model -> service.convertUnknownToResponseDto(model, config))
-                .filter(responseDto -> responseDto.getClass() == CommonResponseDto.class)
+                .filter(responseDto -> responseDto.getClass() == TestResponseDto.class)
                 .count();
         assertEquals(count, 2);
     }

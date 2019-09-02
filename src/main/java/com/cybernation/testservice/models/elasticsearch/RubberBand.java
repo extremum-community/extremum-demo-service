@@ -1,7 +1,7 @@
 package com.cybernation.testservice.models.elasticsearch;
 
 import io.extremum.authentication.api.Roles;
-import io.extremum.common.models.annotation.ModelName;
+import io.extremum.common.model.annotation.ModelName;
 import io.extremum.elasticsearch.model.ElasticsearchCommonModel;
 import io.extremum.security.ExtremumRequiredRoles;
 import io.extremum.security.NoDataSecurity;

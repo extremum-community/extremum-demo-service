@@ -3,7 +3,7 @@ package com.cybernation.testservice.services.jpa;
 import com.cybernation.testservice.dao.jpa.EmployeeDao;
 import com.cybernation.testservice.models.jpa.persistable.Employee;
 import io.extremum.everything.collection.CollectionFragment;
-import io.extremum.jpa.services.impl.PostgresCommonServiceImpl;
+import io.extremum.jpa.service.impl.PostgresCommonServiceImpl;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

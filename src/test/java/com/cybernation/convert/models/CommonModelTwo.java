@@ -1,7 +1,7 @@
 package com.cybernation.convert.models;
 
-import io.extremum.common.models.Model;
-import io.extremum.common.models.annotation.ModelName;
+import io.extremum.common.model.Model;
+import io.extremum.common.model.annotation.ModelName;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
