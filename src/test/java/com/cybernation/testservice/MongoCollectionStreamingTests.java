@@ -7,7 +7,7 @@ import com.cybernation.testservice.services.mongo.HouseService;
 import com.cybernation.testservice.services.mongo.StreetService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.common.collect.ImmutableMap;
-import io.extremum.common.response.Response;
+import io.extremum.sharedmodels.dto.Response;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
