@@ -6,8 +6,8 @@ import com.cybernation.testservice.services.mongo.HouseService;
 import com.cybernation.testservice.services.mongo.StreetService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.common.collect.ImmutableMap;
-import io.extremum.common.response.Response;
-import io.extremum.common.response.ResponseStatusEnum;
+import io.extremum.sharedmodels.dto.Response;
+import io.extremum.sharedmodels.dto.ResponseStatusEnum;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -118,8 +118,8 @@ class MongoCollectionTests extends BaseApplicationTests {
                 ImmutableMap.of(
                         "offset", "1",
                         "limit", "10",
-                        "since", "2000-04-30T15:20:29.578+0000",
-                        "until", "2100-04-30T15:20:29.578+0000"
+                        "since", "2000-04-30T15:20:29.578000+0000",
+                        "until", "2100-04-30T15:20:29.578900+0000"
                 ));
 
         assertThat(housesCollectionList, hasSize(1));

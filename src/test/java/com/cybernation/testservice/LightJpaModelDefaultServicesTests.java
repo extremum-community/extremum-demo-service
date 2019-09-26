@@ -2,13 +2,13 @@ package com.cybernation.testservice;
 
 import com.cybernation.testservice.models.jpa.basic.Fly;
 import com.cybernation.testservice.services.jpa.FlyService;
-import io.extremum.common.response.Response;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.node.TextNode;
 import com.github.fge.jackson.jsonpointer.JsonPointer;
 import com.github.fge.jsonpatch.JsonPatch;
 import com.github.fge.jsonpatch.JsonPatchOperation;
 import com.github.fge.jsonpatch.ReplaceOperation;
+import io.extremum.sharedmodels.dto.Response;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;

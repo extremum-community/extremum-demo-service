@@ -1,8 +1,9 @@
 package com.cybernation.testservice;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import io.extremum.common.response.Response;
-import io.extremum.common.response.ResponseStatusEnum;
+import io.extremum.authentication.spi.interfaces.TokenVerifier;
+import io.extremum.sharedmodels.dto.Response;
+import io.extremum.sharedmodels.dto.ResponseStatusEnum;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -44,9 +45,11 @@ class DemoSecuredControllerTest extends BaseApplicationTests {
 
     @Test
     void testRequireAuthWithoutBearer() {
+        String tokenWithoutBearer = authToken.substring(TokenVerifier.BEARER_PREFIX_LENGTH);
+
         webTestClient.get()
                 .uri("/api/auth/req_auth")
-                .header(HttpHeaders.AUTHORIZATION, authToken)
+                .header(HttpHeaders.AUTHORIZATION, tokenWithoutBearer)
                 .exchange()
                 .expectStatus().is2xxSuccessful()
                 .expectBody(Response.class)

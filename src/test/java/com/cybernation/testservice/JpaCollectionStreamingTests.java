@@ -4,7 +4,7 @@ import com.cybernation.testservice.models.jpa.persistable.Department;
 import com.cybernation.testservice.models.jpa.persistable.Employee;
 import com.cybernation.testservice.services.jpa.DepartmentService;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import io.extremum.common.response.Response;
+import io.extremum.sharedmodels.dto.Response;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 import org.jetbrains.annotations.NotNull;

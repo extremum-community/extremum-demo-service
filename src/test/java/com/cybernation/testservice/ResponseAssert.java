@@ -1,7 +1,7 @@
 package com.cybernation.testservice;
 
-import io.extremum.common.response.Response;
-import io.extremum.common.response.ResponseStatusEnum;
+import io.extremum.sharedmodels.dto.Response;
+import io.extremum.sharedmodels.dto.ResponseStatusEnum;
 import org.hamcrest.CustomTypeSafeMatcher;
 import org.hamcrest.Matcher;
 
