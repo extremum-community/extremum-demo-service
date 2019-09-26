@@ -200,6 +200,7 @@ class DescriptorsTestServiceApplicationTests extends BaseApplicationTests {
     void removeMongoByDescriptorId() {
         webTestClient.delete()
                 .uri("/" + everythingMongoDescriptorId)
+                .header(HttpHeaders.AUTHORIZATION, bearer(anonToken))
                 .exchange()
                 .expectStatus().is2xxSuccessful();
     }
