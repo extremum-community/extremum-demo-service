@@ -5,7 +5,7 @@ import com.cybernation.testservice.models.jpa.basic.Swarm;
 import com.cybernation.testservice.services.jpa.FlyService;
 import io.extremum.everything.collection.CollectionFragment;
 import io.extremum.everything.collection.Projection;
-import io.extremum.everything.services.CollectionFetcher;
+import io.extremum.everything.services.OwnedCollectionFetcher;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @RequiredArgsConstructor
-public class SwarmCustomFliesFetcher implements CollectionFetcher<Swarm, Fly> {
+public class SwarmCustomFliesFetcher implements OwnedCollectionFetcher<Swarm, Fly> {
     private final FlyService flyService;
 
     @Override

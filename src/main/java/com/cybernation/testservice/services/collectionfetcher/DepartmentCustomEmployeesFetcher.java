@@ -5,7 +5,7 @@ import com.cybernation.testservice.models.jpa.persistable.Employee;
 import com.cybernation.testservice.services.jpa.EmployeeService;
 import io.extremum.everything.collection.CollectionFragment;
 import io.extremum.everything.collection.Projection;
-import io.extremum.everything.services.CollectionFetcher;
+import io.extremum.everything.services.OwnedCollectionFetcher;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @RequiredArgsConstructor
-public class DepartmentCustomEmployeesFetcher implements CollectionFetcher<Department, Employee> {
+public class DepartmentCustomEmployeesFetcher implements OwnedCollectionFetcher<Department, Employee> {
     private final EmployeeService employeeService;
 
     @Override
