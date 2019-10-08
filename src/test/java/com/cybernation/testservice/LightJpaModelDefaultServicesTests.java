@@ -23,6 +23,7 @@ import java.util.Collections;
 import java.util.Map;
 
 import static com.cybernation.testservice.Authorization.bearer;
+import static com.cybernation.testservice.UrlPrefix.prefix;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -60,7 +61,7 @@ class LightJpaModelDefaultServicesTests extends BaseApplicationTests {
     @SuppressWarnings("unchecked")
     private Map<String, Object> retrieveViaEverythingGetSuccessfully() {
         return (Map<String, Object>) webTestClient.get()
-                .uri("/" + flyExternalId())
+                .uri(prefix("/" + flyExternalId()))
                 .header(HttpHeaders.AUTHORIZATION, bearer(anonToken))
                 .exchange()
                 .expectStatus().is2xxSuccessful()
@@ -83,7 +84,7 @@ class LightJpaModelDefaultServicesTests extends BaseApplicationTests {
         JsonPatch jsonPatch = new JsonPatch(Collections.singletonList(operation));
 
         Map<String, Object> responseBody = (Map<String, Object>) webTestClient.patch()
-                .uri("/" + flyExternalId())
+                .uri(prefix("/" + flyExternalId()))
                 .header(HttpHeaders.AUTHORIZATION, bearer(anonToken))
                 .body(BodyInserters.fromObject(jsonPatch))
                 .exchange()
@@ -103,7 +104,7 @@ class LightJpaModelDefaultServicesTests extends BaseApplicationTests {
     @Test
     void givenAModelIsAlreadyDeleted_whenDeletingIt_thenShouldReturn404() {
         webTestClient.delete()
-                .uri("/" + flyExternalId())
+                .uri(prefix("/" + flyExternalId()))
                 .header(HttpHeaders.AUTHORIZATION, bearer(anonToken))
                 .exchange()
                 .expectStatus().is2xxSuccessful()
@@ -112,7 +113,7 @@ class LightJpaModelDefaultServicesTests extends BaseApplicationTests {
                 .value(ResponseAssert.isSuccessful());
 
         Response response = webTestClient.get()
-                .uri("/" + flyExternalId())
+                .uri(prefix("/" + flyExternalId()))
                 .header(HttpHeaders.AUTHORIZATION, bearer(anonToken))
                 .exchange()
                 .expectStatus().is2xxSuccessful()

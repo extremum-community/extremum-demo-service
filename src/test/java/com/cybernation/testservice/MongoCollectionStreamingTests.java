@@ -19,13 +19,11 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import java.net.URI;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.cybernation.testservice.Authorization.bearer;
 import static com.cybernation.testservice.ResponseAssert.isSuccessful;
+import static com.cybernation.testservice.UrlPrefix.prefix;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -97,7 +95,7 @@ class MongoCollectionStreamingTests extends BaseApplicationTests {
     @SuppressWarnings("unchecked")
     private Map<String, Object> getStreet(Street street) {
         return (Map<String, Object>) webTestClient.get()
-                .uri("/" + street.getUuid())
+                .uri(prefix("/" + street.getUuid()))
                 .header(HttpHeaders.AUTHORIZATION, bearer(anonToken))
                 .exchange()
                 .expectStatus().is2xxSuccessful()
@@ -126,7 +124,7 @@ class MongoCollectionStreamingTests extends BaseApplicationTests {
     @Test
     void streamANonExistentCollection() {
         List<HouseResponseDto> houses = webTestClient.get()
-                .uri("/no-such-collection")
+                .uri(prefix("/" + UUID.randomUUID()))
                 .accept(MediaType.TEXT_EVENT_STREAM)
                 .header(HttpHeaders.AUTHORIZATION,bearer(anonToken))
                 .exchange()
