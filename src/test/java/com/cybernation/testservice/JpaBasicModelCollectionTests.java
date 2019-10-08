@@ -21,6 +21,7 @@ import java.util.Map;
 
 import static com.cybernation.testservice.Authorization.bearer;
 import static com.cybernation.testservice.ResponseAssert.isSuccessful;
+import static com.cybernation.testservice.UrlPrefix.prefix;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -60,7 +61,7 @@ class JpaBasicModelCollectionTests extends BaseApplicationTests {
     void fetchAnAutoCollection() {
 
         Map<String, Object> swarmMap = (Map<String, Object>) webTestClient.get()
-                .uri("/" + swarm.getUuid())
+                .uri(prefix("/" + swarm.getUuid()))
                 .header(HttpHeaders.AUTHORIZATION, bearer(anonToken))
                 .exchange()
                 .expectStatus().is2xxSuccessful()
@@ -94,7 +95,7 @@ class JpaBasicModelCollectionTests extends BaseApplicationTests {
     @Test
     void fetchACollectionWithCustomFetcher() {
         Map<String, Object> swarmMap = (Map<String, Object>) webTestClient.get()
-                .uri("/" + swarm.getUuid())
+                .uri(prefix("/" + swarm.getUuid()))
                 .header(HttpHeaders.AUTHORIZATION, bearer(anonToken))
                 .exchange()
                 .expectStatus().is2xxSuccessful()

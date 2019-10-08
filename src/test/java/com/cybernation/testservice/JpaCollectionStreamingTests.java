@@ -24,6 +24,7 @@ import java.util.Map;
 
 import static com.cybernation.testservice.Authorization.bearer;
 import static com.cybernation.testservice.ResponseAssert.isSuccessful;
+import static com.cybernation.testservice.UrlPrefix.prefix;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -78,7 +79,7 @@ class JpaCollectionStreamingTests extends BaseApplicationTests {
 
     private Map<String, Object> getDepartment() {
         Response response = webTestClient.get()
-                .uri("/" + department.getUuid())
+                .uri(prefix("/" + department.getUuid()))
                 .header(HttpHeaders.AUTHORIZATION, bearer(anonToken))
                 .exchange()
                 .expectStatus().is2xxSuccessful()

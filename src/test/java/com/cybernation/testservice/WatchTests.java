@@ -27,6 +27,7 @@ import java.util.Map;
 
 import static com.cybernation.testservice.Authorization.bearer;
 import static com.cybernation.testservice.ResponseAssert.isSuccessful;
+import static com.cybernation.testservice.UrlPrefix.prefix;
 import static java.util.Collections.singletonList;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.instanceOf;
@@ -71,7 +72,7 @@ class WatchTests extends BaseApplicationTests {
 
     private void subscribeToSpectacle() {
         webTestClient.put()
-                .uri("/watch")
+                .uri(prefix("/watch"))
                 .header(HttpHeaders.AUTHORIZATION, bearer(anonToken))
                 .body(BodyInserters.fromObject(singletonList(spectacleExternalId())))
                 .exchange()
@@ -92,7 +93,7 @@ class WatchTests extends BaseApplicationTests {
         JsonPatch jsonPatch = new JsonPatch(singletonList(operation));
 
         webTestClient.patch()
-                .uri("/" + spectacleExternalId())
+                .uri(prefix("/" + spectacleExternalId()))
                 .header(HttpHeaders.AUTHORIZATION, bearer(anonToken))
                 .body(BodyInserters.fromObject(jsonPatch))
                 .exchange()
@@ -112,7 +113,7 @@ class WatchTests extends BaseApplicationTests {
     @SuppressWarnings("unchecked")
     private List<Map<String, Object>> getEvents() {
         return (List<Map<String, Object>>) webTestClient.get()
-                            .uri("/watch")
+                            .uri(prefix("/watch"))
                             .header(HttpHeaders.AUTHORIZATION, bearer(anonToken))
                             .exchange()
                             .expectStatus().is2xxSuccessful()

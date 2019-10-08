@@ -5,7 +5,7 @@
     <parent>
         <groupId>io.extremum</groupId>
         <artifactId>extremum-app-parent</artifactId>
-        <version>1.0.13-SNAPSHOT</version>
+        <version>1.0.14-SNAPSHOT</version>
     </parent>
     <artifactId>extremum-demo-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
@@ -14,8 +14,8 @@
 
     <properties>
         <java.version>1.8</java.version>
-        <extremum.common.version>1.0.13-SNAPSHOT</extremum.common.version>
-        <extremum.auth.version>1.0.4-SNAPSHOT</extremum.auth.version>
+        <extremum.common.version>1.0.14-SNAPSHOT</extremum.common.version>
+        <extremum.auth.version>1.0.5-SNAPSHOT</extremum.auth.version>
         <testcontainers.version>1.11.3</testcontainers.version>
     </properties>
 

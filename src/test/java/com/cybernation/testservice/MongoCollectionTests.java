@@ -19,13 +19,11 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.cybernation.testservice.Authorization.bearer;
 import static com.cybernation.testservice.ResponseAssert.isSuccessful;
+import static com.cybernation.testservice.UrlPrefix.prefix;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -83,7 +81,7 @@ class MongoCollectionTests extends BaseApplicationTests {
                 Arrays.asList(house1.getId().toString(), house2.getId().toString())));
 
         Map<String, Object> streetMap = (Map<String, Object>) webTestClient.get()
-                .uri("/" + street.getUuid())
+                .uri(prefix("/" + street.getUuid()))
                 .header(HttpHeaders.AUTHORIZATION, bearer(anonToken))
                 .exchange()
                 .expectStatus().is2xxSuccessful()
@@ -131,7 +129,7 @@ class MongoCollectionTests extends BaseApplicationTests {
     @Test
     void fetchANonExistentCollection() {
         Response response = webTestClient.get()
-                .uri("/no-such-collection")
+                .uri(prefix("/" + UUID.randomUUID()))
                 .header(HttpHeaders.AUTHORIZATION,bearer(anonToken))
                 .exchange()
                 .expectStatus().is2xxSuccessful()

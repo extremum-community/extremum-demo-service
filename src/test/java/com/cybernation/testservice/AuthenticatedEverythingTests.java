@@ -21,6 +21,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import static com.cybernation.testservice.Authorization.bearer;
+import static com.cybernation.testservice.UrlPrefix.prefix;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -73,7 +74,7 @@ class AuthenticatedEverythingTests extends BaseApplicationTests {
     @Test
     void whenAccessingByAnonUser_then403ShouldBeReturned() {
         webTestClient.get()
-                .uri("/" + topSecretId)
+                .uri(prefix("/" + topSecretId))
                 .header(HttpHeaders.AUTHORIZATION, bearer(anonToken))
                 .exchange()
                 .expectStatus().is2xxSuccessful()
@@ -86,7 +87,7 @@ class AuthenticatedEverythingTests extends BaseApplicationTests {
     @Test
     void whenAccessingByPrivilegedUser_thenResultShouldBeReturned() {
         Map<String, Object> responseBody = (Map<String, Object>) webTestClient.get()
-                .uri("/" + topSecretId)
+                .uri(prefix("/" + topSecretId))
                 .header(HttpHeaders.AUTHORIZATION, bearer(privilegedToken))
                 .exchange()
                 .expectStatus().is2xxSuccessful()

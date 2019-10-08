@@ -11,12 +11,11 @@ import java.util.stream.Collectors;
 
 class TestUris {
     @NotNull
-    static URI buildUriWithEncodedQueryString(Map<String, String> queryParams,
-                                               String housesCollectionUrl) throws URISyntaxException {
+    static URI buildUriWithEncodedQueryString(Map<String, String> queryParams, String url) throws URISyntaxException {
         String encodedQueryParams = queryParams.entrySet().stream()
                 .map(entry -> entry.getKey() + "=" + urlEncode(entry.getValue()))
                 .collect(Collectors.joining("&"));
-        return new URI(housesCollectionUrl + "?" + encodedQueryParams);
+        return new URI(url + "?" + encodedQueryParams);
     }
 
     private static String urlEncode(String value) {
