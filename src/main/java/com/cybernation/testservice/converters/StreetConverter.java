@@ -50,7 +50,7 @@ public class StreetConverter implements ToRequestDtoConverter<Street, StreetRequ
         List<HouseResponseDto> houses = street.getHouses().stream()
                 .map(houseId -> houseConverter.loadHouse(houseId, conversionConfig))
                 .collect(Collectors.toList());
-        dto.setHouses(new CollectionReference<>(houses));
+        dto.setHouses(CollectionReference.uninitialized());
 
         dto.setVersion(street.getVersion());
         return dto;

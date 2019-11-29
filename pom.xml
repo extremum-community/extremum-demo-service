@@ -5,7 +5,7 @@
     <parent>
         <groupId>io.extremum</groupId>
         <artifactId>extremum-app-parent</artifactId>
-        <version>1.0.15-SNAPSHOT</version>
+        <version>1.0.17-SNAPSHOT</version>
     </parent>
     <artifactId>extremum-demo-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
@@ -17,13 +17,6 @@
         <extremum.auth.version>1.0.5-SNAPSHOT</extremum.auth.version>
         <testcontainers.version>1.11.3</testcontainers.version>
     </properties>
-
-    <repositories>
-        <repository>
-            <id>spring-libs-snapshot</id>
-            <url>https://repo.spring.io/libs-snapshot</url>
-        </repository>
-    </repositories>
 
     <dependencyManagement>
         <dependencies>
