@@ -209,4 +209,15 @@
         </plugins>
     </build>
 
+    <repositories>
+        <repository>
+            <id>extremum-releases</id>
+            <url>http://nexus.cybernation.com:8081/repository/maven-releases/</url>
+        </repository>
+        <repository>
+            <id>extremum-snapshots</id>
+            <url>http://nexus.cybernation.com:8081/repository/maven-snapshots/</url>
+        </repository>
+    </repositories>
+
 </project>
