@@ -14,7 +14,7 @@
 
     <properties>
         <java.version>1.8</java.version>
-        <extremum.auth.version>1.0.5-SNAPSHOT</extremum.auth.version>
+        <extremum.auth.version>1.0.6-SNAPSHOT</extremum.auth.version>
         <testcontainers.version>1.11.3</testcontainers.version>
     </properties>
 
@@ -81,6 +81,14 @@
                 <exclusion>
                     <groupId>net.java.dev.jna</groupId>
                     <artifactId>jna</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>javax.annotation</groupId>
+                    <artifactId>javax.annotation-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>javax.xml.bind</groupId>
+                    <artifactId>jaxb-api</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
