@@ -106,7 +106,7 @@ class MongoCollectionStreamingTests extends BaseApplicationTests {
     }
 
     @Test
-    void streamAMontoCollectionByIdWithProjection() throws Exception {
+    void streamAMongoCollectionByIdWithProjection() throws Exception {
         List<HouseResponseDto> housesCollectionList = create2HousesAnd1StreetAndStreamHousesFromStreetHousesCollection(
                 ImmutableMap.of(
                         "offset", "1",
@@ -126,7 +126,7 @@ class MongoCollectionStreamingTests extends BaseApplicationTests {
         List<HouseResponseDto> houses = webTestClient.get()
                 .uri(prefix("/" + UUID.randomUUID()))
                 .accept(MediaType.TEXT_EVENT_STREAM)
-                .header(HttpHeaders.AUTHORIZATION,bearer(anonToken))
+                .header(HttpHeaders.AUTHORIZATION, bearer(anonToken))
                 .exchange()
                 .expectStatus().is2xxSuccessful()
                 .expectBodyList(HouseResponseDto.class)
