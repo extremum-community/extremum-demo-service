@@ -37,6 +37,7 @@ public abstract class BaseApplicationTests {
 
         if ("true".equals(System.getProperty("start.elasticsearch", "true"))) {
             ElasticsearchContainer elasticSearch = new ElasticsearchContainer("elasticsearch:7.1.0");
+            defineMildFloodingRestrictions(elasticSearch);
             elasticSearch.start();
 
             System.setProperty("elasticsearch.hosts[0].host", elasticSearch.getContainerIpAddress());
@@ -50,6 +51,12 @@ public abstract class BaseApplicationTests {
             System.setProperty("elasticsearch.hosts[0].port", "9200");
             System.setProperty("elasticsearch.hosts[0].protocol", "http");
         }
+    }
+
+    private static void defineMildFloodingRestrictions(ElasticsearchContainer elasticSearch) {
+        elasticSearch.withEnv("cluster.routing.allocation.disk.watermark.low", "1gb");
+        elasticSearch.withEnv("cluster.routing.allocation.disk.watermark.high", "1gb");
+        elasticSearch.withEnv("cluster.routing.allocation.disk.watermark.flood_stage", "1gb");
     }
 
     private static void workaroundElasticsearchClientStartupQuirk() {
