@@ -111,8 +111,8 @@ class MongoCollectionStreamingTests extends BaseApplicationTests {
                 ImmutableMap.of(
                         "offset", "1",
                         "limit", "10",
-                        "since", "2000-04-30T15:20:29.578000+0000",
-                        "until", "2100-04-30T15:20:29.578900+0000"
+                        "since", "2000-04-30T15:20:29.578000+00:00",
+                        "until", "2100-04-30T15:20:29.578900+00:00"
                 ));
 
         assertThat(housesCollectionList, hasSize(1));
