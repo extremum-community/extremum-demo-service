@@ -5,7 +5,7 @@
     <parent>
         <groupId>io.extremum</groupId>
         <artifactId>extremum-app-parent</artifactId>
-        <version>1.1.6</version>
+        <version>1.1.8</version>
     </parent>
     <artifactId>extremum-demo-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
