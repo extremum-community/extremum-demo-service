@@ -7,7 +7,6 @@ mongo:
   descriptors-db-name: descriptors
   auth-db-name: auth
   repository-packages: com.cybernation.testservice.dao
-  auth-db-uri:
 
 jpa:
   username: postgres
